@@ -14,7 +14,7 @@ import * as fromApp from '../store/app.store';
 import * as RecipesActions from './store/recipes.actions';
 
 @Injectable({ providedIn: 'root' })
-export class RecipesResolverService implements Resolve<Recipe[]> {
+export class RecipesResolverService implements Resolve<{ recipes: Recipe[] }> {
   constructor(
     private store: Store<fromApp.AppState>,
     private actions$: Actions
@@ -23,19 +23,22 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Recipe[] | Observable<Recipe[]> | Promise<Recipe[]> {
+  ):
+    | { recipes: Recipe[] }
+    | Observable<{ recipes: Recipe[] }>
+    | Promise<{ recipes: Recipe[] }> {
     return this.store.select('recipes').pipe(
       take(1),
       map((recipesState) => recipesState.recipes),
       switchMap((recipes) => {
         if (recipes.length === 0) {
-          this.store.dispatch(new RecipesActions.FetchRecipes());
+          this.store.dispatch(RecipesActions.fetchRecipes());
           return this.actions$.pipe(
             ofType(RecipesActions.SET_RECIPES),
             take(1)
           );
         } else {
-          return of(recipes);
+          return of({ recipes });
         }
       })
     );
