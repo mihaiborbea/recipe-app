@@ -19,12 +19,16 @@ export class RecipesEffects {
         );
       }),
       map((recipes) => {
-        return recipes.map((recipe) => {
-          return {
-            ingredients: [], // to ensure 'ingredients' prop on recipes without one
-            ...recipe,
-          };
-        });
+        if (recipes && recipes.length) {
+          return recipes.map((recipe) => {
+            return {
+              ingredients: [], // to ensure 'ingredients' prop on recipes without one
+              ...recipe,
+            };
+          });
+        } else {
+          return [];
+        }
       }),
       map((recipes) => RecipesActions.setRecipes({ recipes }))
     )
