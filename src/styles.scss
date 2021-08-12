@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~@angular/material/theming";
+@import "theme.scss";
+
 html,
 body {
   height: 100%;
@@ -7,4 +10,14 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.dark-theme {
+  // use our theme with angular-material-theme mixin
+  @include angular-material-theme($dark-theme);
+}
+
+.light-theme {
+  // use our theme with angular-material-theme mixin
+  @include angular-material-theme($light-theme);
 }
