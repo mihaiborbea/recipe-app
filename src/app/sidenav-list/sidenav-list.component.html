@@ -1,0 +1,15 @@
+<mat-nav-list fxLayout="column" fxFill>
+  <mat-list-item routerLink="/recipes" (click)="onSidenavClose()">
+    <mat-icon fontSet="material-icons-outlined">fastfood</mat-icon>
+    <span class="nav-caption">Recipes</span>
+  </mat-list-item>
+  <mat-list-item routerLink="/shopping-list" (click)="onSidenavClose()">
+    <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon
+    ><span class="nav-caption">Shopping List</span>
+  </mat-list-item>
+  <span fxFlex></span>
+  <mat-divider></mat-divider>
+  <mat-list-item fxLayoutAlign="left" (click)="onLogout(); onSidenavClose()">
+    <mat-icon>logout</mat-icon><span class="nav-caption">Logout</span>
+  </mat-list-item>
+</mat-nav-list>

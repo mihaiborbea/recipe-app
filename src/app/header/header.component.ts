@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -10,8 +16,10 @@ import * as RecipesActions from '../recipes/store/recipes.actions';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  @Output() public sidenavToggle = new EventEmitter();
   collapsed = false;
   isAuthenticated = false;
   private userSub: Subscription;
@@ -33,6 +41,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onFetch() {
     this.store.dispatch(RecipesActions.fetchRecipes());
+  }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
   }
 
   onLogout() {
