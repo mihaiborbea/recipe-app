@@ -15,11 +15,11 @@ import { PlaceholderDirective } from './placeholder/placeholder.directive';
   ],
   imports: [CommonModule],
   exports: [
+    CommonModule,
     AlertComponent,
     LoadingSpinnerComponent,
     PlaceholderDirective,
     DropdownDirective,
-    CommonModule,
   ],
   entryComponents: [AlertComponent],
 })
