@@ -1,35 +1,35 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
+      providers: [provideMockStore()],
     }).compileComponents();
   });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
+    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'recipe-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('recipe-app');
-  });
-
-  it('should render title', () => {
+  it('should contain app-header', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('recipe-app app is running!');
+    const compiled = fixture.debugElement.nativeElement as HTMLElement;
+    expect(compiled.querySelector('app-header')).toBeTruthy();
+  });
+
+  it('should contain router-outlet', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const compiled = fixture.debugElement.nativeElement as HTMLElement;
+    fixture.detectChanges();
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });
