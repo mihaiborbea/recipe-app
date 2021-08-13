@@ -35,14 +35,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSave() {
-    this.store.dispatch(RecipesActions.storeRecipes());
-  }
-
-  onFetch() {
-    this.store.dispatch(RecipesActions.fetchRecipes());
-  }
-
   onToggleSidenav() {
     this.sidenavToggle.emit();
   }

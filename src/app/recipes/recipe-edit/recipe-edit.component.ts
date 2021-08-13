@@ -101,10 +101,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           recipe: this.recipeForm.value,
         })
       );
+      this.store.dispatch(RecipesActions.storeRecipes());
     } else {
       this.store.dispatch(
         RecipesActions.addRecipe({ recipe: this.recipeForm.value })
       );
+      this.store.dispatch(RecipesActions.storeRecipes());
     }
     this.router.navigate(['..'], { relativeTo: this.route });
   }
