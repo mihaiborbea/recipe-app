@@ -7,7 +7,7 @@ import * as AuthActions from '../auth/store/auth.actions';
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
-  styleUrls: ['./sidenav-list.component.css'],
+  styleUrls: ['./sidenav-list.component.scss'],
 })
 export class SidenavListComponent {
   @Output() sidenavClose = new EventEmitter();
