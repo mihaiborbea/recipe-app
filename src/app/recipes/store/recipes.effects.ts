@@ -39,7 +39,7 @@ export class RecipesEffects {
       this.actions$.pipe(
         ofType(RecipesActions.storeRecipes),
         withLatestFrom(this.store.select('recipes')),
-        switchMap(([actionData, recipesState]) => {
+        switchMap(([_, recipesState]) => {
           return this.http.put(
             'https://recipe-app-8ac24-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
             recipesState.recipes
