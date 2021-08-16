@@ -25,19 +25,11 @@
         Manage Recipe <mat-icon>expand_more</mat-icon>
       </button>
       <mat-action-list class="dropdown-content">
-        <mat-list-item>
-          <a style="cursor: pointer" (click)="onAddToShoppingList()"
-            >To Shopping List</a
-          >
-        </mat-list-item>
-        <mat-list-item>
-          <a style="cursor: pointer" (click)="onEditRecipe()">Edit Recipe</a>
-        </mat-list-item>
-        <mat-list-item>
-          <a style="cursor: pointer" (click)="onDeleteRecipe()"
-            >Delete Recipe</a
-          >
-        </mat-list-item>
+        <button mat-list-item (click)="onAddToShoppingList()">
+          To Shopping List
+        </button>
+        <button mat-list-item (click)="onEditRecipe()">Edit Recipe</button>
+        <button mat-list-item (click)="onDeleteRecipe()">Delete Recipe</button>
       </mat-action-list>
     </div>
   </div>
