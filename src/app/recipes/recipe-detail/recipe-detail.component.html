@@ -1,42 +1,53 @@
-<div class="row">
-  <div class="col-xs-12">
-    <img [src]="recipe.imagePath" alt="" class="img-responsive" style="max-height: 300px;">
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
+    <img
+      [src]="recipe.imagePath"
+      alt=""
+      class="img-responsive"
+      style="max-height: 300px"
+    />
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
     <h1>{{ recipe.name }}</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="btn-group" appDropdown>
+<div fxLayout="row">
+  <div fxLayout="column">
+    <div class="dropdown" appDropdown>
       <button
-      type="button"
-      class="btn btn-primary dropdown-toggle">
-      Manage Recipe <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a style="cursor: pointer;" (click)="onAddToShoppingList()">To Shopping List</a></li>
-      <li><a style="cursor: pointer;" (click)="onEditRecipe()">Edit Recipe</a></li>
-      <li><a style="cursor: pointer;" (click)="onDeleteRecipe()">Delete Recipe</a></li>
-    </ul>
+        mat-raised-button
+        color="primary"
+        type="button"
+        class="dropdown-toggle"
+      >
+        Manage Recipe <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-action-list class="dropdown-content">
+        <button mat-list-item (click)="onAddToShoppingList()">
+          To Shopping List
+        </button>
+        <button mat-list-item (click)="onEditRecipe()">Edit Recipe</button>
+        <button mat-list-item (click)="onDeleteRecipe()">Delete Recipe</button>
+      </mat-action-list>
     </div>
   </div>
 </div>
-<br>
-<div class="row">
-  <div class="col-xs-12">
-    {{ recipe.description }}
+<br />
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
+    <p>{{ recipe.description }}</p>
   </div>
 </div>
-<br>
-<div class="row">
-  <div class="col-xs-12">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
+<br />
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
+    <mat-list>
+      <mat-list-item *ngFor="let ingredient of recipe.ingredients">
         {{ ingredient.name }} - {{ ingredient.amount }}
-      </li>
-    </ul>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
   </div>
 </div>
