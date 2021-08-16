@@ -12,7 +12,7 @@
   >
     <app-shopping-edit></app-shopping-edit>
     <br />
-    <mat-selection-list [multiple]="false">
+    <mat-selection-list #list [multiple]="false">
       <mat-list-option
         *ngFor="
           let ingredient of (ingredients | async).ingredients;
