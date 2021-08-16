@@ -1,35 +1,50 @@
-<div class="row">
-  <div class="col-xs-12">
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <div class="row">
-        <div class="col-sm-5 form-group">
-          <label for="name">Name</label>
+      <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+        <mat-form-field fxFlex.gt-sm="70">
+          <mat-label for="name">Name</mat-label>
+          <input matInput type="text" id="name" name="name" ngModel required />
+        </mat-form-field>
+        <mat-form-field fxFlex.gt-sm="30">
+          <mat-label for="amount">Amount</mat-label>
           <input
-           type="text"
-            id="name"
-            class="form-control"
-            name="name"
-            ngModel
-            required>
-        </div>
-        <div class="col-sm-2 form-group">
-          <label for="amount">Amount</label>
-          <input
-           type="number"
+            matInput
+            type="number"
             id="amount"
-            class="form-control"
             name="amount"
             ngModel
             required
-            pattern="^[1-9]+[0-9]*$">
-        </div>
+            pattern="^[1-9]+[0-9]*$"
+          />
+        </mat-form-field>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ? 'Update': 'Add' }}</button>
-          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
-          <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
-        </div>
+      <div fxLayout="row">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!f.valid"
+        >
+          {{ editMode ? "Update" : "Add" }}
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onDelete()"
+          *ngIf="editMode"
+        >
+          Delete
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          type="reset"
+          (click)="onClear()"
+        >
+          Clear
+        </button>
       </div>
     </form>
   </div>
