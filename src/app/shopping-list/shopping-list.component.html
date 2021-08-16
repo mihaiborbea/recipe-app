@@ -1,9 +1,27 @@
-<div class="row">
-  <div class="col-xs-10">
+<div
+  fxLayout="row"
+  fxLayoutAlign.lt-lg="center center"
+  fxLayoutAlign.lg="start center"
+>
+  <div
+    fxLayout="column"
+    fxFlex.lt-md="90"
+    fxFlex.md="80"
+    fxFlex.gt-md="60"
+    fxFlex.xl="50"
+  >
     <app-shopping-edit></app-shopping-edit>
-    <hr>
-    <ul class="list-group">
-      <a class="list-group-item" style="cursor: pointer" *ngFor="let ingredient of (ingredients | async).ingredients; let i = index" (click)="onEditItem(i)">{{ ingredient.name }} ({{ ingredient.amount }})</a>
-    </ul>
+    <br />
+    <mat-selection-list [multiple]="false">
+      <mat-list-option
+        *ngFor="
+          let ingredient of (ingredients | async).ingredients;
+          let i = index
+        "
+        (click)="onEditItem(i)"
+        >{{ ingredient.name }} ({{ ingredient.amount }})
+        <mat-divider></mat-divider>
+      </mat-list-option>
+    </mat-selection-list>
   </div>
 </div>
