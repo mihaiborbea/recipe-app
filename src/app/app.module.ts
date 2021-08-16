@@ -15,7 +15,6 @@ import * as fromApp from './store/app.store';
 import { AuthEffects } from './auth/store/auth.effects';
 import { RecipesEffects } from './recipes/store/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material.module';
 import { HeaderComponent } from './header/header.component';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 
@@ -32,7 +31,6 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     SharedModule,
     CoreModule,
     BrowserAnimationsModule,
-    MaterialModule,
   ],
   bootstrap: [AppComponent],
 })
