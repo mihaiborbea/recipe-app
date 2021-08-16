@@ -7,28 +7,24 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+
+const materialComponents = [
+  MatToolbarModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatListModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDividerModule,
+  MatCardModule,
+];
 
 @NgModule({
   declarations: [],
-  imports: [
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
-  exports: [
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+  imports: [FlexLayoutModule, ...materialComponents],
+  exports: [FlexLayoutModule, ...materialComponents],
 })
 export class MaterialModule {}

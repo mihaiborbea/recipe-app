@@ -1,14 +1,22 @@
-<div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-success" (click)="onNewRecipe()">New Recipe</button>
+<div fxLayout="row">
+  <div fxLayout="column">
+    <button mat-raised-button color="primary" (click)="onNewRecipe()">
+      New Recipe
+    </button>
   </div>
 </div>
-<hr />
-<div class="row">
-  <div class="col-xc-12">
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+<div fxLayout="row">
+  <div fxLayout="column" fxFlexFill>
     <app-recipe-item
-    *ngFor="let recipeItem of recipes; let i = index"
-    [recipe]="recipeItem" [index]="i">
-  </app-recipe-item>
+      *ngFor="let recipeItem of recipes; let i = index"
+      [recipe]="recipeItem"
+      [index]="i"
+    >
+    </app-recipe-item>
   </div>
 </div>

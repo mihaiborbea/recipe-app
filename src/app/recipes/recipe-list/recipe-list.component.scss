@@ -1,0 +1,7 @@
+mat-divider {
+  margin: 10px 0 10px 0;
+}
+
+app-recipe-item:not(:last-child) {
+  margin-bottom: 5px;
+}
