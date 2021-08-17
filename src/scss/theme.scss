@@ -1,11 +1,12 @@
-@use '~@angular/material' as mat;
+@import "~@angular/material/theming";
+// @import "./_variables.scss";
 
-@include mat.core();
+@include mat-core();
 
 // Define a light theme
-$light-primary: mat.define-palette(mat.$blue-palette);
-$light-accent: mat.define-palette(mat.$cyan-palette);
-$light-theme: mat.define-light-theme(
+$light-primary: mat-palette($mat-blue);
+$light-accent: mat-palette($mat-cyan);
+$light-theme: mat-light-theme(
   (
     color: (
       primary: $light-primary,
@@ -15,9 +16,9 @@ $light-theme: mat.define-light-theme(
 );
 
 // Define a dark theme
-$dark-primary: mat.define-palette(mat.$teal-palette);
-$dark-accent: mat.define-palette(mat.$lime-palette);
-$dark-theme: mat.define-dark-theme(
+$dark-primary: mat-palette($mat-teal);
+$dark-accent: mat-palette($mat-lime);
+$dark-theme: mat-dark-theme(
   (
     color: (
       primary: $dark-primary,
@@ -27,10 +28,20 @@ $dark-theme: mat.define-dark-theme(
 );
 
 // Apply the light theme by default
-@include mat.all-component-themes($light-theme);
+@include angular-material-theme($light-theme);
+:root {
+  --primary: #{mat-color($light-primary)};
+  --accent: #{mat-color($light-accent)};
+  --foreground: #{mat-color(map-get($light-theme, foreground), text)};
+  --background: #{map-get(map-get($light-theme, background), background)};
+}
 
 // Apply the dark theme only when the `dark` CSS class is applied
 // to an ancestor element of the components (such as `body`).
 .dark-theme {
-  @include mat.all-component-colors($dark-theme);
+  @include angular-material-color($dark-theme);
+  --primary: #{mat-color($dark-primary)};
+  --accent: #{mat-color($dark-accent)};
+  --foreground: #{mat-color(map-get($dark-theme, foreground), text)};
+  --background: #{map-get(map-get($dark-theme, background), background)};
 }
