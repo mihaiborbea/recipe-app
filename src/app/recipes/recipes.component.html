@@ -1,6 +1,16 @@
-<div fxLayout.gt-sm="row" fxLayout.sm="column" fxLayoutGap="15px">
+<div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutGap="15px">
   <div fxLayout="column" fxFlexFill fxFlex.gt-sm="40">
-    <app-recipe-list></app-recipe-list>
+    <app-recipe-list [fxHide.lt-md]="hideList"></app-recipe-list>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start start"
+    fxHide
+    [fxShow.lt-md]="hideList"
+  >
+    <button mat-icon-button color="accent" routerLink="/recipes">
+      <mat-icon>arrow_back</mat-icon> Back
+    </button>
   </div>
   <div fxLayout="column" fxFlexFill fxFlex.gt-sm="60">
     <router-outlet></router-outlet>
