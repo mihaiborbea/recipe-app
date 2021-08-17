@@ -5,13 +5,13 @@
         {{ recipe.name }}
       </mat-card-title>
     </mat-card-header>
-    <img
-      mat-card-image
-      [src]="recipe.imagePath"
-      [alt]="recipe.name"
-      style="max-height: 100px"
-    />
     <mat-card-content>
+      <img
+        mat-card-image
+        [src]="recipe.imagePath"
+        [alt]="recipe.name"
+        class="img-responsive"
+      />
       <p>{{ recipe.description }}</p>
     </mat-card-content>
   </mat-card>
