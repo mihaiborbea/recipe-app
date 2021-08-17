@@ -1,0 +1,22 @@
+.img-responsive {
+  max-width: 30%;
+}
+mat-card-content {
+  overflow: hidden;
+}
+
+mat-card-content img {
+  float: right;
+}
+
+.mat-card-image {
+  margin-top: 0 !important;
+}
+
+mat-card-content p {
+  max-width: 70%;
+}
+
+a {
+  text-decoration: none;
+}
