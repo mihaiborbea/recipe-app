@@ -31,6 +31,6 @@ $dark-theme: mat.define-dark-theme(
 
 // Apply the dark theme only when the `dark` CSS class is applied
 // to an ancestor element of the components (such as `body`).
-.dark {
+.dark-theme {
   @include mat.all-component-colors($dark-theme);
 }
