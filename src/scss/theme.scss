@@ -34,6 +34,7 @@ $dark-theme: mat-dark-theme(
   --accent: #{mat-color($light-accent)};
   --foreground: #{mat-color(map-get($light-theme, foreground), text)};
   --background: #{map-get(map-get($light-theme, background), background)};
+  --backdrop: #{"rgba(#{red(mat-color(map-get($light-theme, foreground), text))},#{green(mat-color(map-get($light-theme, foreground), text))},#{blue(mat-color(map-get($light-theme, foreground), text))}, 0.45)"};
 }
 
 // Apply the dark theme only when the `dark` CSS class is applied
@@ -44,4 +45,5 @@ $dark-theme: mat-dark-theme(
   --accent: #{mat-color($dark-accent)};
   --foreground: #{mat-color(map-get($dark-theme, foreground), text)};
   --background: #{map-get(map-get($dark-theme, background), background)};
+  --backdrop: #{"rgba(#{red(mat-color(map-get($dark-theme, foreground), text))},#{green(mat-color(map-get($dark-theme, foreground), text))},#{blue(mat-color(map-get($dark-theme, foreground), text))}, 0.35)"};
 }

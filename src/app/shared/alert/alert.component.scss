@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--backdrop);
   z-index: 50;
 }
 
@@ -15,7 +15,7 @@
   left: 20vw;
   width: 60vw;
   z-index: 100;
-  background: #303030;
+  background: var(--background);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
