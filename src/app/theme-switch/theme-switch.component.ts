@@ -16,7 +16,6 @@ export class ThemeSwitchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.themeService.currentTheme.subscribe((theme) => {
-      console.log('here');
       this.isDarkTheme = theme === AppThemes.dark ? true : false;
     });
   }

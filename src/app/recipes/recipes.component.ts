@@ -16,7 +16,6 @@ export class RecipesComponent implements OnDestroy {
       this.route.firstChild.params.subscribe((params) => {
         if (params && params.hasOwnProperty('id')) {
           this.hideList = true;
-          console.log('here');
         }
       })
     );
