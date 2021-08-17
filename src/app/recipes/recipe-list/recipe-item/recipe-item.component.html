@@ -12,7 +12,7 @@
         [alt]="recipe.name"
         class="img-responsive"
       />
-      <p>{{ recipe.description }}</p>
+      <p>{{ recipe.description | truncate }}</p>
     </mat-card-content>
   </mat-card>
 </a>
