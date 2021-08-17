@@ -11,7 +11,6 @@ import { Store } from '@ngrx/store';
 
 import * as fromApp from '../store/app.store';
 import * as AuthActions from '../auth/store/auth.actions';
-import * as RecipesActions from '../recipes/store/recipes.actions';
 
 @Component({
   selector: 'app-header',

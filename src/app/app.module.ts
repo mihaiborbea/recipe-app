@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,11 +16,17 @@ import * as fromApp from './store/app.store';
 import { AuthEffects } from './auth/store/auth.effects';
 import { RecipesEffects } from './recipes/store/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
+import { HeaderComponent } from './header/header.component';
+import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SidenavListComponent],
+  declarations: [
+    AppComponent,
+    SidenavListComponent,
+    HeaderComponent,
+    ThemeSwitchComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -31,6 +38,7 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     SharedModule,
     CoreModule,
     BrowserAnimationsModule,
+    OverlayModule,
   ],
   bootstrap: [AppComponent],
 })
