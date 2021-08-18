@@ -1,18 +1,13 @@
 <a [routerLink]="[index]" routerLinkActive="active">
   <mat-card>
-    <mat-card-header>
+    <mat-card-header fxLayout="row" class="truncate">
       <mat-card-title>
-        {{ recipe.name }}
+        <span>{{ recipe.name }}</span>
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <img
-        mat-card-image
-        [src]="recipe.imagePath"
-        [alt]="recipe.name"
-        class="img-responsive"
-      />
-      <p>{{ recipe.description | truncate }}</p>
+    <mat-card-content fxLayout="row" fxLayoutAlign="start center">
+      <span>{{ recipe.description | truncate }}</span>
+      <img mat-card-image [src]="recipe.imagePath" [alt]="recipe.name" />
     </mat-card-content>
   </mat-card>
 </a>

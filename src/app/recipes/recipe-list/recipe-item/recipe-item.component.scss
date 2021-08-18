@@ -1,22 +1,29 @@
-.img-responsive {
-  max-width: 30%;
+a {
+  text-decoration: none;
 }
+
+mat-card {
+  height: 150px;
+}
+
 mat-card-content {
+  height: 120px;
   overflow: hidden;
 }
 
-mat-card-content img {
-  float: right;
-}
-
 .mat-card-image {
-  margin-top: 0 !important;
+  margin-left: auto;
+  margin-right: 0;
+  height: 90%;
+  max-width: 30%;
 }
 
-mat-card-content p {
-  max-width: 70%;
+:host ::ng-deep .mat-card-header-text {
+  margin: 0 0 !important;
 }
 
-a {
-  text-decoration: none;
+:host ::ng-deep .truncate * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

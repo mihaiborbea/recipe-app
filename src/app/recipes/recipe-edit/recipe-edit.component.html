@@ -1,5 +1,5 @@
 <div fxLayout="row">
-  <div fxLayout="column" fxFlexFill>
+  <div fxLayout="column" fxFlex="80" fxFlex.lt-md="100">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div fxLayout="row">
         <button
@@ -45,7 +45,9 @@
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <img [src]="imagePath.value" alt="" style="max-width: 700px" />
+        <div fxLayout="column" fxFlexFill>
+          <img [src]="imagePath.value" alt="" />
+        </div>
       </div>
       <div fxLayout="row">
         <mat-form-field fxFlexFill>
