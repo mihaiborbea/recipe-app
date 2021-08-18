@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { environment } from 'src/environments/environment';
 
@@ -33,8 +32,11 @@ import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
     AppRoutingModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([AuthEffects, RecipesEffects]),
-    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
-    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),
     SharedModule,
     CoreModule,
     BrowserAnimationsModule,

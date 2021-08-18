@@ -5,28 +5,28 @@ import * as AuthActions from './auth.actions';
 
 export interface State {
   user: User;
-  authError: string;
+  error: string;
   loading: boolean;
 }
 
 const initialState: State = {
   user: null,
-  authError: null,
+  error: null,
   loading: false,
 };
 
-const _authReducer = createReducer(
+export const authReducer = createReducer(
   initialState,
 
   on(AuthActions.loginStart, AuthActions.signupStart, (state) => ({
     ...state,
-    authError: null,
+    error: null,
     loading: true,
   })),
 
   on(AuthActions.authenticateSuccess, (state, action) => ({
     ...state,
-    authError: null,
+    error: null,
     loading: false,
     user: new User(
       action.email,
@@ -39,7 +39,7 @@ const _authReducer = createReducer(
   on(AuthActions.authenticateFail, (state, action) => ({
     ...state,
     user: null,
-    authError: action.errorMessage,
+    error: action.errorMessage,
     loading: false,
   })),
 
@@ -50,10 +50,6 @@ const _authReducer = createReducer(
 
   on(AuthActions.clearError, (state) => ({
     ...state,
-    authError: null,
+    error: null,
   }))
 );
-
-export function authReducer(state: State, action: Action) {
-  return _authReducer(state, action);
-}

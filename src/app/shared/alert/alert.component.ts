@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-alert',
@@ -7,9 +8,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class AlertComponent {
   @Input() message: string;
-  @Output() dismiss = new EventEmitter<void>();
+  dismiss = new Subject<void>();
 
   onClose() {
-    this.dismiss.emit();
+    this.dismiss.next();
   }
 }

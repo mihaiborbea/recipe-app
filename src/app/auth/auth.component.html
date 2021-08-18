@@ -1,6 +1,6 @@
 <ng-template appPlaceholder></ng-template>
 <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
-  <div *ngIf="isLoading">
+  <div *ngIf="isLoading$ | async">
     <app-loading-spinner></app-loading-spinner>
   </div>
   <form
@@ -12,7 +12,7 @@
     fxFlex.gt-lg="20"
     #authForm="ngForm"
     (ngSubmit)="onSubmit(authForm)"
-    *ngIf="!isLoading"
+    *ngIf="(isLoading$ | async) === false"
   >
     <mat-form-field fxFlexFill>
       <mat-label for="email">Email</mat-label>

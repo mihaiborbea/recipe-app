@@ -6,13 +6,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
-import * as fromApp from '../store/app.store';
+import { AppState } from '../store/app.store';
 import * as AuthActions from './store/auth.actions';
+import { selectAuthError, selectAuthLoading } from './store/auth.selectors';
 
 @Component({
   selector: 'app-auth',
@@ -21,35 +23,28 @@ import * as AuthActions from './store/auth.actions';
 export class AuthComponent implements OnDestroy, OnInit {
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
+  isLoading$ = this.store.pipe(select(selectAuthLoading));
   isLoginMode = true;
-  isLoading = false;
-  error: string = null;
 
-  private closeSub: Subscription;
-  private storeSub: Subscription;
+  private destroy$ = new Subject();
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private store: Store<fromApp.AppState>
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.storeSub = this.store.select('auth').subscribe((authState) => {
-      this.isLoading = authState.loading;
-      this.error = authState.authError;
-      if (this.error) {
-        this.showErrorAlert(this.error);
-      }
-    });
+    this.store
+      .pipe(select(selectAuthError), takeUntil(this.destroy$))
+      .subscribe((err) => {
+        if (err) {
+          this.showErrorAlert(err);
+        }
+      });
   }
 
   ngOnDestroy(): void {
-    if (this.closeSub) {
-      this.closeSub.unsubscribe();
-    }
-    if (this.storeSub) {
-      this.storeSub.unsubscribe();
-    }
+    this.destroy$.next();
   }
 
   onSwitchMode() {
@@ -71,10 +66,6 @@ export class AuthComponent implements OnDestroy, OnInit {
     form.reset();
   }
 
-  onHandleError() {
-    this.store.dispatch(AuthActions.clearError());
-  }
-
   private showErrorAlert(message: string) {
     const alertCmpFactory =
       this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
@@ -85,9 +76,10 @@ export class AuthComponent implements OnDestroy, OnInit {
     const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
 
     componentRef.instance.message = message;
-    this.closeSub = componentRef.instance.dismiss.subscribe(() => {
-      this.closeSub.unsubscribe();
+
+    componentRef.instance.dismiss.pipe(take(1)).subscribe(() => {
       hostViewContainerRef.clear();
+      this.store.dispatch(AuthActions.clearError());
     });
   }
 }
