@@ -1,6 +1,7 @@
 <ng-template appPlaceholder></ng-template>
 <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
   <div *ngIf="isLoading$ | async">
+    <!-- TODO: replace with mat-spinner -->
     <app-loading-spinner></app-loading-spinner>
   </div>
   <form
