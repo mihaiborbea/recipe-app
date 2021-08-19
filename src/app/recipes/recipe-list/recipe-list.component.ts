@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
 import { Recipe } from '../recipe.model';
-import * as fromApp from '../../store/app.store';
+import * as fromApp from '../../state/app.store';
 
 @Component({
   selector: 'app-recipe-list',

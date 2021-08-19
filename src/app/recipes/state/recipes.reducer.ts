@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Recipe } from '../recipe.model';
 
-import * as RecipesActions from '../store/recipes.actions';
+import * as RecipesActions from './recipes.actions';
 
 export interface State {
   recipes: Recipe[];

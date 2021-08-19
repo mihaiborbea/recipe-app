@@ -10,8 +10,8 @@ import { Actions, ofType } from '@ngrx/effects';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import { Recipe } from '../../recipes/recipe.model';
-import * as fromApp from '../../store/app.store';
-import * as RecipesActions from '../../recipes/store/recipes.actions';
+import * as fromApp from '../../state/app.store';
+import * as RecipesActions from '../../recipes/state/recipes.actions';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesResolver implements Resolve<{ recipes: Recipe[] }> {

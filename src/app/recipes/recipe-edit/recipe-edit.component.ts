@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
-import * as fromApp from '../../store/app.store';
-import * as RecipesActions from '../store/recipes.actions';
+import * as fromApp from '../../state/app.store';
+import * as RecipesActions from '../state/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',

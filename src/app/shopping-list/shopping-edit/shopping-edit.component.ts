@@ -5,8 +5,8 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { Ingredient } from 'src/app/shared/domain/ingredient.model';
-import * as ShoppingListActions from '../store/shopping-list.actions';
-import * as fromApp from '../../store/app.store';
+import * as ShoppingListActions from '../state/shopping-list.actions';
+import * as fromApp from '../../state/app.store';
 
 @Component({
   selector: 'app-shopping-edit',

@@ -11,9 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import * as fromApp from './store/app.store';
-import { AuthEffects } from './auth/store/auth.effects';
-import { RecipesEffects } from './recipes/store/recipes.effects';
+import * as fromApp from './state/app.store';
+import { AuthEffects } from './auth/state/auth.effects';
+import { RecipesEffects } from './recipes/state/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 
