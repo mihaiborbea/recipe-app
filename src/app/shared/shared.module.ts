@@ -7,6 +7,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { PlaceholderDirective } from './directives/placeholder.directive';
 import { MaterialModule } from './material.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     PlaceholderDirective,
     DropdownDirective,
     TruncatePipe,
+    ThemeSwitchComponent,
   ],
   imports: [MaterialModule, CommonModule],
   exports: [
@@ -25,6 +27,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     PlaceholderDirective,
     DropdownDirective,
     TruncatePipe,
+    ThemeSwitchComponent,
   ],
   entryComponents: [AlertComponent],
 })

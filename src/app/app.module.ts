@@ -15,21 +15,16 @@ import * as fromApp from './store/app.store';
 import { AuthEffects } from './auth/store/auth.effects';
 import { RecipesEffects } from './recipes/store/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-import { HeaderComponent } from './header/header.component';
-import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidenavListComponent,
-    HeaderComponent,
-    ThemeSwitchComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    OverlayModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([AuthEffects, RecipesEffects]),
     StoreDevtoolsModule.instrument({
@@ -37,10 +32,9 @@ import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
       logOnly: environment.production,
       autoPause: true,
     }),
-    SharedModule,
     CoreModule,
-    BrowserAnimationsModule,
-    OverlayModule,
+    LayoutModule,
+    SharedModule,
   ],
   bootstrap: [AppComponent],
 })

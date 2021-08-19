@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AppThemes, ThemeService } from './theme.service';
+import { AppThemes, ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-switch',
