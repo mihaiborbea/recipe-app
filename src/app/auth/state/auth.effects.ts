@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../user.model';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../core/services/auth.service';
+import { EnvironmentService } from 'src/app/core/services/environment-service.service';
 
 export interface AuthResponseData {
   idToken: string;
@@ -65,7 +66,7 @@ export class AuthEffects {
       switchMap((action) => {
         return this.http
           .post<AuthResponseData>(
-            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,
+            `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.environment.firebaseAPIKey}`,
             {
               email: action.email,
               password: action.password,
@@ -98,7 +99,7 @@ export class AuthEffects {
       switchMap((action) => {
         return this.http
           .post<AuthResponseData>(
-            `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
+            `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.environment.firebaseAPIKey}`,
             {
               email: action.email,
               password: action.password,
@@ -188,6 +189,7 @@ export class AuthEffects {
     private actions$: Actions,
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private environment: EnvironmentService
   ) {}
 }
