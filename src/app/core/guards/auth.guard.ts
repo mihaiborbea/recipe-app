@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import * as fromApp from '../store/app.store';
+import * as fromApp from '../../state/app.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

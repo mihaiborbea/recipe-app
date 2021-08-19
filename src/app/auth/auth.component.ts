@@ -10,11 +10,11 @@ import { Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { AlertComponent } from '../shared/alert/alert.component';
-import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
-import { AppState } from '../store/app.store';
-import * as AuthActions from './store/auth.actions';
-import { selectAuthError, selectAuthLoading } from './store/auth.selectors';
+import { AlertComponent } from '../shared/components/alert/alert.component';
+import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
+import { AppState } from '../state/app.store';
+import * as AuthActions from './state/auth.actions';
+import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 
 @Component({
   selector: 'app-auth',

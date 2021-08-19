@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Ingredient } from '../../shared/ingredient.model';
+import { Ingredient } from '../../shared/domain/ingredient.model';
 
 export const ADD_INGREDIENT = '[Shopping List] Add Ingredient';
 export const ADD_INGREDIENTS = '[Shopping List] Add Ingredients';

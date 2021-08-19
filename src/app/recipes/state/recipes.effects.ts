@@ -6,7 +6,7 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { Recipe } from '../recipe.model';
 import * as RecipesActions from './recipes.actions';
-import * as fromApp from '../../store/app.store';
+import * as fromApp from '../../state/app.store';
 
 @Injectable()
 export class RecipesEffects {

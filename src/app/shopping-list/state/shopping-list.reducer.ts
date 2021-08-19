@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Ingredient } from '../../shared/ingredient.model';
+import { Ingredient } from '../../shared/domain/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
 
 export interface State {
