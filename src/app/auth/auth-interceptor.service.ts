@@ -23,6 +23,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return this.store.pipe(
       select(selectAuthUser),
+      take(1),
       exhaustMap((user) => {
         if (!user) {
           return next.handle(req);
@@ -31,8 +32,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           params: new HttpParams().set('auth', user.token),
         });
         return next.handle(modifiedReq);
-      }),
-      take(1)
+      })
     );
   }
 }
