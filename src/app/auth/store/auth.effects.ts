@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 
 import { User } from '../user.model';
 import * as AuthActions from './auth.actions';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 export interface AuthResponseData {
   idToken: string;

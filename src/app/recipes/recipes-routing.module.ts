@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../auth/auth.guard';
+import { AuthGuard } from '../core/guards/auth.guard';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
-import { RecipesResolverService } from './recipes-resolver.service';
+import { RecipesResolver } from '../core/resolvers/recipes.resolver';
 import { RecipesComponent } from './recipes.component';
 
 const routes: Routes = [
@@ -17,22 +17,22 @@ const routes: Routes = [
       {
         path: '',
         component: RecipeStartComponent,
-        resolve: [RecipesResolverService],
+        resolve: [RecipesResolver],
       },
       {
         path: 'new',
         component: RecipeEditComponent,
-        resolve: [RecipesResolverService],
+        resolve: [RecipesResolver],
       },
       {
         path: ':id',
         component: RecipeDetailComponent,
-        resolve: [RecipesResolverService],
+        resolve: [RecipesResolver],
       },
       {
         path: ':id/edit',
         component: RecipeEditComponent,
-        resolve: [RecipesResolverService],
+        resolve: [RecipesResolver],
       },
     ],
   },
