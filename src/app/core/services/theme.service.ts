@@ -12,7 +12,7 @@ export enum AppThemes {
 })
 export class ThemeService {
   private renderer: Renderer2;
-  private _currentTheme: AppThemes = AppThemes.dark;
+  private _currentTheme: AppThemes = AppThemes.light;
 
   private _currentThemeSub = new BehaviorSubject<string>(this._currentTheme);
 
