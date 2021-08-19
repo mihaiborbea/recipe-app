@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AlertComponent } from './alert/alert.component';
-import { DropdownDirective } from './dropdown.directive';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { PlaceholderDirective } from './placeholder/placeholder.directive';
+import { AlertComponent } from './components/alert/alert.component';
+import { DropdownDirective } from './directives/dropdown.directive';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { PlaceholderDirective } from './directives/placeholder.directive';
 import { MaterialModule } from './material.module';
-import { TruncatePipe } from './truncate.pipe';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -19,10 +19,10 @@ import { TruncatePipe } from './truncate.pipe';
   imports: [MaterialModule, CommonModule],
   exports: [
     CommonModule,
+    MaterialModule,
     AlertComponent,
     LoadingSpinnerComponent,
     PlaceholderDirective,
-    MaterialModule,
     DropdownDirective,
     TruncatePipe,
   ],

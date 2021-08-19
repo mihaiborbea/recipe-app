@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../shared/domain/ingredient.model';
 import * as ShoppingListActions from './store/shopping-list.actions';
 import * as fromApp from '../store/app.store';
 
