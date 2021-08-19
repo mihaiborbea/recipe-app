@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core.module';
+import { CoreModule } from './core/core.module';
 import * as fromApp from './store/app.store';
 import { AuthEffects } from './auth/store/auth.effects';
 import { RecipesEffects } from './recipes/store/recipes.effects';

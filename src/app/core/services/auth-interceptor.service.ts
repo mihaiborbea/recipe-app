@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 import { exhaustMap, map, take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 
-import * as fromApp from '../store/app.store';
-import { selectAuthUser } from './store/auth.selectors';
+import * as fromApp from '../../store/app.store';
+import { selectAuthUser } from '../../auth/store/auth.selectors';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
