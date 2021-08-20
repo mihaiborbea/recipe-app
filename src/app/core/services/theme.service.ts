@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { UserSettingsService } from './user-settings.service';
 
 export enum AppThemes {
   light = 'light-theme',
@@ -12,31 +13,37 @@ export enum AppThemes {
 })
 export class ThemeService {
   private renderer: Renderer2;
-  private _currentTheme: AppThemes = AppThemes.light;
-
-  private _currentThemeSub = new BehaviorSubject<string>(this._currentTheme);
+  private _currentThemeSub: BehaviorSubject<AppThemes>;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private rendererFactory: RendererFactory2
+    private rendererFactory: RendererFactory2,
+    private userSettingsService: UserSettingsService
   ) {
     this.renderer = this.rendererFactory.createRenderer(null, null);
-    this.renderer.addClass(this.document.body, this._currentTheme);
+    this._currentThemeSub = new BehaviorSubject<AppThemes>(
+      this.userSettingsService.getItem('appTheme')
+    );
+
+    this._currentThemeSub.subscribe((theme) => {
+      this.userSettingsService.item = { appTheme: theme as AppThemes };
+      if (theme === AppThemes.dark) {
+        this.renderer.addClass(this.document.body, AppThemes.dark);
+      } else {
+        this.renderer.removeClass(this.document.body, AppThemes.dark);
+      }
+    });
   }
 
   toggleTheme(): void {
-    if (this._currentTheme === AppThemes.light) {
-      this._currentTheme = AppThemes.dark;
+    if (this._currentThemeSub.getValue() === AppThemes.light) {
       this._currentThemeSub.next(AppThemes.dark);
-      this.renderer.addClass(this.document.body, AppThemes.dark);
     } else {
-      this._currentTheme = AppThemes.light;
       this._currentThemeSub.next(AppThemes.light);
-      this.renderer.removeClass(this.document.body, AppThemes.dark);
     }
   }
 
-  get currentTheme(): Observable<string> {
+  get currentTheme$(): Observable<string> {
     return this._currentThemeSub.asObservable();
   }
 }
