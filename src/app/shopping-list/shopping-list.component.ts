@@ -18,7 +18,8 @@ import { takeUntil } from 'rxjs/operators';
 export class ShoppingListComponent implements OnInit, OnDestroy {
   @ViewChild('list') selectionList;
   shoppingList$ = this.store.select(selectShoppingList);
-  destroy$ = new Subject<void>();
+
+  private destroy$ = new Subject<void>();
 
   constructor(private store: Store<fromApp.AppState>) {}
 

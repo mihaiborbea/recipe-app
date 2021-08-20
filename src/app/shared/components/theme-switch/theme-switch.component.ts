@@ -9,8 +9,9 @@ import { AppThemes, ThemeService } from '../../../core/services/theme.service';
   styleUrls: ['./theme-switch.component.scss'],
 })
 export class ThemeSwitchComponent implements OnInit, OnDestroy {
-  private sub: Subscription;
   isDarkTheme;
+
+  private sub: Subscription;
 
   constructor(private themeService: ThemeService) {}
 
