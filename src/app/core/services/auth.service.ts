@@ -27,4 +27,22 @@ export class AuthService {
   authenticatedUser() {
     return authState(this.auth);
   }
+
+  getAuthenticatedUser(): User {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return null;
+    }
+    return new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+  }
 }

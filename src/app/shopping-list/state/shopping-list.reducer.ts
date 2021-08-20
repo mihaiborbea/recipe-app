@@ -1,14 +1,18 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
 import { Ingredient } from '../../shared/domain/ingredient.model';
+import { ShoppingList } from '../domain/shopping-list.model';
 import * as ShoppingListActions from './shopping-list.actions';
 
 export interface State {
+  shoppingList: ShoppingList;
   ingredients: Ingredient[];
   editIndex: number;
 }
 
 const initialState: State = {
-  ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatoes', 10)],
+  shoppingList: null,
+  ingredients: [],
   editIndex: -1,
 };
 
