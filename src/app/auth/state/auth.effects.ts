@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
-import { User } from '../user.model';
+import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../core/services/auth.service';
 import { EnvironmentService } from 'src/app/core/services/environment-service.service';
