@@ -37,6 +37,20 @@
         name="password"
         required
         minlength="6"
+        #passwordControl="ngModel"
+      />
+    </mat-form-field>
+    <mat-form-field fxFlexFill *ngIf="!isLoginMode">
+      <mat-label for="confirmPassword">Confirm password</mat-label>
+      <input
+        matInput
+        type="password"
+        id="confirmPassword"
+        ngModel
+        name="confirmPassword"
+        [appMustMatch]="passwordControl.control"
+        required
+        minlength="6"
       />
     </mat-form-field>
     <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
@@ -57,7 +71,7 @@
         type="button"
         (click)="onSwitchMode()"
       >
-        {{ isLoginMode ? "Switch to Sign up" : "Switch to Login" }}
+        {{ isLoginMode ? "Create an Account" : "Go to Login" }}
       </button>
     </div>
   </form>
