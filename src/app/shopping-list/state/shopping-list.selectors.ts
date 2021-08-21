@@ -16,9 +16,3 @@ export const selectEditIndex = createSelector(
   selectShpListState,
   (state: selectShpListState) => state.editIndex
 );
-
-export const selectShpListWithEditIndex = createSelector(
-  selectShoppingList,
-  selectEditIndex,
-  (shoppingList, editIndex) => ({ shoppingList, editIndex })
-);

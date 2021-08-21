@@ -2,14 +2,14 @@ import { Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Subject, Subscription } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 
 import { Ingredient } from 'src/app/shared/domain/ingredient.model';
 import * as ShoppingListActions from '../state/shopping-list.actions';
 import * as fromApp from '../../state/app.store';
 import {
   selectEditIndex,
-  selectShpListWithEditIndex,
+  selectShoppingList,
 } from '../state/shopping-list.selectors';
 import { takeUntil } from 'rxjs/operators';
 
@@ -28,14 +28,16 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.store
-      .select(selectShpListWithEditIndex)
+    combineLatest([
+      this.store.select(selectEditIndex),
+      this.store.select(selectShoppingList),
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe((stateData) => {
-        const index = stateData.editIndex;
+      .subscribe(([editIndex, shoppingList]) => {
+        const index = editIndex;
         if (index > -1) {
           this.editMode = true;
-          this.editedItem = stateData.shoppingList.ingredients[index];
+          this.editedItem = shoppingList.ingredients[index];
           this.form.setValue({
             name: this.editedItem.name,
             amount: this.editedItem.amount,

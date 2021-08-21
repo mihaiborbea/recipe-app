@@ -8,6 +8,7 @@ import { Recipe } from '../recipe.model';
 import * as RecipesActions from './recipes.actions';
 import * as fromApp from '../../state/app.store';
 
+// TODO: fix set recipes right after fetch recipes
 @Injectable()
 export class RecipesEffects {
   fetchRecipes$ = createEffect(() =>
