@@ -67,7 +67,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.form.resetForm();
     this.editMode = false;
-    this.store.dispatch(ShoppingListActions.stopEdit());
+    this.store.dispatch(ShoppingListActions.stopEditIngredient());
   }
 
   onDelete() {
@@ -77,6 +77,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    this.store.dispatch(ShoppingListActions.stopEdit());
+    this.store.dispatch(ShoppingListActions.stopEditIngredient());
   }
 }
