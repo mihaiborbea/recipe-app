@@ -6,6 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { LayoutModule } from './layout/layout.module';
       logOnly: environment.production,
       autoPause: true,
     }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     CoreModule,
     LayoutModule,
     SharedModule,

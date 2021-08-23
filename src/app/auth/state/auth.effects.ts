@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
