@@ -12,6 +12,7 @@ import {
   getAuth,
   browserLocalPersistence,
 } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { AuthEffects } from './auth/state/auth.effects';
 import { RecipesEffects } from './recipes/state/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
+import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
+import { metaReducers } from './state/meta.reducers';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,8 +34,10 @@ import { LayoutModule } from './layout/layout.module';
     HttpClientModule,
     AppRoutingModule,
     OverlayModule,
-    StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects, RecipesEffects]),
+    StoreModule.forRoot(fromApp.appReducer, {
+      metaReducers: metaReducers,
+    }),
+    EffectsModule.forRoot([AuthEffects, RecipesEffects, ShoppingListEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -44,6 +49,7 @@ import { LayoutModule } from './layout/layout.module';
       auth.setPersistence(browserLocalPersistence);
       return auth;
     }),
+    provideFirestore(() => getFirestore()),
     CoreModule,
     LayoutModule,
     SharedModule,

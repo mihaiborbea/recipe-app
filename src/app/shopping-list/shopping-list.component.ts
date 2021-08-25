@@ -1,36 +1,46 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { Ingredient } from '../shared/domain/ingredient.model';
 import * as ShoppingListActions from './state/shopping-list.actions';
 import * as fromApp from '../state/app.store';
+import {
+  selectEditIndex,
+  selectShoppingList,
+} from './state/shopping-list.selectors';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss'],
 })
-export class ShoppingListComponent implements OnInit, AfterViewInit {
+export class ShoppingListComponent implements OnInit, OnDestroy {
   @ViewChild('list') selectionList;
-  ingredients: Observable<{ ingredients: Ingredient[] }>;
-  storeSub: Subscription;
+  shoppingList$ = this.store.select(selectShoppingList);
+
+  private destroy$ = new Subject<void>();
 
   constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.ingredients = this.store.select('shoppingList');
-  }
-
-  ngAfterViewInit(): void {
-    this.storeSub = this.store.select('shoppingList').subscribe((stateData) => {
-      if (stateData.editIndex === -1) {
-        this.selectionList.deselectAll();
-      }
-    });
+    this.store
+      .select(selectEditIndex)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((editIndex) => {
+        if (editIndex === -1 && this.selectionList) {
+          this.selectionList.deselectAll();
+        }
+      });
   }
 
   onEditItem(index: number) {
-    this.store.dispatch(ShoppingListActions.startEdit({ index }));
+    this.store.dispatch(
+      ShoppingListActions.startEditIngredient({ ingredientIndex: index })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 }
