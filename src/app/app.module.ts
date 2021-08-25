@@ -28,6 +28,7 @@ import { RecipesEffects } from './recipes/state/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
+import { metaReducers } from './state/meta.reducers';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,9 @@ import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects
     HttpClientModule,
     AppRoutingModule,
     OverlayModule,
-    StoreModule.forRoot(fromApp.appReducer, { metaReducers: [] }),
+    StoreModule.forRoot(fromApp.appReducer, {
+      metaReducers: metaReducers,
+    }),
     EffectsModule.forRoot([AuthEffects, RecipesEffects, ShoppingListEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
