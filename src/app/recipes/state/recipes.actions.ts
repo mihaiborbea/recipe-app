@@ -19,7 +19,6 @@ export const addRecipe = createAction(
 export const updateRecipe = createAction(
   UPDATE_RECIPE,
   props<{
-    index: number;
     recipe: Recipe;
   }>()
 );
@@ -27,7 +26,7 @@ export const updateRecipe = createAction(
 export const deleteRecipe = createAction(
   DELETE_RECIPE,
   props<{
-    index: number;
+    recipe: Recipe;
   }>()
 );
 

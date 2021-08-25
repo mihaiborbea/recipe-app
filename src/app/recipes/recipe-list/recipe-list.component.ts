@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { Recipe } from '../domain/recipe.model';
 import * as fromApp from '../../state/app.store';
+import { selectRecipes } from '../state/recipes.selectors';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,8 +14,9 @@ import * as fromApp from '../../state/app.store';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  subs: Subscription;
   recipes: Recipe[];
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +25,9 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subs = this.store
-      .select('recipes')
-      .pipe(map((recipesState) => recipesState.recipes))
+    this.store
+      .select(selectRecipes)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;
       });
@@ -36,6 +38,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.unsubscribe();
+    this.destroy$.next();
   }
 }

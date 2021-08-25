@@ -22,10 +22,14 @@ export class RecipesEffects {
       map((recipes) => {
         if (recipes && recipes.length) {
           return recipes.map((recipe) => {
-            return {
-              ingredients: [], // to ensure 'ingredients' prop on recipes without one
-              ...recipe,
-            };
+            return new Recipe(
+              recipe.id,
+              recipe.name,
+              recipe.description,
+              recipe.imagePath,
+              recipe.ingredients || [],
+              recipe.userId
+            );
           });
         } else {
           return [];
