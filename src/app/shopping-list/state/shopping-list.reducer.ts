@@ -14,7 +14,7 @@ const initialState: State = {
   editIndex: -1,
 };
 
-const _shoppingListReducer = createReducer(
+export const shoppingListReducer = createReducer(
   initialState,
 
   on(ShoppingListActions.setShoppingList, (state, action) => ({
@@ -23,24 +23,23 @@ const _shoppingListReducer = createReducer(
   })),
 
   on(ShoppingListActions.addIngredient, (state, action) => {
-    const newState = cloneDeep(state);
-    newState.shoppingList.ingredients.concat(action.ingredient);
+    const newState: State = cloneDeep(state);
+    newState.shoppingList.ingredients.push(action.ingredient);
     return newState;
   }),
 
   on(ShoppingListActions.addIngredients, (state, action) => {
     const newState = cloneDeep(state);
-    newState.shoppingList.ingredients = state.shoppingList.ingredients.concat(
-      ...action.ingredients
-    );
+    newState.shoppingList.ingredients.push(...action.ingredients);
     return newState;
   }),
 
   on(ShoppingListActions.updateIngredient, (state, action) => {
     const newState = cloneDeep(state);
     newState.editIndex = -1;
-    newState.shoppingList.ingredients.map((ingredient, index) =>
-      index === state.editIndex ? { ...action.ingredient } : ingredient
+    newState.shoppingList.ingredients = state.shoppingList.ingredients.map(
+      (ingredient, index) =>
+        index === state.editIndex ? { ...action.ingredient } : ingredient
     );
     return newState;
   }),
@@ -48,7 +47,7 @@ const _shoppingListReducer = createReducer(
   on(ShoppingListActions.deleteIngredient, (state) => {
     const newState = cloneDeep(state);
     newState.editIndex = -1;
-    newState.shoppingList.ingredients.filter(
+    newState.shoppingList.ingredients = state.shoppingList.ingredients.filter(
       (_, index) => index !== state.editIndex
     );
     return newState;
@@ -64,7 +63,3 @@ const _shoppingListReducer = createReducer(
     editIndex: -1,
   }))
 );
-
-export function shoppingListReducer(state: State, action: Action) {
-  return _shoppingListReducer(state, action);
-}

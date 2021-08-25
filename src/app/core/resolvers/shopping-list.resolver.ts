@@ -7,7 +7,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import { ShoppingList } from 'src/app/shopping-list/domain/shopping-list.model';
 import * as fromApp from '../../state/app.store';

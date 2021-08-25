@@ -12,6 +12,11 @@ import {
   getAuth,
   browserLocalPersistence,
 } from '@angular/fire/auth';
+import {
+  provideFirestore,
+  getFirestore,
+  enableIndexedDbPersistence,
+} from '@angular/fire/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,7 +37,7 @@ import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects
     HttpClientModule,
     AppRoutingModule,
     OverlayModule,
-    StoreModule.forRoot(fromApp.appReducer),
+    StoreModule.forRoot(fromApp.appReducer, { metaReducers: [] }),
     EffectsModule.forRoot([AuthEffects, RecipesEffects, ShoppingListEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -45,6 +50,7 @@ import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects
       auth.setPersistence(browserLocalPersistence);
       return auth;
     }),
+    provideFirestore(() => getFirestore()),
     CoreModule,
     LayoutModule,
     SharedModule,
