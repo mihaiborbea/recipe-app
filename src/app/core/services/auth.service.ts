@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-
-import * as fromApp from '../../state/app.store';
-import * as AuthActions from '../../auth/state/auth.actions';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  authState,
+} from '@angular/fire/auth';
+import { UserCredential } from '@firebase/auth';
+import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private tokenExpirationTimer: any;
+  constructor(private auth: Auth) {}
 
-  constructor(private store: Store<fromApp.AppState>) {}
-
-  setLogoutTimer(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(
-      () => this.store.dispatch(AuthActions.logout()),
-      expirationDuration
-    );
+  signUp(email: string, password: string): Observable<UserCredential> {
+    return from(createUserWithEmailAndPassword(this.auth, email, password));
   }
 
-  clearLogoutTimer() {
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-      this.tokenExpirationTimer = null;
-    }
+  signIn(email: string, password: string): Observable<UserCredential> {
+    return from(signInWithEmailAndPassword(this.auth, email, password));
+  }
+
+  signOut(): Observable<void> {
+    return from(this.auth.signOut());
+  }
+
+  authenticatedUser() {
+    return authState(this.auth);
   }
 }

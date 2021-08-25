@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { exhaustMap, map, take } from 'rxjs/operators';
+import { exhaustMap, take } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 
 import * as fromApp from '../../state/app.store';

@@ -13,11 +13,11 @@ export class EnvironmentService implements IEnvironment {
     return environment.production;
   }
 
-  get firebaseAPIKey() {
-    return environment.firebaseAPIKey;
+  get firebaseConfig() {
+    return environment.firebaseConfig;
   }
 
-  get apiUrl() {
-    return environment.apiUrl;
+  get firebaseAPIKey() {
+    return environment.firebaseConfig.apiKey;
   }
 }

@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
+import { User } from '../domain/user.model';
+
 export const LOGIN_START = '[Auth] Login Start';
 export const SIGNUP_START = '[Auth] Signup Start';
 export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
@@ -27,10 +29,7 @@ export const signupStart = createAction(
 export const authenticateSuccess = createAction(
   AUTHENTICATE_SUCCESS,
   props<{
-    email: string;
-    userId: string;
-    token: string;
-    expirationDate: Date;
+    user: User;
     redirect: boolean;
   }>()
 );
