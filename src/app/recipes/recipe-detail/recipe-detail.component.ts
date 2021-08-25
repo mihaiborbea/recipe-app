@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { Recipe } from '../domain/recipe.model';
 import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
 import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
+import { selectRecipes } from '../state/recipes.selectors';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.scss'],
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   id: number;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,18 +30,23 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params
       .pipe(
+        takeUntil(this.destroy$),
         map((params) => +params['id']),
         switchMap((id) => {
           this.id = id;
-          return this.store.select('recipes');
+          return this.store.select(selectRecipes);
         }),
-        map((recipesState) => {
-          return recipesState.recipes.find((_, index) => index === this.id);
+        map((recipes) => {
+          return recipes.find((_, index) => index === this.id);
         })
       )
       .subscribe((recipe) => {
         this.recipe = recipe;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 
   onAddToShoppingList() {

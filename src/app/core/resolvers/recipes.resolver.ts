@@ -7,11 +7,12 @@ import {
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import { Recipe } from '../../recipes/domain/recipe.model';
 import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../../recipes/state/recipes.actions';
+import { selectRecipes } from 'src/app/recipes/state/recipes.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesResolver implements Resolve<{ recipes: Recipe[] }> {
@@ -27,9 +28,8 @@ export class RecipesResolver implements Resolve<{ recipes: Recipe[] }> {
     | { recipes: Recipe[] }
     | Observable<{ recipes: Recipe[] }>
     | Promise<{ recipes: Recipe[] }> {
-    return this.store.select('recipes').pipe(
+    return this.store.select(selectRecipes).pipe(
       take(1),
-      map((recipesState) => recipesState.recipes),
       switchMap((recipes) => {
         if (recipes.length === 0) {
           this.store.dispatch(RecipesActions.fetchRecipes());
