@@ -4,7 +4,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from './recipes.actions';
 import * as fromApp from '../../state/app.store';
 

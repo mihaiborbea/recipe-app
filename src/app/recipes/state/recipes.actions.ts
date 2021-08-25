@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../domain/recipe.model';
 
 export const SET_RECIPES = '[Recipes] Set Recipes';
 export const FETCH_RECIPES = '[Recipes] Fetch Recipes';

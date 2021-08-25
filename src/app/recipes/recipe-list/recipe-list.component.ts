@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../domain/recipe.model';
 import * as fromApp from '../../state/app.store';
 
 @Component({

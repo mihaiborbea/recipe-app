@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../domain/recipe.model';
 
 import * as RecipesActions from './recipes.actions';
 

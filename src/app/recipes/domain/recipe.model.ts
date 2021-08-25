@@ -1,4 +1,4 @@
-import { Ingredient } from '../shared/domain/ingredient.model';
+import { Ingredient } from '../../shared/domain/ingredient.model';
 
 export class Recipe {
   public name: string;

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, switchMap } from 'rxjs/operators';
 
-import { Recipe } from '../recipe.model';
+import { Recipe } from '../domain/recipe.model';
 import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
 import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
