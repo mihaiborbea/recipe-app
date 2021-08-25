@@ -12,11 +12,7 @@
 </div>
 <div fxLayout="row">
   <div fxLayout="column" fxFlexFill>
-    <app-recipe-item
-      *ngFor="let recipeItem of recipes; let i = index"
-      [recipe]="recipeItem"
-      [index]="i"
-    >
+    <app-recipe-item *ngFor="let recipeItem of recipes" [recipe]="recipeItem">
     </app-recipe-item>
   </div>
 </div>

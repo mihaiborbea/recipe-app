@@ -45,6 +45,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
+  // TODO: fix for when use never visited shopping-list
   onAddToShoppingList() {
     this.store.dispatch(
       ShoppingListActions.addIngredients({
