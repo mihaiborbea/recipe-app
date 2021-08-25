@@ -24,16 +24,16 @@ export const authReducer = createReducer(
     loading: true,
   })),
 
+  on(AuthActions.autoLogin, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
   on(AuthActions.authenticateSuccess, (state, action) => ({
     ...state,
     error: null,
     loading: false,
-    user: new User(
-      action.email,
-      action.userId,
-      action.token,
-      action.expirationDate
-    ),
+    user: action.user,
   })),
 
   on(AuthActions.authenticateFail, (state, action) => ({

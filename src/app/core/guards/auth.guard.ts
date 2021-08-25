@@ -7,10 +7,14 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../state/app.store';
+import {
+  selectAuthLoading,
+  selectAuthUser,
+} from '../../auth/state/auth.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -23,10 +27,10 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.store.select('auth').pipe(
-      take(1),
-      map((authState) => authState.user),
-      map((user) => {
+    return this.store.select(selectAuthLoading).pipe(
+      filter((isLoading) => !isLoading),
+      withLatestFrom(this.store.select(selectAuthUser)),
+      map(([_, user]) => {
         const isAuth = !!user;
         if (isAuth) {
           return true;
