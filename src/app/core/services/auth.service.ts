@@ -5,17 +5,15 @@ import {
   createUserWithEmailAndPassword,
   authState,
 } from '@angular/fire/auth';
-import { doc, Firestore } from '@angular/fire/firestore';
 import { UserCredential } from '@firebase/auth';
-import { setDoc } from 'firebase/firestore';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth) {}
 
   signUp(email: string, password: string): Observable<UserCredential> {
-    return from(this.createNewUser(email, password));
+    return from(createUserWithEmailAndPassword(this.auth, email, password));
   }
 
   signIn(email: string, password: string): Observable<UserCredential> {
@@ -28,28 +26,5 @@ export class AuthService {
 
   authenticatedUser() {
     return authState(this.auth);
-  }
-
-  private async createNewUser(
-    email: string,
-    password: string
-  ): Promise<UserCredential> {
-    const authRes = await createUserWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    );
-    await this.createNewUserDocument(authRes);
-    return authRes;
-  }
-
-  private async createNewUserDocument(userData: UserCredential): Promise<void> {
-    const docRef = doc(this.firestore, 'user-data', userData.user.uid);
-    const newUserDoc = {
-      userId: userData.user.uid,
-      recipes: [],
-      shoppingList: [],
-    };
-    await setDoc(docRef, newUserDoc);
   }
 }

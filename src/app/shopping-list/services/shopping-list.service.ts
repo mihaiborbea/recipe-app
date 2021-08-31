@@ -3,14 +3,14 @@ import {
   Firestore,
   collection,
   getDocs,
-  query,
-  where,
-  addDoc,
-  setDoc,
   doc,
+  setDoc,
 } from '@angular/fire/firestore';
 
-import { ShoppingList } from '../domain/shopping-list.model';
+import {
+  ShoppingList,
+  shoppingListConverter,
+} from '../domain/shopping-list.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,37 +19,37 @@ export class ShoppingListService {
   constructor(private firestore: Firestore) {}
 
   async getShoppingList(userId: string): Promise<ShoppingList> {
-    const q = query(
-      collection(this.firestore, 'shopping-lists'),
-      where('userId', '==', userId)
-    );
-    const docs = (await getDocs(q)).docs;
+    const docs = (
+      await getDocs(
+        collection(
+          this.firestore,
+          `user-data/${userId}/shoppingList`
+        ).withConverter(shoppingListConverter)
+      )
+    ).docs;
     if (docs && docs.length) {
-      return new ShoppingList(
-        docs[0].id,
-        docs[0].data()['userId'],
-        docs[0].data()['ingredients']
-      );
+      console.log(docs[0].data());
+      return docs[0].data();
     } else {
-      // create a shopping list if the user does not have one
-      const docRef = await addDoc(
-        collection(this.firestore, 'shopping-lists'),
-        {
-          userId: userId,
-          ingredients: [],
-        }
+      const docRef = doc(
+        collection(this.firestore, `user-data/${userId}/shoppingList`)
       );
-      return new ShoppingList(docRef.id, userId, []);
+      return new ShoppingList(docRef.id);
     }
   }
 
-  async storeUserShoppingList(shoppingList: ShoppingList): Promise<void> {
-    await setDoc(doc(this.firestore, 'shopping-lists', shoppingList.id), {
-      ingredients: shoppingList.ingredients.map((i) => ({
-        name: i.name,
-        amount: i.amount,
-      })),
-      userId: shoppingList.userId,
-    });
+  async storeUserShoppingList(
+    shoppingList: ShoppingList,
+    userId: string
+  ): Promise<void> {
+    await setDoc(
+      doc(
+        this.firestore,
+        `user-data/${userId}/shoppingList`,
+        shoppingList.id
+      ).withConverter(shoppingListConverter),
+      shoppingList
+    );
+    // }
   }
 }
