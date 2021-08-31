@@ -23,7 +23,7 @@ export class ShoppingListService {
       await getDocs(
         collection(
           this.firestore,
-          `user-data/${userId}/shoppingList`
+          `userData/${userId}/shoppingList`
         ).withConverter(shoppingListConverter)
       )
     ).docs;
@@ -32,7 +32,7 @@ export class ShoppingListService {
       return docs[0].data();
     } else {
       const docRef = doc(
-        collection(this.firestore, `user-data/${userId}/shoppingList`)
+        collection(this.firestore, `userData/${userId}/shoppingList`)
       );
       return new ShoppingList(docRef.id);
     }
@@ -45,7 +45,7 @@ export class ShoppingListService {
     await setDoc(
       doc(
         this.firestore,
-        `user-data/${userId}/shoppingList`,
+        `userData/${userId}/shoppingList`,
         shoppingList.id
       ).withConverter(shoppingListConverter),
       shoppingList
