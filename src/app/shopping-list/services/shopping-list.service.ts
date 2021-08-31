@@ -28,7 +28,6 @@ export class ShoppingListService {
       )
     ).docs;
     if (docs && docs.length) {
-      console.log(docs[0].data());
       return docs[0].data();
     } else {
       const docRef = doc(

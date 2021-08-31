@@ -7,35 +7,21 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from './recipes.actions';
 import * as fromApp from '../../state/app.store';
+import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
+import { RecipesService } from '../services/recipes.service';
 
-// TODO: fix set recipes right after fetch recipes
 @Injectable()
 export class RecipesEffects {
   fetchRecipes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(RecipesActions.fetchRecipes),
-      switchMap(() => {
-        return this.http.get<Recipe[]>(
-          'https://recipe-app-8ac24-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
-        );
+      withLatestFrom(this.store.select(selectAuthUser)),
+      switchMap(([_, user]) => {
+        return this.recipesService.getUserRecipes(user.id);
       }),
-      map((recipes) => {
-        if (recipes && recipes.length) {
-          return recipes.map((recipe) => {
-            return new Recipe(
-              recipe.id,
-              recipe.name,
-              recipe.description,
-              recipe.imagePath,
-              recipe.ingredients || [],
-              recipe.userId
-            );
-          });
-        } else {
-          return [];
-        }
-      }),
-      map((recipes) => RecipesActions.setRecipes({ recipes }))
+      map((recipes: Recipe[]) => {
+        return RecipesActions.setRecipes({ recipes });
+      })
     )
   );
 
@@ -57,6 +43,7 @@ export class RecipesEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private recipesService: RecipesService
   ) {}
 }

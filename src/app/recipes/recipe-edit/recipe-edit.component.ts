@@ -2,14 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
 import { selectRecipes } from '../state/recipes.selectors';
 import { Recipe } from '../domain/recipe.model';
-import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -69,28 +68,19 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
         this.recipeForm.get('imagePath').value,
-        this.recipeForm.get('ingredients').value,
-        this.recipe.userId
+        this.recipeForm.get('ingredients').value
       );
       this.store.dispatch(
         RecipesActions.updateRecipe({ recipe: editedRecipe })
       );
       this.store.dispatch(RecipesActions.storeRecipes());
     } else {
-      let userId;
-      this.store
-        .select(selectAuthUser)
-        .pipe(take(1))
-        .subscribe((user) => {
-          userId = user.id;
-        });
       const newRecipe = new Recipe(
         'dummy',
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
         this.recipeForm.get('imagePath').value,
-        this.recipeForm.get('ingredients').value,
-        userId
+        this.recipeForm.get('ingredients').value
       );
       this.store.dispatch(RecipesActions.addRecipe({ recipe: newRecipe }));
       this.store.dispatch(RecipesActions.storeRecipes());

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, concatMap, switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { UserCredential } from '@firebase/auth';
 
 import { User } from '../domain/user.model';
@@ -42,7 +42,7 @@ export class AuthEffects {
       ofType(AuthActions.loginStart),
       switchMap((action) => {
         return this.authService.signIn(action.email, action.password).pipe(
-          concatMap((resData) => {
+          switchMap((resData) => {
             return handleAuthentication(resData);
           }),
           catchError((errorRes) => {
@@ -58,7 +58,7 @@ export class AuthEffects {
       ofType(AuthActions.signupStart),
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
-          concatMap((resData) => {
+          switchMap((resData) => {
             return handleAuthentication(resData);
           }),
           catchError((errorRes) => {
@@ -84,7 +84,7 @@ export class AuthEffects {
       switchMap(() => {
         return this.authService.authenticatedUser();
       }),
-      concatMap(async (authData) => {
+      switchMap(async (authData) => {
         if (!authData) {
           return AuthActions.authenticateFail({ errorMessage: null });
         }
