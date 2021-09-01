@@ -10,24 +10,25 @@
 </div>
 <div fxLayout="row">
   <div fxLayout="column">
-    <!-- TODO: replace with mat-menu -->
-    <div class="dropdown" appDropdown>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        class="dropdown-toggle"
-      >
-        Manage Recipe <mat-icon>expand_more</mat-icon>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [matMenuTriggerFor]="recipeMenu"
+    >
+      Manage Recipe <mat-icon>expand_more</mat-icon>
+    </button>
+    <mat-menu #recipeMenu="matMenu">
+      <button mat-menu-item (click)="onAddToShoppingList()">
+        <span>To Shopping List</span>
       </button>
-      <mat-action-list class="dropdown-content">
-        <button mat-list-item (click)="onAddToShoppingList()">
-          To Shopping List
-        </button>
-        <button mat-list-item (click)="onEditRecipe()">Edit Recipe</button>
-        <button mat-list-item (click)="onDeleteRecipe()">Delete Recipe</button>
-      </mat-action-list>
-    </div>
+      <button mat-menu-item (click)="onEditRecipe()">
+        <span>Edit Recipe</span>
+      </button>
+      <button mat-menu-item (click)="onDeleteRecipe()">
+        <span>Delete Recipe</span>
+      </button>
+    </mat-menu>
   </div>
 </div>
 <br />

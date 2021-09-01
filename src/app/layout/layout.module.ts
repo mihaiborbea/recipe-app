@@ -4,15 +4,11 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { LoadingBarComponent } from './loading-bar/loading-bar.component';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidenavListComponent,
-    LoadingSpinnerComponent,
-  ],
+  declarations: [HeaderComponent, SidenavListComponent, LoadingBarComponent],
   imports: [SharedModule, RouterModule],
-  exports: [HeaderComponent, SidenavListComponent, LoadingSpinnerComponent],
+  exports: [HeaderComponent, SidenavListComponent, LoadingBarComponent],
 })
 export class LayoutModule {}

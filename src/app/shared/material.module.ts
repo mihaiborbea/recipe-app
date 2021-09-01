@@ -11,6 +11,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const materialComponents = [
   MatToolbarModule,
@@ -24,6 +26,8 @@ const materialComponents = [
   MatCardModule,
   MatSlideToggleModule,
   MatProgressBarModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({

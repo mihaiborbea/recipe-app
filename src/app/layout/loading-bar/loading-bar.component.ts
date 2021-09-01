@@ -12,11 +12,11 @@ import { AppState } from 'src/app/state/app.store';
 import { selectSharedLoading } from 'src/app/shared/state/shared.selector';
 
 @Component({
-  selector: 'app-loading',
-  templateUrl: './loading-spinner.component.html',
-  styleUrls: ['./loading-spinner.component.scss'],
+  selector: 'app-loading-bar',
+  templateUrl: './loading-bar.component.html',
+  styleUrls: ['./loading-bar.component.scss'],
 })
-export class LoadingSpinnerComponent implements AfterViewInit, OnDestroy {
+export class LoadingBarComponent implements AfterViewInit, OnDestroy {
   private loadingSubscription: Subscription;
 
   constructor(
