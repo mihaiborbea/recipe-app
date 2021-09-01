@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from './recipes.actions';
 import * as fromApp from '../../state/app.store';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { RecipesService } from '../services/recipes.service';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 @Injectable()
 export class RecipesEffects {
@@ -18,8 +19,11 @@ export class RecipesEffects {
       switchMap(([_, user]) => {
         return this.recipesService.getUserRecipes(user.id);
       }),
-      map((recipes: Recipe[]) => {
-        return RecipesActions.setRecipes({ recipes });
+      mergeMap((recipes: Recipe[]) => {
+        return [
+          SharedActions.setLoadingBar({ status: false }),
+          RecipesActions.setRecipes({ recipes }),
+        ];
       })
     )
   );
