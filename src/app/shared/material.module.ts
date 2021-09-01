@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const materialComponents = [
   MatToolbarModule,
@@ -22,6 +23,7 @@ const materialComponents = [
   MatDividerModule,
   MatCardModule,
   MatSlideToggleModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({

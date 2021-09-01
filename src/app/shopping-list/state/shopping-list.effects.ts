@@ -1,13 +1,14 @@
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, withLatestFrom } from 'rxjs/operators';
+import { concatMap, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 import * as ShoppingListActions from './shopping-list.actions';
 import * as fromApp from '../../state/app.store';
 import { ShoppingListService } from '../services/shopping-list.service';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { selectShoppingList } from './shopping-list.selectors';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -18,8 +19,11 @@ export class ShoppingListEffects {
       concatMap(([_, user]) => {
         return this.shoppingListService.getShoppingList(user.id);
       }),
-      map((shoppingList) => {
-        return ShoppingListActions.setShoppingList({ shoppingList });
+      mergeMap((shoppingList) => {
+        return [
+          SharedActions.setLoadingBar({ status: false }),
+          ShoppingListActions.setShoppingList({ shoppingList }),
+        ];
       })
     )
   );

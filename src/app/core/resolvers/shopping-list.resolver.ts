@@ -13,6 +13,7 @@ import { ShoppingList } from 'src/app/shopping-list/domain/shopping-list.model';
 import * as fromApp from '../../state/app.store';
 import { selectShoppingList } from 'src/app/shopping-list/state/shopping-list.selectors';
 import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
+import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListResolver
@@ -34,6 +35,7 @@ export class ShoppingListResolver
       take(1),
       switchMap((shoppingList) => {
         if (!shoppingList) {
+          this.store.dispatch(SharedActions.setLoadingBar({ status: true }));
           this.store.dispatch(ShoppingListActions.fetchShoppingList());
           return this.actions$.pipe(
             ofType(ShoppingListActions.SET_SHOPPING_LIST),
