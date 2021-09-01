@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import {
+  collection,
+  Firestore,
+  getDocs,
+  doc,
+  deleteDoc,
+} from '@angular/fire/firestore';
 
 import { Recipe, recipeConverter } from '../domain/recipe.model';
 
@@ -18,5 +24,10 @@ export class RecipesService {
       )
     ).docs;
     return docs.map((d) => d.data());
+  }
+
+  async deleteUserRecipe(recipe: Recipe, userId: string) {
+    const docRef = doc(this.firestore, `userData/${userId}/recipes`, recipe.id);
+    await deleteDoc(docRef);
   }
 }

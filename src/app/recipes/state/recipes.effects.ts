@@ -25,6 +25,20 @@ export class RecipesEffects {
     )
   );
 
+  deleteRecipe$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RecipesActions.deleteRecipe),
+        withLatestFrom(this.store.select(selectAuthUser)),
+        switchMap(([action, user]) => {
+          return this.recipesService.deleteUserRecipe(action.recipe, user.id);
+        })
+      ),
+    {
+      dispatch: false,
+    }
+  );
+
   storeRecipes$ = createEffect(
     () =>
       this.actions$.pipe(
