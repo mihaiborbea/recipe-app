@@ -16,7 +16,7 @@ const _recipesReducer = createReducer(
 
   on(RecipesActions.addRecipe, (state, action) => ({
     ...state,
-    recipes: state.recipes.concat({ ...action.recipe }),
+    recipes: [{ ...action.recipe }, ...state.recipes],
   })),
 
   on(RecipesActions.updateRecipe, (state, action) => ({

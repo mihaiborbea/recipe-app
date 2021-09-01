@@ -5,6 +5,8 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  setDoc,
+  DocumentReference,
 } from '@angular/fire/firestore';
 
 import { Recipe, recipeConverter } from '../domain/recipe.model';
@@ -26,7 +28,23 @@ export class RecipesService {
     return docs.map((d) => d.data());
   }
 
-  async deleteUserRecipe(recipe: Recipe, userId: string) {
+  async addOrUpdateUserRecipe(recipe: Partial<Recipe>, userId: string) {
+    let docRef: DocumentReference;
+    if (recipe.id) {
+      docRef = doc(
+        this.firestore,
+        `userData/${userId}/recipes`,
+        recipe.id
+      ).withConverter(recipeConverter);
+    } else {
+      docRef = doc(
+        collection(this.firestore, `userData/${userId}/recipes`)
+      ).withConverter(recipeConverter);
+    }
+    await setDoc(docRef, recipe);
+  }
+
+  async deleteUserRecipe(recipe: Recipe, userId: string): Promise<void> {
     const docRef = doc(this.firestore, `userData/${userId}/recipes`, recipe.id);
     await deleteDoc(docRef);
   }
