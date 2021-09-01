@@ -15,8 +15,8 @@ export class ShoppingListEffects {
     this.actions$.pipe(
       ofType(ShoppingListActions.fetchShoppingList),
       withLatestFrom(this.store.select(selectAuthUser)),
-      concatMap(async ([_, user]) => {
-        return await this.shoppingListService.getShoppingList(user.id);
+      concatMap(([_, user]) => {
+        return this.shoppingListService.getShoppingList(user.id);
       }),
       map((shoppingList) => {
         return ShoppingListActions.setShoppingList({ shoppingList });

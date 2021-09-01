@@ -11,12 +11,13 @@
   </div>
 </div>
 <div fxLayout="row">
-  <div fxLayout="column" fxFlexFill>
-    <app-recipe-item
-      *ngFor="let recipeItem of recipes; let i = index"
-      [recipe]="recipeItem"
-      [index]="i"
-    >
+  <div fxLayout="column" *ngIf="recipes?.length; else noRecipes" fxFlexFill>
+    <app-recipe-item *ngFor="let recipeItem of recipes" [recipe]="recipeItem">
     </app-recipe-item>
   </div>
+  <ng-template #noRecipes>
+    <div fxLayout="column" fxFlexFill>
+      <p>No recipes!</p>
+    </div>
+  </ng-template>
 </div>
