@@ -27,17 +27,19 @@ export class ShoppingListEffects {
   storeShoppingList$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ShoppingListActions.storeShoppingList),
+        ofType(
+          ShoppingListActions.storeShoppingList,
+          ShoppingListActions.addIngredient,
+          ShoppingListActions.updateIngredient,
+          ShoppingListActions.deleteIngredient
+        ),
         withLatestFrom(
           this.store.select(selectShoppingList),
           this.store.select(selectAuthUser)
         ),
-        switchMap(([_, shoppingList, user]) => {
-          return this.shoppingListService.storeUserShoppingList(
-            shoppingList,
-            user.id
-          );
-        })
+        switchMap(([_, shoppingList, user]) =>
+          this.shoppingListService.storeUserShoppingList(shoppingList, user.id)
+        )
       ),
     { dispatch: false }
   );
