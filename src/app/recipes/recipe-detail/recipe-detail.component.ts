@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
 import { Recipe } from '../domain/recipe.model';
 import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
-import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
 import { selectRecipes } from '../state/recipes.selectors';
 
 @Component({
@@ -45,11 +44,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
-  // TODO: fix for when use never visited shopping-list
   onAddToShoppingList() {
     this.store.dispatch(
-      ShoppingListActions.addIngredients({
-        ingredients: this.recipe.ingredients,
+      RecipesActions.addRecipeToShoppingList({
+        recipe: this.recipe,
       })
     );
   }

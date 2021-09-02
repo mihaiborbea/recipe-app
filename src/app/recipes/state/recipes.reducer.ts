@@ -14,7 +14,7 @@ const initialState: State = {
 const _recipesReducer = createReducer(
   initialState,
 
-  on(RecipesActions.addRecipe, (state, action) => ({
+  on(RecipesActions.createRecipe, (state, action) => ({
     ...state,
     recipes: [{ ...action.recipe }, ...state.recipes],
   })),

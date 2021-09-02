@@ -81,7 +81,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.recipeForm.get('imagePath').value,
         this.recipeForm.get('ingredients').value
       );
-      this.store.dispatch(RecipesActions.addRecipe({ recipe: newRecipe }));
+      this.store.dispatch(RecipesActions.createRecipe({ recipe: newRecipe }));
     }
     this.router.navigate(['..'], { relativeTo: this.route });
   }

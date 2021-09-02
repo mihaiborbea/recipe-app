@@ -12,7 +12,7 @@ import { RecipesService } from '../services/recipes.service';
 export class RecipesEffects {
   fetchRecipes$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(RecipesActions.fetchRecipes, RecipesActions.addRecipe),
+      ofType(RecipesActions.fetchRecipes, RecipesActions.createRecipe),
       withLatestFrom(this.store.select(selectAuthUser)),
       switchMap(([_, user]) => this.recipesService.getUserRecipes(user.id)),
       map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
@@ -22,7 +22,7 @@ export class RecipesEffects {
   storeRecipe$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(RecipesActions.updateRecipe, RecipesActions.addRecipe),
+        ofType(RecipesActions.updateRecipe, RecipesActions.createRecipe),
         withLatestFrom(this.store.select(selectAuthUser)),
         switchMap(([action, user]) => {
           return this.recipesService.addOrUpdateUserRecipe(
@@ -48,6 +48,21 @@ export class RecipesEffects {
     {
       dispatch: false,
     }
+  );
+
+  addRecipeToShoppingList$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RecipesActions.addRecipeToShoppingList),
+        withLatestFrom(this.store.select(selectAuthUser)),
+        switchMap(([action, user]) => {
+          return this.recipesService.addRecipeToUserShoppingList(
+            action.recipe,
+            user.id
+          );
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(
