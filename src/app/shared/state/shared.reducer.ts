@@ -6,10 +6,17 @@ import * as SharedActions from './shared.actions';
 export const sharedReducer = createReducer(
   initialState,
 
-  on(SharedActions.setLoadingBar, (state, action) => {
+  on(SharedActions.showLoadingBar, (state, _) => {
     return {
       ...state,
-      showLoading: action.status,
+      showLoading: true,
+    };
+  }),
+
+  on(SharedActions.hideLoadingBar, (state, _) => {
+    return {
+      ...state,
+      showLoading: false,
     };
   })
 );

@@ -8,7 +8,6 @@ import * as fromApp from '../../state/app.store';
 import { ShoppingListService } from '../services/shopping-list.service';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { selectShoppingList } from './shopping-list.selectors';
-import * as SharedActions from 'src/app/shared/state/shared.actions';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -20,10 +19,7 @@ export class ShoppingListEffects {
         return this.shoppingListService.getShoppingList(user.id);
       }),
       mergeMap((shoppingList) => {
-        return [
-          SharedActions.setLoadingBar({ status: false }),
-          ShoppingListActions.setShoppingList({ shoppingList }),
-        ];
+        return [ShoppingListActions.setShoppingList({ shoppingList })];
       })
     )
   );

@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
 import { metaReducers } from './state/meta.reducers';
+import { SharedEffects } from './shared/state/shared.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,12 @@ import { metaReducers } from './state/meta.reducers';
     StoreModule.forRoot(fromApp.appReducer, {
       metaReducers: metaReducers,
     }),
-    EffectsModule.forRoot([AuthEffects, RecipesEffects, ShoppingListEffects]),
+    EffectsModule.forRoot([
+      SharedEffects,
+      AuthEffects,
+      RecipesEffects,
+      ShoppingListEffects,
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

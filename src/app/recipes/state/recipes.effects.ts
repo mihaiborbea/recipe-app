@@ -8,8 +8,6 @@ import * as RecipesActions from './recipes.actions';
 import * as fromApp from '../../state/app.store';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { RecipesService } from '../services/recipes.service';
-import * as SharedActions from 'src/app/shared/state/shared.actions';
-
 @Injectable()
 export class RecipesEffects {
   fetchRecipes$ = createEffect(() =>
@@ -20,15 +18,12 @@ export class RecipesEffects {
         return this.recipesService.getUserRecipes(user.id);
       }),
       mergeMap((recipes: Recipe[]) => {
-        return [
-          SharedActions.setLoadingBar({ status: false }),
-          RecipesActions.setRecipes({ recipes }),
-        ];
+        return [RecipesActions.setRecipes({ recipes })];
       })
     )
   );
 
-  setRecipe$ = createEffect(
+  storeRecipe$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(RecipesActions.updateRecipe, RecipesActions.addRecipe),

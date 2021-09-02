@@ -1,8 +1,8 @@
-import { createAction, props } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
 
-export const SET_LOADING_BAR = '[Shared] Set Loading Bar';
+export const SHOW_LOADING_BAR = '[Shared] Show Loading Bar';
+export const HIDE_LOADING_BAR = '[Shared] Hide Loading Bar';
 
-export const setLoadingBar = createAction(
-  SET_LOADING_BAR,
-  props<{ status: boolean }>()
-);
+export const showLoadingBar = createAction(SHOW_LOADING_BAR);
+
+export const hideLoadingBar = createAction(HIDE_LOADING_BAR);
