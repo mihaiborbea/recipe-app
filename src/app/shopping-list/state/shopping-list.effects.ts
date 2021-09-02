@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import * as ShoppingListActions from './shopping-list.actions';
 import * as fromApp from '../../state/app.store';
@@ -15,12 +15,12 @@ export class ShoppingListEffects {
     this.actions$.pipe(
       ofType(ShoppingListActions.fetchShoppingList),
       withLatestFrom(this.store.select(selectAuthUser)),
-      concatMap(([_, user]) => {
-        return this.shoppingListService.getShoppingList(user.id);
-      }),
-      mergeMap((shoppingList) => {
-        return [ShoppingListActions.setShoppingList({ shoppingList })];
-      })
+      switchMap(([_, user]) =>
+        this.shoppingListService.getShoppingList(user.id)
+      ),
+      map((shoppingList) =>
+        ShoppingListActions.setShoppingList({ shoppingList })
+      )
     )
   );
 
@@ -32,7 +32,7 @@ export class ShoppingListEffects {
           this.store.select(selectShoppingList),
           this.store.select(selectAuthUser)
         ),
-        concatMap(([_, shoppingList, user]) => {
+        switchMap(([_, shoppingList, user]) => {
           return this.shoppingListService.storeUserShoppingList(
             shoppingList,
             user.id

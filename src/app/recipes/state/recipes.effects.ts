@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from './recipes.actions';
@@ -14,12 +14,8 @@ export class RecipesEffects {
     this.actions$.pipe(
       ofType(RecipesActions.fetchRecipes, RecipesActions.addRecipe),
       withLatestFrom(this.store.select(selectAuthUser)),
-      switchMap(([_, user]) => {
-        return this.recipesService.getUserRecipes(user.id);
-      }),
-      mergeMap((recipes: Recipe[]) => {
-        return [RecipesActions.setRecipes({ recipes })];
-      })
+      switchMap(([_, user]) => this.recipesService.getUserRecipes(user.id)),
+      map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
     )
   );
 
