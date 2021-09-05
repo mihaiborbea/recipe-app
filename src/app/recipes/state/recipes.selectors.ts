@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { AppState } from 'src/app/state/app.store';
-import { State as RecipesState } from './recipes.reducer';
+import { RecipesState } from './recipes.state';
 
-const selectRecipesState = createFeatureSelector<AppState, RecipesState>(
-  'recipes'
-);
+export const RECIPES_STATE_NAME = 'recipes';
+
+const selectRecipesState =
+  createFeatureSelector<RecipesState>(RECIPES_STATE_NAME);
 
 export const selectRecipes = createSelector(
   selectRecipesState,

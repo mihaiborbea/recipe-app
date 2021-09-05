@@ -1,17 +1,9 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { Recipe } from '../domain/recipe.model';
+import { createReducer, on } from '@ngrx/store';
 
 import * as RecipesActions from './recipes.actions';
+import { initialState } from './recipes.state';
 
-export interface State {
-  recipes: Recipe[];
-}
-
-const initialState: State = {
-  recipes: [],
-};
-
-const _recipesReducer = createReducer(
+export const recipesReducer = createReducer(
   initialState,
 
   on(RecipesActions.createRecipe, (state, action) => ({
@@ -36,7 +28,3 @@ const _recipesReducer = createReducer(
     recipes: [...action.recipes],
   }))
 );
-
-export function recipesReducer(state: State, action: Action) {
-  return _recipesReducer(state, action);
-}

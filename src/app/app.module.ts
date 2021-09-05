@@ -20,7 +20,6 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import * as fromApp from './state/app.store';
 import { AuthEffects } from './auth/state/auth.effects';
-import { RecipesEffects } from './recipes/state/recipes.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
@@ -38,12 +37,7 @@ import { CoreEffects } from './core/state/core.effects';
     StoreModule.forRoot(fromApp.appReducer, {
       metaReducers: metaReducers,
     }),
-    EffectsModule.forRoot([
-      CoreEffects,
-      AuthEffects,
-      RecipesEffects,
-      ShoppingListEffects,
-    ]),
+    EffectsModule.forRoot([CoreEffects, AuthEffects, ShoppingListEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
