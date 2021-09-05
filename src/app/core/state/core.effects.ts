@@ -5,10 +5,10 @@ import { map } from 'rxjs/operators';
 import * as RecipesActions from '../../recipes/state/recipes.actions';
 import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
 import * as AuthActions from '../../auth/state/auth.actions';
-import * as SharedActions from './shared.actions';
+import * as CoreActions from './core.actions';
 
 @Injectable()
-export class SharedEffects {
+export class CoreEffects {
   showLoadingBar$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
@@ -17,7 +17,7 @@ export class SharedEffects {
         AuthActions.signupStart,
         AuthActions.loginStart
       ),
-      map(() => SharedActions.showLoadingBar())
+      map(() => CoreActions.showLoadingBar())
     )
   );
 
@@ -29,7 +29,7 @@ export class SharedEffects {
         AuthActions.authenticateSuccess,
         AuthActions.authenticateFail
       ),
-      map(() => SharedActions.hideLoadingBar())
+      map(() => CoreActions.hideLoadingBar())
     )
   );
 

@@ -25,7 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
 import { metaReducers } from './state/meta.reducers';
-import { SharedEffects } from './shared/state/shared.effects';
+import { CoreEffects } from './core/state/core.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +39,7 @@ import { SharedEffects } from './shared/state/shared.effects';
       metaReducers: metaReducers,
     }),
     EffectsModule.forRoot([
-      SharedEffects,
+      CoreEffects,
       AuthEffects,
       RecipesEffects,
       ShoppingListEffects,

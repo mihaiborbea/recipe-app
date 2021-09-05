@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { AppState } from 'src/app/state/app.store';
-import { selectSharedLoading } from 'src/app/shared/state/shared.selector';
+import { selectCoreLoading } from 'src/app/core/state/core.selector';
 
 @Component({
   selector: 'app-loading-bar',
@@ -28,7 +28,7 @@ export class LoadingBarComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this._elmRef.nativeElement.style.display = 'none';
     this.loadingSubscription = this.store
-      .select(selectSharedLoading)
+      .select(selectCoreLoading)
       .subscribe((status: boolean) => {
         this._elmRef.nativeElement.style.display = status ? 'block' : 'none';
         this._changeDetectorRef.detectChanges();
