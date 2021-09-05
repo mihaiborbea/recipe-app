@@ -1,6 +1,6 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
 
-import { LOGOUT } from '../auth/state/auth.actions';
+import { LOGOUT } from '../../auth/state/auth.actions';
 
 export function cleanState(reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state, action) {
