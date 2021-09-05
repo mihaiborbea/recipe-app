@@ -12,9 +12,7 @@ import {
   shoppingListConverter,
 } from '../domain/shopping-list.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ShoppingListService {
   constructor(private firestore: Firestore) {}
 

@@ -22,7 +22,6 @@ import * as fromApp from './state/app.store';
 import { AuthEffects } from './auth/state/auth.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
-import { ShoppingListEffects } from './shopping-list/state/shopping-list.effects';
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './core/state/core.effects';
 
@@ -37,7 +36,7 @@ import { CoreEffects } from './core/state/core.effects';
     StoreModule.forRoot(fromApp.appReducer, {
       metaReducers: metaReducers,
     }),
-    EffectsModule.forRoot([CoreEffects, AuthEffects, ShoppingListEffects]),
+    EffectsModule.forRoot([CoreEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

@@ -1,18 +1,19 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { AppState } from 'src/app/state/app.store';
-import { State as selectShpListState } from './shopping-list.reducer';
+import { ShoppingListState } from './shopping-list.state';
 
-const selectShpListState = createFeatureSelector<AppState, selectShpListState>(
-  'shoppingList'
+export const SHOPPING_LIST_STATE_NAME = 'shoppingList';
+
+const selectShpListState = createFeatureSelector<ShoppingListState>(
+  SHOPPING_LIST_STATE_NAME
 );
 
 export const selectShoppingList = createSelector(
   selectShpListState,
-  (state: selectShpListState) => state.shoppingList
+  (state: ShoppingListState) => state.shoppingList
 );
 
 export const selectEditIndex = createSelector(
   selectShpListState,
-  (state: selectShpListState) => state.editIndex
+  (state: ShoppingListState) => state.editIndex
 );
