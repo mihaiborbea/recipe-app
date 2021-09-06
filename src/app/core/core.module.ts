@@ -2,6 +2,13 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import {
+  browserLocalPersistence,
+  getAuth,
+  provideAuth,
+} from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './state/core.effects';
@@ -11,6 +18,13 @@ import { appReducer } from './state/app.store';
 
 @NgModule({
   imports: [
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => {
+      const auth = getAuth();
+      auth.setPersistence(browserLocalPersistence);
+      return auth;
+    }),
+    provideFirestore(() => getFirestore()),
     StoreModule.forRoot(appReducer, {
       metaReducers: metaReducers,
     }),
