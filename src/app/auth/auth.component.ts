@@ -12,9 +12,9 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
-import { AppState } from '../state/app.store';
 import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
+import { AppState } from '../core/state/app.store';
 
 @Component({
   selector: 'app-auth',

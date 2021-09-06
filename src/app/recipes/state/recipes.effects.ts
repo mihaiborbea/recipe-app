@@ -5,9 +5,9 @@ import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from './recipes.actions';
-import * as fromApp from '../../state/app.store';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { RecipesService } from '../services/recipes.service';
+import { AppState } from 'src/app/core/state/app.store';
 @Injectable()
 export class RecipesEffects {
   fetchRecipes$ = createEffect(() =>
@@ -67,7 +67,7 @@ export class RecipesEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromApp.AppState>,
+    private store: Store<AppState>,
     private recipesService: RecipesService
   ) {}
 }

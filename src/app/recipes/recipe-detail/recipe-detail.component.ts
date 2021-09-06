@@ -5,9 +5,9 @@ import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { Recipe } from '../domain/recipe.model';
-import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
 import { selectRecipes } from '../state/recipes.selectors';
+import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,7 +22,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromApp.AppState>
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {

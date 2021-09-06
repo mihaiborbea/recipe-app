@@ -15,9 +15,7 @@ import {
 } from 'src/app/shopping-list/domain/shopping-list.model';
 import { Recipe, recipeConverter } from '../domain/recipe.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RecipesService {
   constructor(private firestore: Firestore) {}
 

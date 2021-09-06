@@ -1,18 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import cloneDeep from 'lodash.clonedeep';
 
-import { ShoppingList } from '../domain/shopping-list.model';
 import * as ShoppingListActions from './shopping-list.actions';
-
-export interface State {
-  shoppingList: ShoppingList;
-  editIndex: number;
-}
-
-const initialState: State = {
-  shoppingList: null,
-  editIndex: -1,
-};
+import { initialState } from './shopping-list.state';
 
 export const shoppingListReducer = createReducer(
   initialState,
@@ -23,7 +13,7 @@ export const shoppingListReducer = createReducer(
   })),
 
   on(ShoppingListActions.addIngredient, (state, action) => {
-    const newState: State = cloneDeep(state);
+    const newState = cloneDeep(state);
     newState.shoppingList.ingredients.push(action.ingredient);
     return newState;
   }),

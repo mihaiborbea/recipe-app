@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { takeUntil } from 'rxjs/operators';
 
+import { AppState } from '../core/state/app.store';
 import * as ShoppingListActions from './state/shopping-list.actions';
-import * as fromApp from '../state/app.store';
 import {
   selectEditIndex,
   selectShoppingList,
 } from './state/shopping-list.selectors';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-list',
@@ -21,7 +21,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.store

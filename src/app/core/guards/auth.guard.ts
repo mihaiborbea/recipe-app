@@ -10,15 +10,15 @@ import { Observable } from 'rxjs';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import * as fromApp from '../../state/app.store';
 import {
   selectAuthLoading,
   selectAuthUser,
 } from '../../auth/state/auth.selectors';
+import { AppState } from '../state/app.store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
