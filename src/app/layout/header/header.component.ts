@@ -8,9 +8,9 @@ import {
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as fromApp from '../../state/app.store';
 import * as AuthActions from '../../auth/state/auth.actions';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
+import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private userSub: Subscription;
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.userSub = this.store.select(selectAuthUser).subscribe((user) => {

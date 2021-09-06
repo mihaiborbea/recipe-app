@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromApp from '../../state/app.store';
+import { AppState } from 'src/app/core/state/app.store';
 import * as AuthActions from '../../auth/state/auth.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import * as AuthActions from '../../auth/state/auth.actions';
 export class SidenavListComponent {
   @Output() sidenavClose = new EventEmitter();
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   onSidenavClose() {
     this.sidenavClose.emit();

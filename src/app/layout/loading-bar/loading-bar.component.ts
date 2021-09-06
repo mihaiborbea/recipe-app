@@ -8,7 +8,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { AppState } from 'src/app/state/app.store';
+import { AppState } from 'src/app/core/state/app.store';
 import { selectCoreLoading } from 'src/app/core/state/core.selector';
 
 @Component({

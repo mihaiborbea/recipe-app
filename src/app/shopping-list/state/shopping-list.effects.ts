@@ -4,10 +4,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import * as ShoppingListActions from './shopping-list.actions';
-import * as fromApp from '../../state/app.store';
 import { ShoppingListService } from '../services/shopping-list.service';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { selectShoppingList } from './shopping-list.selectors';
+import { AppState } from 'src/app/core/state/app.store';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -47,6 +47,6 @@ export class ShoppingListEffects {
   constructor(
     private actions$: Actions,
     private shoppingListService: ShoppingListService,
-    private store: Store<fromApp.AppState>
+    private store: Store<AppState>
   ) {}
 }

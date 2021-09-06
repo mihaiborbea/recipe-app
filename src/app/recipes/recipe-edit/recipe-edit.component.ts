@@ -5,10 +5,10 @@ import { Store } from '@ngrx/store';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import * as fromApp from '../../state/app.store';
 import * as RecipesActions from '../state/recipes.actions';
 import { selectRecipes } from '../state/recipes.selectors';
 import { Recipe } from '../domain/recipe.model';
+import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,7 +25,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromApp.AppState>
+    private store: Store<AppState>
   ) {}
 
   get controls() {

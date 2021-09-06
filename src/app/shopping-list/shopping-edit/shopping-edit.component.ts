@@ -1,17 +1,16 @@
 import { Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { combineLatest, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Ingredient } from 'src/app/shared/domain/ingredient.model';
 import * as ShoppingListActions from '../state/shopping-list.actions';
-import * as fromApp from '../../state/app.store';
 import {
   selectEditIndex,
   selectShoppingList,
 } from '../state/shopping-list.selectors';
-import { takeUntil } from 'rxjs/operators';
+import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -25,7 +24,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     combineLatest([

@@ -10,18 +10,15 @@ import { Actions, ofType } from '@ngrx/effects';
 import { switchMap, take } from 'rxjs/operators';
 
 import { ShoppingList } from 'src/app/shopping-list/domain/shopping-list.model';
-import * as fromApp from '../../state/app.store';
 import { selectShoppingList } from 'src/app/shopping-list/state/shopping-list.selectors';
 import * as ShoppingListActions from '../../shopping-list/state/shopping-list.actions';
+import { AppState } from '../state/app.store';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListResolver
   implements Resolve<{ shoppingList: ShoppingList }>
 {
-  constructor(
-    private store: Store<fromApp.AppState>,
-    private actions$: Actions
-  ) {}
+  constructor(private store: Store<AppState>, private actions$: Actions) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
