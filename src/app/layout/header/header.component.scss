@@ -1,11 +1,13 @@
 mat-toolbar {
-  border-radius: 3px;
+  border-radius: 0px;
 }
+
 @media (max-width: 959px) {
   mat-toolbar {
     border-radius: 0px;
   }
 }
+
 .navbar-brand {
   margin: 0 15px 0 0;
 }
@@ -14,6 +16,18 @@ mat-toolbar {
 a:active {
   color: white;
   text-decoration: none;
+}
+
+.brand-logo {
+  margin-top: 10px;
+  max-width: 70px;
+}
+
+@media (max-width: 599px) {
+  .brand-logo {
+    margin-top: 10px;
+    max-width: 60px;
+  }
 }
 
 .navigation-items {

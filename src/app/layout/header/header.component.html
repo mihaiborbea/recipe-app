@@ -1,11 +1,16 @@
 <mat-toolbar color="primary">
+  <div class="navbar-brand">
+    <a routerLink="/">
+      <img
+        src="../../../assets/logo/brand-logo-mono-white.png"
+        class="brand-logo"
+      />
+    </a>
+  </div>
   <div fxHide.gt-xs *ngIf="isAuthenticated">
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-  </div>
-  <div class="navbar-brand">
-    <a routerLink="/">mRecipes</a>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs>
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
