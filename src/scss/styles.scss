@@ -3,9 +3,10 @@
 html,
 body {
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 .img-fluid {
@@ -14,4 +15,8 @@ body {
 }
 .mat-slide-toggle-content {
   height: 24px;
+}
+
+.mat-list-base {
+  padding-top: 0 !important;
 }

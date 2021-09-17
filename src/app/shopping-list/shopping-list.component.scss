@@ -1,0 +1,49 @@
+.mat-selection-list {
+  height: 80vh;
+  overflow-y: hidden;
+
+  background:
+    // Shadow covers
+    linear-gradient(var(--background) 30%, var(--background)),
+    linear-gradient(var(--background), var(--background) 70%) 0 100%,
+    // Shadows
+    radial-gradient(
+        farthest-side at 1% 0,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        farthest-side at 1% 100%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 10px, 100% 10px, 200% 10px, 200% 10px;
+  background-attachment: local, local, scroll, scroll;
+}
+.mat-selection-list:hover {
+  overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--background);
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 12px;
+  background-color: var(--background);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary);
+}
+app-shopping-edit {
+  // height: 10vh;
+}

@@ -5,3 +5,8 @@ button {
 mat-form-field:not(:last-child) {
   margin-right: 10px;
 }
+@media (max-width: 959px) {
+  mat-form-field:not(:last-child) {
+    margin-right: 0px;
+  }
+}
