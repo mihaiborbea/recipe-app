@@ -1,11 +1,42 @@
 {
-  "name": "recipe-app",
-  "short_name": "recipe-app",
+  "name": "mRecipes",
+  "short_name": "mRecipes",
+  "description": "A simple recipe app to save your recipes and search for new ones.",
+  "lang": "en-US",
+  "categories": ["food", "shopping", "lifestyle", "utilities"],
+  "display": "standalone",
   "theme_color": "#009688",
   "background_color": "#fafafa",
-  "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "shortcuts": [
+    {
+      "name": "New Recipe",
+      "url": "/recipes/new",
+      "description": "Add a new recipe to your catalog",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "maskable any"
+        }
+      ]
+    },
+    {
+      "name": "Shopping List",
+      "url": "/shopping-list",
+      "description": "Check yout shopping list",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "maskable any"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
