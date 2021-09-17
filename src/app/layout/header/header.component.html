@@ -1,4 +1,9 @@
 <mat-toolbar color="primary">
+  <div fxHide.gt-xs *ngIf="isAuthenticated">
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
   <div class="navbar-brand">
     <a routerLink="/">
       <img
@@ -6,11 +11,6 @@
         class="brand-logo"
       />
     </a>
-  </div>
-  <div fxHide.gt-xs *ngIf="isAuthenticated">
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs>
     <ul fxLayout fxLayoutGap="15px" class="navigation-items">
