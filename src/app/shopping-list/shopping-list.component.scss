@@ -1,7 +1,6 @@
 .mat-selection-list {
   height: 80vh;
-  overflow-y: hidden;
-
+  overflow-y: scroll;
   background:
     // Shadow covers
     linear-gradient(var(--background) 30%, var(--background)),
@@ -22,8 +21,14 @@
   background-size: 100% 10px, 100% 10px, 200% 10px, 200% 10px;
   background-attachment: local, local, scroll, scroll;
 }
-.mat-selection-list:hover {
-  overflow-y: auto;
+
+@media (hover: hover) {
+  .mat-selection-list {
+    overflow-y: hidden;
+  }
+  .mat-selection-list:hover {
+    overflow-y: scroll;
+  }
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -43,7 +48,4 @@
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: var(--primary);
-}
-app-shopping-edit {
-  // height: 10vh;
 }

@@ -9,7 +9,7 @@
   >
     <app-shopping-edit></app-shopping-edit>
     <br />
-    <mat-selection-list #list [multiple]="false" class="scrollbar shadow-top">
+    <mat-selection-list #list [multiple]="false" class="scrollbar">
       <div
         *ngFor="
           let ingredient of (shoppingList$ | async)?.ingredients;
