@@ -1,13 +1,15 @@
-<div fxLayout="row" fxLayoutAlign="center center">
+<div class="container top" fxLayout="row" fxLayoutAlign="center center">
   <div
-    class="list-container"
+    class="container"
     fxLayout="column"
     fxFlex.lt-md="90"
     fxFlex.md="80"
     fxFlex.gt-md="60"
     fxFlex.xl="50"
   >
-    <app-shopping-edit></app-shopping-edit>
+    <div class="edit-container">
+      <app-shopping-edit></app-shopping-edit>
+    </div>
     <br />
     <mat-selection-list #list [multiple]="false" class="scrollbar">
       <div
