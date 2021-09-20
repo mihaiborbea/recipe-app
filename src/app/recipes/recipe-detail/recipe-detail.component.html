@@ -1,50 +1,52 @@
-<div fxLayout="row">
-  <div fxLayout="column" fxFlex="80" fxFlex.lt-md="100">
-    <h1>{{ recipe.name }}</h1>
+<div class="container">
+  <div fxLayout="row">
+    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+      <h1>{{ recipe.name }}</h1>
+    </div>
   </div>
-</div>
-<div fxLayout="row">
-  <div fxLayout="column" fxFlexFill class="img-canvas">
-    <img [src]="recipe.imagePath" alt="" [ngClass.gt-sm]="'img-fluid'" />
+  <div fxLayout="row">
+    <div fxLayout="column" fxFlexFill class="img-canvas">
+      <img [src]="recipe.imagePath" alt="" [ngClass.gt-sm]="'img-fluid'" />
+    </div>
   </div>
-</div>
-<div fxLayout="row">
-  <div fxLayout="column">
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      [matMenuTriggerFor]="recipeMenu"
-    >
-      Manage Recipe <mat-icon>expand_more</mat-icon>
-    </button>
-    <mat-menu #recipeMenu="matMenu">
-      <button mat-menu-item (click)="onAddToShoppingList()">
-        <span>Add to Shopping List</span>
+  <div fxLayout="row">
+    <div fxLayout="column">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [matMenuTriggerFor]="recipeMenu"
+      >
+        Manage Recipe <mat-icon>expand_more</mat-icon>
       </button>
-      <button mat-menu-item (click)="onEditRecipe()">
-        <span>Edit Recipe</span>
-      </button>
-      <button mat-menu-item (click)="onDeleteRecipe()">
-        <span>Delete Recipe</span>
-      </button>
-    </mat-menu>
+      <mat-menu #recipeMenu="matMenu">
+        <button mat-menu-item (click)="onAddToShoppingList()">
+          <span>Add to Shopping List</span>
+        </button>
+        <button mat-menu-item (click)="onEditRecipe()">
+          <span>Edit Recipe</span>
+        </button>
+        <button mat-menu-item (click)="onDeleteRecipe()">
+          <span>Delete Recipe</span>
+        </button>
+      </mat-menu>
+    </div>
   </div>
-</div>
-<br />
-<div fxLayout="row">
-  <div fxLayout="column" fxFlex="80" fxFlex.lt-md="100">
-    <p>{{ recipe.description }}</p>
+  <br />
+  <div fxLayout="row">
+    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+      <p>{{ recipe.description }}</p>
+    </div>
   </div>
-</div>
-<br />
-<div fxLayout="row">
-  <div fxLayout="column" fxFlex="80" fxFlex.lt-md="100">
-    <mat-list>
-      <mat-list-item *ngFor="let ingredient of recipe.ingredients">
-        {{ ingredient.name }} - {{ ingredient.amount }}
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
+  <br />
+  <div fxLayout="row">
+    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+      <mat-list>
+        <mat-list-item *ngFor="let ingredient of recipe.ingredients">
+          {{ ingredient.name }} - {{ ingredient.amount }}
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
 </div>
