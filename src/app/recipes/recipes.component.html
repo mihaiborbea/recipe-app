@@ -1,18 +1,29 @@
-<div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutGap="30px">
-  <div fxLayout="column" fxFlexFill fxFlex.gt-sm="40" [fxHide.lt-md]="hideList">
-    <app-recipe-list></app-recipe-list>
-  </div>
+<div
+  fxLayout.gt-sm="row"
+  fxLayoutAlign.gt-sm="center start"
+  fxLayoutAlign.lt-md="center center"
+  fxLayout.lt-md="column"
+  fxLayoutGap="30px"
+  class="container"
+>
   <div
     fxLayout="column"
-    fxLayoutAlign="start start"
-    fxHide
-    [fxShow.lt-md]="hideList"
+    [fxHide.lt-md]="hideList"
+    [ngClass.lt-md]="'full-width'"
+    class="list-container"
   >
+    <app-recipe-list></app-recipe-list>
+  </div>
+  <div fxLayout="column" fxFlexAlign="start" fxHide [fxShow.lt-md]="hideList">
     <button mat-icon-button color="accent" routerLink="/recipes">
       <mat-icon>arrow_back</mat-icon> Back
     </button>
   </div>
-  <div fxLayout="column" fxFlexFill fxFlex.gt-sm="60">
+  <div
+    fxLayout="column"
+    [ngClass.lt-md]="'full-width'"
+    class="detail-container"
+  >
     <router-outlet></router-outlet>
   </div>
 </div>

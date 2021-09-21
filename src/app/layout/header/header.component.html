@@ -1,38 +1,68 @@
 <mat-toolbar color="primary">
-  <div fxHide.gt-xs *ngIf="isAuthenticated">
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-  <div class="navbar-brand">
-    <a routerLink="/">
-      <img
-        src="../../../assets/logo/brand-logo-mono-white.png"
-        class="brand-logo"
-      />
-    </a>
-  </div>
-  <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs>
-    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-      <li routerLinkActive="active" *ngIf="isAuthenticated">
-        <a routerLink="/recipes">My Recipes</a>
-      </li>
-      <li routerLinkActive="active" *ngIf="isAuthenticated">
-        <a routerLink="/shopping-list">Shopping List</a>
-      </li>
-    </ul>
-  </div>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs *ngIf="isAuthenticated">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="$event.stopPropagation()">
-        <app-theme-switch></app-theme-switch>
+  <div
+    fxLayout="row"
+    fxLayoutAlign.xs="start center"
+    fxLayoutAlign="center center"
+    fxFlexFill
+    class="full-width"
+  >
+    <div
+      fxFlex="10"
+      fxLayoutAlign="start center"
+      fxHide.gt-xs
+      *ngIf="isAuthenticated"
+    >
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
       </button>
-      <button mat-menu-item (click)="onLogout()">
-        <span>Logout</span>
+    </div>
+    <div
+      fxFlex.lt-sm="90"
+      fxFlex.xs="10"
+      fxLayoutAlign="start center"
+      class="navbar-brand"
+    >
+      <a routerLink="/">
+        <img
+          src="../../../assets/logo/brand-logo-mono-white.png"
+          class="brand-logo"
+        />
+      </a>
+    </div>
+    <div
+      fxFlex="80"
+      fxLayoutAlign.lt-xl="start center"
+      fxLayoutAlign.xl="center center"
+      fxHide.xs
+    >
+      <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+        <li *ngIf="isAuthenticated">
+          <a routerLink="/recipes" routerLinkActive="active">My Recipes</a>
+        </li>
+        <li *ngIf="isAuthenticated">
+          <a routerLink="/shopping-list" routerLinkActive="active"
+            >Shopping List</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div
+      fxFlex="10"
+      fxLayoutAlign="end center"
+      fxHide.xs
+      *ngIf="isAuthenticated"
+    >
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
-    </mat-menu>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="$event.stopPropagation()">
+          <app-theme-switch></app-theme-switch>
+        </button>
+        <button mat-menu-item (click)="onLogout()">
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
   </div>
 </mat-toolbar>

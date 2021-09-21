@@ -8,14 +8,19 @@ mat-card {
 
 mat-card-content {
   height: 120px;
-  overflow: hidden;
 }
 
 .mat-card-image {
   margin-left: auto;
   margin-right: 0;
   height: 90%;
-  max-width: 30%;
+  width: 30%;
+}
+
+.description {
+  height: calc(1.5rem * 5);
+  overflow: hidden;
+  width: 70%;
 }
 
 :host ::ng-deep .mat-card-header-text {

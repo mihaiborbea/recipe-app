@@ -1,18 +1,16 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign.lt-lg="center center"
-  fxLayoutAlign.lg="start center"
->
+<div class="container top" fxLayout="row" fxLayoutAlign="center center">
   <div
+    class="container"
     fxLayout="column"
     fxFlex.lt-md="90"
     fxFlex.md="80"
     fxFlex.gt-md="60"
     fxFlex.xl="50"
   >
-    <app-shopping-edit></app-shopping-edit>
-    <br />
-    <mat-selection-list #list [multiple]="false">
+    <div class="edit-container">
+      <app-shopping-edit></app-shopping-edit>
+    </div>
+    <mat-selection-list #list [multiple]="false" class="scrollbar">
       <div
         *ngFor="
           let ingredient of (shoppingList$ | async)?.ingredients;
