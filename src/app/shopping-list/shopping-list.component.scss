@@ -32,25 +32,6 @@
   }
 }
 
-.scrollbar::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: var(--background);
-  border-radius: 10px;
-}
-
-.scrollbar::-webkit-scrollbar {
-  width: 12px;
-  background-color: var(--background);
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: var(--primary);
-}
-
 .edit-container {
   position: relative;
   height: 20%;
