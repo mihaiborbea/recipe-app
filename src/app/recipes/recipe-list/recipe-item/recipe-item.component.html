@@ -6,6 +6,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content fxLayout="row" fxLayoutAlign="start center">
+      <!-- TODO: improve truncate -->
       <span>{{ recipe.description | truncate }}</span>
       <img mat-card-image [src]="recipe.imagePath" [alt]="recipe.name" />
     </mat-card-content>
