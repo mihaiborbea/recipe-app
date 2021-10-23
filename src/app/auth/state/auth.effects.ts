@@ -4,6 +4,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { UserCredential } from '@firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 
 import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
@@ -59,6 +60,7 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
+            sendEmailVerification(resData.user);
             return handleAuthentication(resData);
           }),
           catchError((errorRes) => {
