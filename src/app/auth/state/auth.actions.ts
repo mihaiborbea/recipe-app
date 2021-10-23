@@ -4,6 +4,8 @@ import { User } from '../domain/user.model';
 
 export const LOGIN_START = '[Auth] Login Start';
 export const SIGNUP_START = '[Auth] Signup Start';
+export const RESET_START = '[Auth] Reset Start';
+export const RESET_SUCCESS = '[Auth] Reset Success';
 export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
 export const AUTHENTICATE_FAIL = '[Auth] Authenticate Fail';
 export const CLEAR_ERROR = '[Auth] Clear Error';
@@ -26,6 +28,13 @@ export const signupStart = createAction(
   }>()
 );
 
+export const resetStart = createAction(
+  RESET_START,
+  props<{
+    email: string;
+  }>()
+);
+
 export const authenticateSuccess = createAction(
   AUTHENTICATE_SUCCESS,
   props<{
@@ -44,5 +53,7 @@ export const authenticateFail = createAction(
 export const clearError = createAction(CLEAR_ERROR);
 
 export const autoLogin = createAction(AUTO_LOGIN);
+
+export const resetSuccess = createAction(RESET_SUCCESS);
 
 export const logout = createAction(LOGOUT);

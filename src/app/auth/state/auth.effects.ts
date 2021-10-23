@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { sendEmailVerification } from '@angular/fire/auth';
 import { UserCredential } from '@firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
 
@@ -13,6 +14,9 @@ import { AuthService } from '../../core/services/auth.service';
 const handleAuthentication = async (userData: UserCredential) => {
   const token = await userData.user.getIdToken();
   const user = new User(userData.user.email, userData.user.uid, token);
+  if (!userData.user.emailVerified) {
+    await sendEmailVerification(userData.user);
+  }
   return AuthActions.authenticateSuccess({ user, redirect: true });
 };
 
@@ -63,6 +67,20 @@ export class AuthEffects {
             sendEmailVerification(resData.user);
             return handleAuthentication(resData);
           }),
+          catchError((errorRes) => {
+            return handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  authForget$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.resetStart),
+      switchMap((action) => {
+        return this.authService.sendResetEmail(action.email).pipe(
+          switchMap(async () => AuthActions.resetSuccess()),
           catchError((errorRes) => {
             return handleError(errorRes);
           })

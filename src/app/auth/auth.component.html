@@ -26,7 +26,7 @@
         email
       />
     </mat-form-field>
-    <mat-form-field fxFlexFill>
+    <mat-form-field fxFlexFill *ngIf="authMode !== 'reset'">
       <mat-label for="password">Password</mat-label>
       <input
         matInput
@@ -39,7 +39,7 @@
         #passwordControl="ngModel"
       />
     </mat-form-field>
-    <mat-form-field fxFlexFill *ngIf="!isLoginMode">
+    <mat-form-field fxFlexFill *ngIf="authMode === 'signup'">
       <mat-label for="confirmPassword">Confirm password</mat-label>
       <input
         matInput
@@ -47,12 +47,17 @@
         id="confirmPassword"
         ngModel
         name="confirmPassword"
-        [appMustMatch]="passwordControl.control"
+        [appMustMatch]="passwordControl?.control"
         required
         minlength="6"
       />
     </mat-form-field>
-    <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxFlexFill
+      style="gap: 10px"
+    >
       <button
         fxFlexFill
         mat-raised-button
@@ -60,17 +65,28 @@
         type="submit"
         [disabled]="!authForm.valid"
       >
-        {{ isLoginMode ? "Login" : "Sign up" }}
+        {{ authMode === "login" ? "Login" : "Sign up" }}
       </button>
-      <br />
+
       <button
         fxFlexFill
         mat-stroked-button
         color="accent"
         type="button"
-        (click)="onSwitchMode()"
+        (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')"
       >
-        {{ isLoginMode ? "Create an Account" : "Go to Login" }}
+        {{ authMode === "login" ? "Create an Account" : "Go to Login" }}
+      </button>
+
+      <button
+        fxFlexFill
+        mat-stroked-button
+        color="accent"
+        type="button"
+        (click)="onSwitchMode('reset')"
+        *ngIf="authMode !== 'reset'"
+      >
+        Forget password?
       </button>
     </div>
   </form>

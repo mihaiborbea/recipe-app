@@ -16,6 +16,7 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 
+type AuthMode = 'login' | 'signup' | 'reset';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -24,7 +25,8 @@ export class AuthComponent implements OnDestroy, OnInit {
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
   isLoading$ = this.store.pipe(select(selectAuthLoading));
-  isLoginMode = true;
+  authMode: AuthMode = 'login';
+  passwordControl: any;
 
   private destroy$ = new Subject();
 
@@ -47,8 +49,8 @@ export class AuthComponent implements OnDestroy, OnInit {
     this.destroy$.next();
   }
 
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
+  onSwitchMode(mode: AuthMode) {
+    this.authMode = mode;
   }
 
   onSubmit(form: NgForm) {
@@ -58,10 +60,15 @@ export class AuthComponent implements OnDestroy, OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    if (this.isLoginMode) {
-      this.store.dispatch(AuthActions.loginStart({ email, password }));
-    } else {
-      this.store.dispatch(AuthActions.signupStart({ email, password }));
+    switch (this.authMode) {
+      case 'reset':
+        this.store.dispatch(AuthActions.resetStart({ email }));
+        break;
+      case 'signup':
+        this.store.dispatch(AuthActions.signupStart({ email, password }));
+        break;
+      default:
+        this.store.dispatch(AuthActions.loginStart({ email, password }));
     }
     form.reset();
   }

@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   authState,
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
 import { UserCredential } from '@firebase/auth';
 import { from, Observable } from 'rxjs';
@@ -18,6 +19,10 @@ export class AuthService {
 
   signIn(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.auth, email, password));
+  }
+
+  sendResetEmail(email: string) {
+    return from(sendPasswordResetEmail(this.auth, email));
   }
 
   signOut(): Observable<void> {
