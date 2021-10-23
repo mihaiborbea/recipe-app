@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { sendEmailVerification } from '@angular/fire/auth';
-import { UserCredential } from '@firebase/auth';
-import { sendEmailVerification } from 'firebase/auth';
+import { UserCredential, sendEmailVerification } from '@firebase/auth';
 
 import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
