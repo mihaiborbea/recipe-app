@@ -6,15 +6,25 @@ import { initialState } from './auth.state';
 export const authReducer = createReducer(
   initialState,
 
-  on(AuthActions.loginStart, AuthActions.signupStart, (state) => ({
-    ...state,
-    error: null,
-    loading: true,
-  })),
+  on(
+    AuthActions.loginStart,
+    AuthActions.signupStart,
+    AuthActions.resetStart,
+    (state) => ({
+      ...state,
+      error: null,
+      loading: true,
+    })
+  ),
 
   on(AuthActions.autoLogin, (state) => ({
     ...state,
     loading: true,
+  })),
+
+  on(AuthActions.resetSuccess, (state) => ({
+    ...state,
+    loading: false,
   })),
 
   on(AuthActions.authenticateSuccess, (state, action) => ({
