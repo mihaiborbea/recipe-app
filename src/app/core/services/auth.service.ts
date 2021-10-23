@@ -6,7 +6,7 @@ import {
   authState,
   sendPasswordResetEmail,
 } from '@angular/fire/auth';
-import { UserCredential } from '@firebase/auth';
+import { User, UserCredential } from '@firebase/auth';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -21,7 +21,7 @@ export class AuthService {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  sendResetEmail(email: string) {
+  sendPasswordResetEmail(email: string): Observable<void> {
     return from(sendPasswordResetEmail(this.auth, email));
   }
 
@@ -29,7 +29,7 @@ export class AuthService {
     return from(this.auth.signOut());
   }
 
-  authenticatedUser() {
+  authenticatedUser(): Observable<User> {
     return authState(this.auth);
   }
 }

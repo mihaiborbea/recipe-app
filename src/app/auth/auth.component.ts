@@ -16,7 +16,8 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 
-type AuthMode = 'login' | 'signup' | 'reset';
+type AuthMode = 'login' | 'signup' | 'reset' | 'recovery';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -25,7 +26,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
   isLoading$ = this.store.pipe(select(selectAuthLoading));
-  authMode: AuthMode = 'login';
+  authMode: AuthMode = 'reset';
   passwordControl: any;
 
   private destroy$ = new Subject();

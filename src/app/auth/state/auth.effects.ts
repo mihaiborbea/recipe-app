@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+// TODO: check if can be removed
 import { UserCredential, sendEmailVerification } from '@firebase/auth';
 
 import { User } from '../domain/user.model';
@@ -12,6 +13,7 @@ import { AuthService } from '../../core/services/auth.service';
 const handleAuthentication = async (userData: UserCredential) => {
   const token = await userData.user.getIdToken();
   const user = new User(userData.user.email, userData.user.uid, token);
+  // TODO: maybe remove this and notify user to verify email other way
   if (!userData.user.emailVerified) {
     await sendEmailVerification(userData.user);
   }
@@ -62,6 +64,7 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
+            // maybe put this into an AuthService wrapper
             sendEmailVerification(resData.user);
             return handleAuthentication(resData);
           }),
@@ -77,7 +80,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.resetStart),
       switchMap((action) => {
-        return this.authService.sendResetEmail(action.email).pipe(
+        return this.authService.sendPasswordResetEmail(action.email).pipe(
           switchMap(async () => AuthActions.resetSuccess()),
           catchError((errorRes) => {
             return handleError(errorRes);
