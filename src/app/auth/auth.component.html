@@ -27,7 +27,9 @@
       />
     </mat-form-field>
     <mat-form-field fxFlexFill *ngIf="authMode !== 'recovery'">
-      <mat-label for="password">{{ authMode === "reset" ? "New password" : "Password" }}</mat-label>
+      <mat-label for="password">{{
+        authMode === "reset" ? "New password" : "Password"
+      }}</mat-label>
       <input
         matInput
         type="password"
@@ -39,7 +41,10 @@
         #passwordControl="ngModel"
       />
     </mat-form-field>
-    <mat-form-field fxFlexFill *ngIf="authMode === 'signup' || authMode === 'reset'">
+    <mat-form-field
+      fxFlexFill
+      *ngIf="authMode === 'signup' || authMode === 'reset'"
+    >
       <mat-label for="confirmPassword">Confirm password</mat-label>
       <input
         matInput
@@ -65,7 +70,15 @@
         type="submit"
         [disabled]="!authForm.valid"
       >
-        {{ authMode === "login" ? "Login" : authMode === "reset" ? "Reset password" : authMode === "recovery" ? "Send password recovery email" :  "Sign up" }}
+        {{
+          authMode === "login"
+            ? "Login"
+            : authMode === "reset"
+            ? "Reset password"
+            : authMode === "recovery"
+            ? "Send password recovery email"
+            : "Sign up"
+        }}
       </button>
 
       <button
