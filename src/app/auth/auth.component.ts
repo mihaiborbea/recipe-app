@@ -26,7 +26,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
   isLoading$ = this.store.pipe(select(selectAuthLoading));
-  authMode: AuthMode = 'reset';
+  authMode: AuthMode = 'login';
   passwordControl: any;
 
   private destroy$ = new Subject();
