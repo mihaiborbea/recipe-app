@@ -6,7 +6,12 @@ import {
   authState,
   sendPasswordResetEmail,
 } from '@angular/fire/auth';
-import { UserCredential } from '@firebase/auth';
+import {
+  User,
+  UserCredential,
+  verifyPasswordResetCode,
+  confirmPasswordReset,
+} from '@firebase/auth';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -21,15 +26,22 @@ export class AuthService {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  sendResetEmail(email: string) {
+  sendPasswordResetEmail(email: string): Observable<void> {
     return from(sendPasswordResetEmail(this.auth, email));
+  }
+
+  resetPassword(newPassword: string, actionCode: string): Observable<any> {
+    const userEmail = verifyPasswordResetCode(this.auth, actionCode);
+    if (userEmail) {
+      return from(confirmPasswordReset(this.auth, actionCode, newPassword));
+    }
   }
 
   signOut(): Observable<void> {
     return from(this.auth.signOut());
   }
 
-  authenticatedUser() {
+  authenticatedUser(): Observable<User> {
     return authState(this.auth);
   }
 }

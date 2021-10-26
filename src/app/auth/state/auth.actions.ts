@@ -4,8 +4,10 @@ import { User } from '../domain/user.model';
 
 export const LOGIN_START = '[Auth] Login Start';
 export const SIGNUP_START = '[Auth] Signup Start';
-export const RESET_START = '[Auth] Reset Start';
-export const RESET_SUCCESS = '[Auth] Reset Success';
+export const PASSWORD_RECOVERY_START = '[Auth] Password Recovery Start';
+export const PASSWORD_RECOVERY_END = '[Auth] Password Recovery End';
+export const PASSWORD_RESET_START = '[Auth] Password Reset Start';
+export const PASSWORD_RESET_END = '[Auth] Password Reset End';
 export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
 export const AUTHENTICATE_FAIL = '[Auth] Authenticate Fail';
 export const CLEAR_ERROR = '[Auth] Clear Error';
@@ -28,10 +30,18 @@ export const signupStart = createAction(
   }>()
 );
 
-export const resetStart = createAction(
-  RESET_START,
+export const passwordRecoveryStart = createAction(
+  PASSWORD_RECOVERY_START,
   props<{
     email: string;
+  }>()
+);
+
+export const passwordResetStart = createAction(
+  PASSWORD_RESET_START,
+  props<{
+    newPassword: string;
+    actionCode: string;
   }>()
 );
 
@@ -54,6 +64,10 @@ export const clearError = createAction(CLEAR_ERROR);
 
 export const autoLogin = createAction(AUTO_LOGIN);
 
-export const resetSuccess = createAction(RESET_SUCCESS);
+// TODO: maybe have an success / fail flow
+export const passwordRecoveryEnd = createAction(PASSWORD_RECOVERY_END);
+
+// TODO: maybe have an success / fail flow
+export const passwordResetEnd = createAction(PASSWORD_RESET_END);
 
 export const logout = createAction(LOGOUT);

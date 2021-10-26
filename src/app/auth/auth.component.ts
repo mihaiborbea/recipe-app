@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { take, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder.directive';
@@ -16,7 +17,8 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 
-type AuthMode = 'login' | 'signup' | 'reset';
+type AuthPageMode = 'login' | 'signup' | 'resetPassword' | 'accountRecovery';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -25,14 +27,16 @@ export class AuthComponent implements OnDestroy, OnInit {
   @ViewChild(PlaceholderDirective, { static: false })
   alertHost: PlaceholderDirective;
   isLoading$ = this.store.pipe(select(selectAuthLoading));
-  authMode: AuthMode = 'login';
+  authMode: AuthPageMode;
   passwordControl: any;
 
   private destroy$ = new Subject();
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,14 +47,25 @@ export class AuthComponent implements OnDestroy, OnInit {
           this.showErrorAlert(err);
         }
       });
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(async (params) => {
+        if (params.mode) {
+          this.authMode = params.mode;
+        } else {
+          this.authMode = 'login';
+        }
+        await this.appendPageModeToRoute();
+      });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
-  onSwitchMode(mode: AuthMode) {
+  async onSwitchMode(mode: AuthPageMode): Promise<void> {
     this.authMode = mode;
+    await this.appendPageModeToRoute();
   }
 
   onSubmit(form: NgForm) {
@@ -61,8 +76,14 @@ export class AuthComponent implements OnDestroy, OnInit {
     const password = form.value.password;
 
     switch (this.authMode) {
-      case 'reset':
-        this.store.dispatch(AuthActions.resetStart({ email }));
+      case 'accountRecovery':
+        this.store.dispatch(AuthActions.passwordRecoveryStart({ email }));
+        break;
+      case 'resetPassword':
+        const actionCode = this.route.snapshot.queryParams['oobCode'];
+        this.store.dispatch(
+          AuthActions.passwordResetStart({ newPassword: password, actionCode })
+        );
         break;
       case 'signup':
         this.store.dispatch(AuthActions.signupStart({ email, password }));
@@ -71,6 +92,17 @@ export class AuthComponent implements OnDestroy, OnInit {
         this.store.dispatch(AuthActions.loginStart({ email, password }));
     }
     form.reset();
+  }
+
+  private async appendPageModeToRoute(): Promise<void> {
+    await this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        mode: this.authMode,
+      },
+      queryParamsHandling: 'merge',
+      skipLocationChange: false,
+    });
   }
 
   private showErrorAlert(message: string) {

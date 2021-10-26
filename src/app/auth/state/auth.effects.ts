@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+// TODO: check if can be removed
 import { UserCredential, sendEmailVerification } from '@firebase/auth';
 
 import { User } from '../domain/user.model';
@@ -13,6 +14,7 @@ const handleAuthentication = async (userData: UserCredential) => {
   const token = await userData.user.getIdToken();
   const user = new User(userData.user.email, userData.user.uid, token);
   if (!userData.user.emailVerified) {
+    //TODO: maybe put this into an AuthService wrapper
     await sendEmailVerification(userData.user);
   }
   return AuthActions.authenticateSuccess({ user, redirect: true });
@@ -62,7 +64,6 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
-            sendEmailVerification(resData.user);
             return handleAuthentication(resData);
           }),
           catchError((errorRes) => {
@@ -75,14 +76,30 @@ export class AuthEffects {
 
   authForget$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.resetStart),
+      ofType(AuthActions.passwordRecoveryStart),
       switchMap((action) => {
-        return this.authService.sendResetEmail(action.email).pipe(
-          switchMap(async () => AuthActions.resetSuccess()),
+        return this.authService.sendPasswordResetEmail(action.email).pipe(
+          switchMap(async () => AuthActions.passwordRecoveryEnd()),
           catchError((errorRes) => {
             return handleError(errorRes);
           })
         );
+      })
+    )
+  );
+
+  passwordReset$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.passwordResetStart),
+      switchMap((action) => {
+        return this.authService
+          .resetPassword(action.newPassword, action.actionCode)
+          .pipe(
+            switchMap(async () => AuthActions.passwordResetEnd()),
+            catchError((errorRes) => {
+              return handleError(errorRes);
+            })
+          );
       })
     )
   );
