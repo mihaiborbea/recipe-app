@@ -9,7 +9,8 @@ export const authReducer = createReducer(
   on(
     AuthActions.loginStart,
     AuthActions.signupStart,
-    AuthActions.resetStart,
+    AuthActions.passwordRecoveryStart,
+    AuthActions.passwordResetStart,
     (state) => ({
       ...state,
       error: null,
@@ -22,10 +23,14 @@ export const authReducer = createReducer(
     loading: true,
   })),
 
-  on(AuthActions.resetSuccess, (state) => ({
-    ...state,
-    loading: false,
-  })),
+  on(
+    AuthActions.passwordRecoveryEnd,
+    AuthActions.passwordResetEnd,
+    (state) => ({
+      ...state,
+      loading: false,
+    })
+  ),
 
   on(AuthActions.authenticateSuccess, (state, action) => ({
     ...state,

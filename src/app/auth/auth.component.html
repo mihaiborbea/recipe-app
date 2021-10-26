@@ -14,7 +14,7 @@
     (ngSubmit)="onSubmit(authForm)"
     *ngIf="(isLoading$ | async) === false"
   >
-    <mat-form-field fxFlexFill *ngIf="authMode !== 'reset'">
+    <mat-form-field fxFlexFill *ngIf="authMode !== 'resetPassword'">
       <mat-label for="email">Email</mat-label>
       <input
         matInput
@@ -26,9 +26,9 @@
         email
       />
     </mat-form-field>
-    <mat-form-field fxFlexFill *ngIf="authMode !== 'recovery'">
+    <mat-form-field fxFlexFill *ngIf="authMode !== 'accountRecovery'">
       <mat-label for="password">{{
-        authMode === "reset" ? "New password" : "Password"
+        authMode === "resetPassword" ? "New password" : "Password"
       }}</mat-label>
       <input
         matInput
@@ -43,7 +43,7 @@
     </mat-form-field>
     <mat-form-field
       fxFlexFill
-      *ngIf="authMode === 'signup' || authMode === 'reset'"
+      *ngIf="authMode === 'signup' || authMode === 'resetPassword'"
     >
       <mat-label for="confirmPassword">Confirm password</mat-label>
       <input
@@ -73,9 +73,9 @@
         {{
           authMode === "login"
             ? "Login"
-            : authMode === "reset"
+            : authMode === "resetPassword"
             ? "Reset password"
-            : authMode === "recovery"
+            : authMode === "accountRecovery"
             ? "Send password recovery email"
             : "Sign up"
         }}
@@ -96,8 +96,8 @@
         mat-button
         color="accent"
         type="button"
-        (click)="onSwitchMode('recovery')"
-        *ngIf="authMode !== 'recovery'"
+        (click)="onSwitchMode('accountRecovery')"
+        *ngIf="authMode !== 'accountRecovery'"
       >
         Forgot password ?
       </button>

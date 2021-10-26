@@ -13,8 +13,8 @@ import { AuthService } from '../../core/services/auth.service';
 const handleAuthentication = async (userData: UserCredential) => {
   const token = await userData.user.getIdToken();
   const user = new User(userData.user.email, userData.user.uid, token);
-  // TODO: maybe remove this and notify user to verify email other way
   if (!userData.user.emailVerified) {
+    //TODO: maybe put this into an AuthService wrapper
     await sendEmailVerification(userData.user);
   }
   return AuthActions.authenticateSuccess({ user, redirect: true });
@@ -64,8 +64,6 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
-            // maybe put this into an AuthService wrapper
-            sendEmailVerification(resData.user);
             return handleAuthentication(resData);
           }),
           catchError((errorRes) => {
@@ -78,14 +76,30 @@ export class AuthEffects {
 
   authForget$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.resetStart),
+      ofType(AuthActions.passwordRecoveryStart),
       switchMap((action) => {
         return this.authService.sendPasswordResetEmail(action.email).pipe(
-          switchMap(async () => AuthActions.resetSuccess()),
+          switchMap(async () => AuthActions.passwordRecoveryEnd()),
           catchError((errorRes) => {
             return handleError(errorRes);
           })
         );
+      })
+    )
+  );
+
+  passwordReset$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.passwordResetStart),
+      switchMap((action) => {
+        return this.authService
+          .resetPassword(action.newPassword, action.actionCode)
+          .pipe(
+            switchMap(async () => AuthActions.passwordResetEnd()),
+            catchError((errorRes) => {
+              return handleError(errorRes);
+            })
+          );
       })
     )
   );

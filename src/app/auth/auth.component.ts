@@ -17,7 +17,7 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 
-type AuthPageMode = 'login' | 'signup' | 'reset' | 'recovery';
+type AuthPageMode = 'login' | 'signup' | 'resetPassword' | 'accountRecovery';
 
 @Component({
   selector: 'app-auth',
@@ -76,8 +76,14 @@ export class AuthComponent implements OnDestroy, OnInit {
     const password = form.value.password;
 
     switch (this.authMode) {
-      case 'reset':
-        this.store.dispatch(AuthActions.resetStart({ email }));
+      case 'accountRecovery':
+        this.store.dispatch(AuthActions.passwordRecoveryStart({ email }));
+        break;
+      case 'resetPassword':
+        const actionCode = this.route.snapshot.queryParams['oobCode'];
+        this.store.dispatch(
+          AuthActions.passwordResetStart({ newPassword: password, actionCode })
+        );
         break;
       case 'signup':
         this.store.dispatch(AuthActions.signupStart({ email, password }));
