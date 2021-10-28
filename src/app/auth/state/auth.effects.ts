@@ -3,42 +3,10 @@ import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-// TODO: check if can be removed
-import { UserCredential, sendEmailVerification } from '@firebase/auth';
 
 import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../core/services/auth.service';
-
-const handleAuthentication = async (userData: UserCredential) => {
-  const token = await userData.user.getIdToken();
-  const user = new User(userData.user.email, userData.user.uid, token);
-  if (!userData.user.emailVerified) {
-    //TODO: maybe put this into an AuthService wrapper
-    await sendEmailVerification(userData.user);
-  }
-  return AuthActions.authenticateSuccess({ user, redirect: true });
-};
-
-const handleError = (errorRes: any) => {
-  let errorMsg = 'An unknown error occurred!';
-  if (!errorRes.code) {
-    return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));
-  }
-
-  switch (errorRes.code) {
-    case 'auth/email-already-in-use':
-      errorMsg = 'This email already exists!';
-      break;
-    case 'auth/user-not-found':
-      errorMsg = 'User not found!';
-      break;
-    case 'auth/wrong-password':
-      errorMsg = 'Password invalid!';
-      break;
-  }
-  return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));
-};
 
 @Injectable()
 export class AuthEffects {
@@ -48,10 +16,10 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signIn(action.email, action.password).pipe(
           switchMap((resData) => {
-            return handleAuthentication(resData);
+            return this.handleAuthentication(resData);
           }),
           catchError((errorRes) => {
-            return handleError(errorRes);
+            return this.handleError(errorRes);
           })
         );
       })
@@ -64,10 +32,10 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
-            return handleAuthentication(resData);
+            return this.handleAuthentication(resData);
           }),
           catchError((errorRes) => {
-            return handleError(errorRes);
+            return this.handleError(errorRes);
           })
         );
       })
@@ -81,7 +49,7 @@ export class AuthEffects {
         return this.authService.sendPasswordResetEmail(action.email).pipe(
           switchMap(async () => AuthActions.passwordRecoveryEnd()),
           catchError((errorRes) => {
-            return handleError(errorRes);
+            return this.handleError(errorRes);
           })
         );
       })
@@ -97,7 +65,7 @@ export class AuthEffects {
           .pipe(
             switchMap(async () => AuthActions.passwordResetEnd()),
             catchError((errorRes) => {
-              return handleError(errorRes);
+              return this.handleError(errorRes);
             })
           );
       })
@@ -146,9 +114,63 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  startConfirmEmail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.confirmEmailStart),
+      switchMap((action) => {
+        return this.authService.confirmUserEmail(action.actionCode).pipe(
+          switchMap(async () => AuthActions.confirmEmailEnd()),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  finishConfirmEmail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.confirmEmailEnd),
+        tap(() => {
+          this.router.navigate(['/', 'recipes']);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private router: Router,
     private authService: AuthService
   ) {}
+
+  private async handleAuthentication(userData) {
+    const token = await userData.user.getIdToken();
+    const user = new User(userData.user.email, userData.user.uid, token);
+    if (!userData.user.emailVerified) {
+      await this.authService.sendEmailVerification(userData.user).toPromise();
+    }
+    return AuthActions.authenticateSuccess({ user, redirect: true });
+  }
+
+  private handleError(errorRes: any) {
+    let errorMsg = 'An unknown error occurred!';
+    if (!errorRes.code) {
+      return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));
+    }
+
+    switch (errorRes.code) {
+      case 'auth/email-already-in-use':
+        errorMsg = 'This email already exists!';
+        break;
+      case 'auth/user-not-found':
+        errorMsg = 'User not found!';
+        break;
+      case 'auth/wrong-password':
+        errorMsg = 'Password invalid!';
+        break;
+    }
+    return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));
+  }
 }

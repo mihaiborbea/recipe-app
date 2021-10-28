@@ -8,6 +8,8 @@ export const PASSWORD_RECOVERY_START = '[Auth] Password Recovery Start';
 export const PASSWORD_RECOVERY_END = '[Auth] Password Recovery End';
 export const PASSWORD_RESET_START = '[Auth] Password Reset Start';
 export const PASSWORD_RESET_END = '[Auth] Password Reset End';
+export const CONFIRM_EMAIL_START = '[Auth] Confirm Email Start';
+export const CONFIRM_EMAIL_END = '[Auth] Confirm Email End';
 export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
 export const AUTHENTICATE_FAIL = '[Auth] Authenticate Fail';
 export const CLEAR_ERROR = '[Auth] Clear Error';
@@ -59,6 +61,13 @@ export const authenticateFail = createAction(
     errorMessage: string;
   }>()
 );
+
+export const confirmEmailStart = createAction(
+  CONFIRM_EMAIL_START,
+  props<{ actionCode: string }>()
+);
+
+export const confirmEmailEnd = createAction(CONFIRM_EMAIL_END);
 
 export const clearError = createAction(CLEAR_ERROR);
 
