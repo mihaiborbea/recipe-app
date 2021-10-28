@@ -6,6 +6,7 @@ import {
   authState,
   sendPasswordResetEmail,
   sendEmailVerification,
+  applyActionCode,
 } from '@angular/fire/auth';
 import {
   User,
@@ -27,8 +28,12 @@ export class AuthService {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  sendEmailVerification(user: User) {
+  sendEmailVerification(user: User): Observable<void> {
     return from(sendEmailVerification(user));
+  }
+
+  confirmUserEmail(actionCode: string) {
+    return from(applyActionCode(this.auth, actionCode));
   }
 
   sendPasswordResetEmail(email: string): Observable<void> {

@@ -114,6 +114,31 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  startConfirmEmail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.confirmEmailStart),
+      switchMap((action) => {
+        return this.authService.confirmUserEmail(action.actionCode).pipe(
+          switchMap(async () => AuthActions.confirmEmailEnd()),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  finishConfirmEmail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.confirmEmailEnd),
+        tap(() => {
+          this.router.navigate(['/', 'recipes']);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private router: Router,

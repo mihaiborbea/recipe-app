@@ -17,7 +17,12 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 
-type AuthPageMode = 'login' | 'signup' | 'resetPassword' | 'accountRecovery';
+type AuthPageMode =
+  | 'login'
+  | 'signup'
+  | 'resetPassword'
+  | 'accountRecovery'
+  | 'verifyEmail';
 
 @Component({
   selector: 'app-auth',
@@ -52,6 +57,10 @@ export class AuthComponent implements OnDestroy, OnInit {
       .subscribe(async (params) => {
         if (params.mode) {
           this.authMode = params.mode;
+          if (params.mode === 'verifyEmail') {
+            const actionCode = this.route.snapshot.queryParams['oobCode'];
+            this.store.dispatch(AuthActions.confirmEmailStart(actionCode));
+          }
         } else {
           this.authMode = 'login';
         }
