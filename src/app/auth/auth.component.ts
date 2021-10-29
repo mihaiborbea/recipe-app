@@ -59,7 +59,7 @@ export class AuthComponent implements OnDestroy, OnInit {
           this.authMode = params.mode;
           if (params.mode === 'verifyEmail') {
             const actionCode = this.route.snapshot.queryParams['oobCode'];
-            this.store.dispatch(AuthActions.confirmEmailStart(actionCode));
+            this.store.dispatch(AuthActions.confirmEmailStart({ actionCode }));
           }
         } else {
           this.authMode = 'login';
