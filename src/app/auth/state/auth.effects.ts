@@ -133,7 +133,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.confirmEmailEnd),
         tap(() => {
-          this.router.navigate(['/', 'recipes']);
+          this.router.navigate(['/recipes']);
         })
       ),
     { dispatch: false }
