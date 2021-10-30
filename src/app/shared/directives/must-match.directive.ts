@@ -4,7 +4,6 @@ import {
   NG_VALIDATORS,
   ValidationErrors,
   Validator,
-  ValidatorFn,
 } from '@angular/forms';
 
 @Directive({
@@ -14,32 +13,30 @@ import {
   ],
 })
 export class MustMatchDirective implements Validator {
-  @Input('appMustMatch') controlToMatch: AbstractControl;
+  @Input('appMustMatch') appMustMatch: string;
 
   constructor() {}
 
   validate(control: AbstractControl): ValidationErrors {
-    return this.controlToMatch
-      ? mustMatchValidator(this.controlToMatch)(control)
-      : null;
-  }
-}
+    let confirmPassword = control;
 
-export function mustMatchValidator(
-  matchingControl: AbstractControl
-): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+    let password = control.root.get(this.appMustMatch);
+
     // return null if controls haven't initialised yet
-    if (!control || !matchingControl) {
+    if (!password.value || !confirmPassword.value) {
       return null;
     }
+
     // return null if another validator has already found an error on the matchingControl
-    if (matchingControl.errors) {
+    if (password.errors) {
       return null;
     }
+
     // set error on matchingControl if validation fails
-    if (control.value !== matchingControl.value) {
-      return { mustMatch: true };
+    if (password.value && password.value != confirmPassword.value) {
+      return { appMustMatch: false };
     }
-  };
+
+    return null;
+  }
 }

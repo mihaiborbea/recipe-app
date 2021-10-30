@@ -38,7 +38,7 @@
         name="password"
         required
         minlength="6"
-        #passwordControl="ngModel"
+        #password="ngModel"
       />
     </mat-form-field>
     <mat-form-field
@@ -52,9 +52,10 @@
         id="confirmPassword"
         ngModel
         name="confirmPassword"
-        [appMustMatch]="passwordControl?.control"
+        appMustMatch="password"
         required
         minlength="6"
+        #confirmPassword="ngModel"
       />
     </mat-form-field>
     <div
