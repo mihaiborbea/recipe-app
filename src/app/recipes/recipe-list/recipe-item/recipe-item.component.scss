@@ -2,15 +2,17 @@ a {
   text-decoration: none;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card {
   height: 150px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-content {
   height: 120px;
 }
 
-.mat-card-image {
+.mat-mdc-card-image {
   margin-left: auto;
   margin-right: 0;
   height: 90%;
@@ -23,6 +25,7 @@ mat-card-content {
   width: 70%;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 :host ::ng-deep .mat-card-header-text {
   margin: 0 0 !important;
 }
