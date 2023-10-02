@@ -1,10 +1,4 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
@@ -38,7 +32,6 @@ export class AuthComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject();
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
     private store: Store<AppState>,
     private route: ActivatedRoute,
     private router: Router
@@ -115,13 +108,11 @@ export class AuthComponent implements OnDestroy, OnInit {
   }
 
   private showErrorAlert(message: string) {
-    const alertCmpFactory =
-      this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
     const hostViewContainerRef = this.alertHost.viewContainerRef;
 
     hostViewContainerRef.clear();
 
-    const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
+    const componentRef = hostViewContainerRef.createComponent(AlertComponent);
 
     componentRef.instance.message = message;
 
