@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/compat/app';
 import {
   browserLocalPersistence,
   getAuth,
   provideAuth,
-} from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+} from '@angular/fire/compat/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/compat/firestore';
 
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './state/core.effects';

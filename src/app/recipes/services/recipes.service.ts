@@ -7,7 +7,7 @@ import {
   deleteDoc,
   setDoc,
   DocumentReference,
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 
 import {
   ShoppingList,

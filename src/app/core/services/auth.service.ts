@@ -7,13 +7,13 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification,
   applyActionCode,
-} from '@angular/fire/auth';
+} from '@angular/fire/compat/auth';
 import {
   User,
   UserCredential,
   verifyPasswordResetCode,
   confirmPasswordReset,
-} from '@firebase/auth';
+} from 'firebase/auth';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
