@@ -5,7 +5,7 @@ import {
   getDocs,
   doc,
   setDoc,
-} from '@angular/fire/compat/firestore';
+} from '@angular/fire/firestore';
 
 import {
   ShoppingList,

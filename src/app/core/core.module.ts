@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import {
+  browserLocalPersistence,
+  getAuth,
+  provideAuth,
+} from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './state/core.effects';
@@ -16,11 +18,13 @@ import { appReducer } from './state/app.store';
 
 @NgModule({
   imports: [
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => {
+      const auth = getAuth();
+      auth.setPersistence(browserLocalPersistence);
+      return auth;
+    }),
+    provideFirestore(() => getFirestore()),
     StoreModule.forRoot(appReducer, {
       metaReducers: metaReducers,
     }),

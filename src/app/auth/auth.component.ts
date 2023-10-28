@@ -29,7 +29,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   authMode: AuthPageMode;
   passwordControl: any;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(
     private store: Store<AppState>,
@@ -63,6 +63,7 @@ export class AuthComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   async onSwitchMode(mode: AuthPageMode): Promise<void> {

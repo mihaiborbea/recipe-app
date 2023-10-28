@@ -8,20 +8,17 @@
 >
   <div
     fxLayout="column"
-    [fxHide.lt-md]="hideList"
-    [ngClass.lt-md]="'full-width'"
     class="list-container"
   >
     <app-recipe-list></app-recipe-list>
   </div>
-  <div fxLayout="column" fxFlexAlign="start" fxHide [fxShow.lt-md]="hideList">
+  <div fxLayout="column" fxFlexAlign="start" fxHide>
     <button mat-icon-button color="accent" routerLink="/recipes">
       <mat-icon>arrow_back</mat-icon> Back
     </button>
   </div>
   <div
     fxLayout="column"
-    [ngClass.lt-md]="'full-width'"
     class="detail-container"
   >
     <router-outlet></router-outlet>

@@ -47,6 +47,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   onAddIngredient() {

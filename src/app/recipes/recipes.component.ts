@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 export class RecipesComponent implements OnDestroy {
   hideList = false;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -34,6 +34,7 @@ export class RecipesComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.unsubscribe();
     this.hideList = false;
   }
 }
