@@ -1,15 +1,15 @@
-<a [routerLink]="[recipe.id]" routerLinkActive="active">
-  <mat-card appearance="outlined">
-    <mat-card-header fxLayout="row" class="truncate">
-      <mat-card-title>
-        <span>{{ recipe.name }}</span>
+<a [routerLink]="[recipe.id]" routerLinkActive="active" class="no-underline">
+  <mat-card class="flex flex-col h-[100%] p-3">
+    <mat-card-header class="p-0">
+      <mat-card-title class="p-0">
+        <span class="font-semibold text-lg m-0">{{ recipe.name }}</span>
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content fxLayout="row" fxLayoutAlign="start start">
-      <div class="description">
+    <mat-card-content class="flex flex-row content-start justify-start grow p-0 w-full h-[120px]">
+      <div class="w-[70%] h-32 overflow-hidden p-0">
         <span>{{ recipe.description }}</span>
       </div>
-      <img mat-card-image [src]="recipe.imagePath" [alt]="recipe.name" />
+      <img class="w-[30%] h-[90%]" mat-card-image [src]="recipe.imagePath" [alt]="recipe.name" />
     </mat-card-content>
   </mat-card>
 </a>

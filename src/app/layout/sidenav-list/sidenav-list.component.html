@@ -1,18 +1,18 @@
-<mat-nav-list fxLayout="column" fxFill>
-  <mat-list-item routerLink="/recipes" (click)="onSidenavClose()">
-    <mat-icon fontSet="material-icons-outlined">fastfood</mat-icon>
-    <span class="nav-caption">Recipes</span>
-  </mat-list-item>
-  <mat-list-item routerLink="/shopping-list" (click)="onSidenavClose()">
-    <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon
-    ><span class="nav-caption">Shopping List</span>
-  </mat-list-item>
-  <span fxFlex></span>
-  <mat-divider></mat-divider>
-  <mat-list-item>
-    <app-theme-switch></app-theme-switch>
-  </mat-list-item>
-  <mat-list-item fxLayoutAlign="left" (click)="onLogout(); onSidenavClose()">
-    <mat-icon>logout</mat-icon><span class="nav-caption">Logout</span>
-  </mat-list-item>
+<mat-nav-list class="flex flex-col list-none h-full">
+  <div class="flex flex-col list-none h-full">
+    <mat-list-item class="flex grow-0" routerLink="/recipes" (click)="onSidenavClose()">
+      <mat-icon fontSet="material-icons-outlined">fastfood</mat-icon>
+      <span class="nav-caption">Recipes</span>
+    </mat-list-item>
+    <mat-list-item class="flex grow-0" routerLink="/shopping-list" (click)="onSidenavClose()">
+      <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon><span class="nav-caption">Shopping List</span>
+    </mat-list-item>
+    <mat-divider class="flex grow my-auto"></mat-divider>
+    <mat-list-item class="flex grow-0">
+      <app-theme-switch></app-theme-switch>
+    </mat-list-item>
+    <mat-list-item class="flex grow-0" (click)="onLogout(); onSidenavClose()">
+      <mat-icon>logout</mat-icon><span class="nav-caption">Logout</span>
+    </mat-list-item>
+  </div>
 </mat-nav-list>

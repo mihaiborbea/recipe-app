@@ -1,15 +1,9 @@
 <mat-toolbar color="primary">
   <div
-    fxLayout="row"
-    fxLayoutAlign.xs="start center"
-    fxLayoutAlign="center center"
-    fxFlexFill
-    class="full-width"
+  class="flex flex-row place-content-start lg:place-content-center items-center justify-items-stretch w-full"
   >
     <div
-      fxFlex="10"
-      fxLayoutAlign="start center"
-      fxHide.gt-xs
+      class="sm:hidden"
       *ngIf="isAuthenticated"
     >
       <button mat-icon-button (click)="onToggleSidenav()">
@@ -17,25 +11,20 @@
       </button>
     </div>
     <div
-      fxFlex.lt-sm="90"
-      fxFlex.xs="10"
-      fxLayoutAlign="start center"
-      class="navbar-brand"
+
+      class="w-1/9 sm:w-[10%] mr-4"
     >
       <a routerLink="/">
         <img
+        title="logo"
           src="../../../assets/logo/brand-logo-mono-white.png"
-          class="brand-logo"
+          class="sm:max-w-[70px] max-w-[60px]"
         />
       </a>
     </div>
-    <div
-      fxFlex="80"
-      fxLayoutAlign.lt-xl="start center"
-      fxLayoutAlign.xl="center center"
-      fxHide.xs
+    <div class="hidden sm:flex flex-row grow 2xl:content-center 2xl:justify-center max-w-[80%]"
     >
-      <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <ul class="flex gap-4 list-none text-xl">
         <li *ngIf="isAuthenticated">
           <a routerLink="/recipes" routerLinkActive="active">My Recipes</a>
         </li>
@@ -47,9 +36,7 @@
       </ul>
     </div>
     <div
-      fxFlex="10"
-      fxLayoutAlign="end center"
-      fxHide.xs
+    class="hidden sm:flex flex-row grow content-center justify-end max-w-[10%]"
       *ngIf="isAuthenticated"
     >
       <button mat-icon-button [matMenuTriggerFor]="menu">

@@ -5,10 +5,17 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.scss'],
+  styles: [
+    `
+      .mat-mdc-icon-button {
+        padding: 0;
+      }
+    `,
+  ],
 })
 export class RecipesComponent implements OnDestroy {
   hideList = false;
+  hideBackBtn = true;
 
   private destroy$ = new Subject<void>();
 
@@ -20,6 +27,7 @@ export class RecipesComponent implements OnDestroy {
       .subscribe((params) => {
         if (params && params.hasOwnProperty('id')) {
           this.hideList = true;
+          this.hideBackBtn = false;
         }
       });
 

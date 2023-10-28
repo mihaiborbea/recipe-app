@@ -15,7 +15,6 @@ import { AppState } from 'src/app/core/state/app.store';
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
-  styleUrls: ['./shopping-edit.component.scss'],
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f') form: NgForm;

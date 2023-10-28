@@ -12,7 +12,6 @@ import { AppState } from 'src/app/core/state/app.store';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;

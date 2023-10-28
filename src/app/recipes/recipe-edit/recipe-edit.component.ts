@@ -13,7 +13,6 @@ import { AppState } from 'src/app/core/state/app.store';
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.scss'],
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
   recipe: Recipe;
@@ -124,7 +123,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.recipeForm = new UntypedFormGroup({
       name: new UntypedFormControl(recipeName, Validators.required),
       imagePath: new UntypedFormControl(recipeImagePath, Validators.required),
-      description: new UntypedFormControl(recipeDescription, Validators.required),
+      description: new UntypedFormControl(
+        recipeDescription,
+        Validators.required
+      ),
       ingredients: recipeIngredients,
     });
   }
