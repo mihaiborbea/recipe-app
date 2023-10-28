@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -32,7 +31,7 @@ const materialComponents = [
 
 @NgModule({
   declarations: [],
-  imports: [FlexLayoutModule, ...materialComponents],
-  exports: [FlexLayoutModule, ...materialComponents],
+  imports: [...materialComponents],
+  exports: [...materialComponents],
 })
 export class MaterialModule {}

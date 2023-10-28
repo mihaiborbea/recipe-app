@@ -15,7 +15,6 @@ import { AppState } from 'src/app/core/state/app.store';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() public sidenavToggle = new EventEmitter();

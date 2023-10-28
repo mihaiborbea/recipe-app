@@ -1,16 +1,16 @@
-<div class="container">
-  <div fxLayout="row">
-    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+<div class="pb-5">
+  <div>
+    <div>
       <h1>{{ recipe.name }}</h1>
     </div>
   </div>
-  <div fxLayout="row">
-    <div fxLayout="column" fxFlexFill class="img-canvas">
-      <img [src]="recipe.imagePath" alt="" [ngClass.gt-sm]="'img-fluid'" />
+  <div>
+    <div class="mb-3">
+      <img [src]="recipe.imagePath" alt="" />
     </div>
   </div>
-  <div fxLayout="row">
-    <div fxLayout="column">
+  <div>
+    <div>
       <button
         mat-raised-button
         color="primary"
@@ -33,14 +33,14 @@
     </div>
   </div>
   <br />
-  <div fxLayout="row">
-    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+  <div>
+    <div>
       <p>{{ recipe.description }}</p>
     </div>
   </div>
   <br />
-  <div fxLayout="row">
-    <div fxLayout="column" fxFlexFill fxFlex.lt-md="100">
+  <div>
+    <div>
       <mat-list>
         <mat-list-item *ngFor="let ingredient of recipe.ingredients">
           {{ ingredient.name }} - {{ ingredient.amount }}

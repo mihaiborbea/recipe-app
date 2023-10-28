@@ -1,29 +1,14 @@
-<div
-  fxLayout.gt-sm="row"
-  fxLayoutAlign.gt-sm="center start"
-  fxLayoutAlign.lt-md="center center"
-  fxLayout.lt-md="column"
-  fxLayoutGap="30px"
-  class="container"
->
-  <div
-    fxLayout="column"
-    [fxHide.lt-md]="hideList"
-    [ngClass.lt-md]="'full-width'"
-    class="list-container"
-  >
+<div class="flex flex-col md:flex-row gap-1 mx-6 mb-6 justify-center content-start md:content-center">
+  <div class="max-w-[640px] w-[100%] md:w-[37%] md:flex" [ngClass]="{'hidden': hideList}">
     <app-recipe-list></app-recipe-list>
   </div>
-  <div fxLayout="column" fxFlexAlign="start" fxHide [fxShow.lt-md]="hideList">
-    <button mat-icon-button color="accent" routerLink="/recipes">
-      <mat-icon>arrow_back</mat-icon> Back
+  <div class="flex flex-row w-[6%] md:hidden content-center" [ngClass]="{'hidden': hideBackBtn}" routerLink="/recipes">
+    <button type="button" class="flex flex-row p-0" mat-icon-button color="accent">
+      <mat-icon>arrow_back</mat-icon>
     </button>
+    <span>Back</span>
   </div>
-  <div
-    fxLayout="column"
-    [ngClass.lt-md]="'full-width'"
-    class="detail-container"
-  >
+  <div class="max-w-[960px] w-[94%] md:w-[57%]" [ngClass]="{'hidden': !hideList, 'md:hidden': hideBackBtn}">
     <router-outlet></router-outlet>
   </div>
 </div>

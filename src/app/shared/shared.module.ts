@@ -10,23 +10,22 @@ import { MustMatchDirective } from './directives/must-match.directive';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AlertComponent,
-    PlaceholderDirective,
-    TruncatePipe,
-    ThemeSwitchComponent,
-    MustMatchDirective,
-  ],
-  imports: [MaterialModule, CommonModule, FormsModule],
-  exports: [
-    CommonModule,
-    MaterialModule,
-    AlertComponent,
-    PlaceholderDirective,
-    TruncatePipe,
-    ThemeSwitchComponent,
-    MustMatchDirective,
-  ],
-  entryComponents: [AlertComponent],
+    declarations: [
+        AlertComponent,
+        PlaceholderDirective,
+        TruncatePipe,
+        ThemeSwitchComponent,
+        MustMatchDirective,
+    ],
+    imports: [MaterialModule, CommonModule, FormsModule],
+    exports: [
+        CommonModule,
+        MaterialModule,
+        AlertComponent,
+        PlaceholderDirective,
+        TruncatePipe,
+        ThemeSwitchComponent,
+        MustMatchDirective,
+    ]
 })
 export class SharedModule {}

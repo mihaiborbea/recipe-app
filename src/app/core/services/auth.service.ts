@@ -3,17 +3,14 @@ import {
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  authState,
   sendPasswordResetEmail,
   sendEmailVerification,
   applyActionCode,
-} from '@angular/fire/auth';
-import {
   User,
-  UserCredential,
   verifyPasswordResetCode,
   confirmPasswordReset,
-} from '@firebase/auth';
+  UserCredential,
+} from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -52,6 +49,6 @@ export class AuthService {
   }
 
   authenticatedUser(): Observable<User> {
-    return authState(this.auth);
+    return from([this.auth.currentUser]);
   }
 }

@@ -5,12 +5,19 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.scss'],
+  styles: [
+    `
+      .mat-mdc-icon-button {
+        padding: 0;
+      }
+    `,
+  ],
 })
 export class RecipesComponent implements OnDestroy {
   hideList = false;
+  hideBackBtn = true;
 
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -20,6 +27,7 @@ export class RecipesComponent implements OnDestroy {
       .subscribe((params) => {
         if (params && params.hasOwnProperty('id')) {
           this.hideList = true;
+          this.hideBackBtn = false;
         }
       });
 
@@ -34,6 +42,7 @@ export class RecipesComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.unsubscribe();
     this.hideList = false;
   }
 }
