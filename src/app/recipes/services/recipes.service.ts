@@ -6,6 +6,8 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  query,
+  where,
   DocumentReference,
 } from '@angular/fire/firestore';
 
@@ -20,37 +22,31 @@ export class RecipesService {
   constructor(private firestore: Firestore) {}
 
   async getUserRecipes(userId: string): Promise<Recipe[]> {
-    const docs = (
-      await getDocs(
-        collection(this.firestore, `userData/${userId}/recipes`).withConverter(
-          recipeConverter
-        )
-      )
-    ).docs;
+    const recipesColl = collection(this.firestore, `recipes`);
+    const q = query(
+      recipesColl,
+      where('createdBy', '==', userId)
+    ).withConverter(recipeConverter);
+    const docs = (await getDocs(q)).docs;
     return docs.map((d) => d.data());
   }
 
-  async addOrUpdateUserRecipe(
-    recipe: Partial<Recipe>,
-    userId: string
-  ): Promise<void> {
+  async addOrUpdateRecipe(recipe: Partial<Recipe>): Promise<void> {
     let docRef: DocumentReference;
     if (recipe.id) {
-      docRef = doc(
-        this.firestore,
-        `userData/${userId}/recipes`,
-        recipe.id
-      ).withConverter(recipeConverter);
+      docRef = doc(this.firestore, `recipes`, recipe.id).withConverter(
+        recipeConverter
+      );
     } else {
-      docRef = doc(
-        collection(this.firestore, `userData/${userId}/recipes`)
-      ).withConverter(recipeConverter);
+      docRef = doc(collection(this.firestore, `recipes`)).withConverter(
+        recipeConverter
+      );
     }
     await setDoc(docRef, recipe);
   }
 
-  async deleteUserRecipe(recipe: Recipe, userId: string): Promise<void> {
-    const docRef = doc(this.firestore, `userData/${userId}/recipes`, recipe.id);
+  async deleteRecipe(recipe: Recipe): Promise<void> {
+    const docRef = doc(this.firestore, `recipes`, recipe.id);
     await deleteDoc(docRef);
   }
 

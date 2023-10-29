@@ -9,6 +9,8 @@ import * as RecipesActions from '../state/recipes.actions';
 import { selectRecipes } from '../state/recipes.selectors';
 import { Recipe } from '../domain/recipe.model';
 import { AppState } from 'src/app/core/state/app.store';
+import { User } from 'src/app/auth/domain/user.model';
+import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -17,6 +19,7 @@ import { AppState } from 'src/app/core/state/app.store';
 export class RecipeEditComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   recipeForm: UntypedFormGroup;
+  currentUser: User;
   editMode = false;
 
   private destroy$ = new Subject<void>();
@@ -35,11 +38,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
-        withLatestFrom(this.store.select(selectRecipes))
+        withLatestFrom(
+          this.store.select(selectRecipes),
+          this.store.select(selectAuthUser)
+        )
       )
-      .subscribe(([params, recipes]) => {
+      .subscribe(([params, recipes, user]) => {
         this.editMode = params['id'] != null;
         this.recipe = recipes.find((recipe) => recipe.id === params['id']);
+        this.currentUser = user;
         this.initForm();
       });
   }
@@ -68,7 +75,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
         this.recipeForm.get('imagePath').value,
-        this.recipeForm.get('ingredients').value
+        this.recipeForm.get('ingredients').value,
+        this.currentUser.id
       );
       this.store.dispatch(
         RecipesActions.updateRecipe({ recipe: editedRecipe })
@@ -79,7 +87,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
         this.recipeForm.get('imagePath').value,
-        this.recipeForm.get('ingredients').value
+        this.recipeForm.get('ingredients').value,
+        this.currentUser.id
       );
       this.store.dispatch(RecipesActions.createRecipe({ recipe: newRecipe }));
     }
