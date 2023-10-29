@@ -23,13 +23,7 @@ export class RecipesEffects {
     () =>
       this.actions$.pipe(
         ofType(RecipesActions.updateRecipe, RecipesActions.createRecipe),
-        withLatestFrom(this.store.select(selectAuthUser)),
-        switchMap(([action, user]) => {
-          return this.recipesService.addOrUpdateUserRecipe(
-            action.recipe,
-            user.id
-          );
-        })
+        map((action) => this.recipesService.addOrUpdateRecipe(action.recipe))
       ),
     {
       dispatch: false,
@@ -40,10 +34,7 @@ export class RecipesEffects {
     () =>
       this.actions$.pipe(
         ofType(RecipesActions.deleteRecipe),
-        withLatestFrom(this.store.select(selectAuthUser)),
-        switchMap(([action, user]) => {
-          return this.recipesService.deleteUserRecipe(action.recipe, user.id);
-        })
+        map((action) => this.recipesService.deleteRecipe(action.recipe))
       ),
     {
       dispatch: false,

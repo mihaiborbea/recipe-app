@@ -6,7 +6,8 @@ export class Recipe {
     public name: string,
     public description: string,
     public imagePath: string,
-    public ingredients: Ingredient[]
+    public ingredients: Ingredient[],
+    public createdBy: string
   ) {}
 }
 
@@ -17,6 +18,7 @@ export const recipeConverter = {
       description: recipe.description,
       imagePath: recipe.imagePath,
       ingredients: recipe.ingredients.map((i) => ({ ...i })),
+      createdBy: recipe.createdBy,
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -26,7 +28,8 @@ export const recipeConverter = {
       data.name,
       data.description,
       data.imagePath,
-      data.ingredients.map((i) => new Ingredient(i.name, i.amount))
+      data.ingredients.map((i) => new Ingredient(i.name, i.amount)),
+      data.createdBy
     );
   },
 };
