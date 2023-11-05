@@ -9,6 +9,7 @@ import {
   provideAuth,
 } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './state/core.effects';
@@ -25,6 +26,7 @@ import { appReducer } from './state/app.store';
       return auth;
     }),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     StoreModule.forRoot(appReducer, {
       metaReducers: metaReducers,
     }),

@@ -13,9 +13,17 @@
         <mat-label for="name">Name</mat-label>
         <input matInput type="text" id="name" name="name" formControlName="name" />
         </mat-form-field>
-      <mat-form-field class="flex flex-row w-full mt-1 mb-1">
-        <mat-label for="imagePath">Image URL</mat-label>
-        <input matInput type="text" id="imagePath" name="imagePath" formControlName="imagePath" #imagePath />
+        <mat-form-field>
+          <mat-label for="images">Images</mat-label>
+          <ngx-mat-file-input formControlName="images" placeholder="JPG file only" [accept]="'image/*'" [multiple]="true" />
+          <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+        <div *ngFor="let image of recipe.images">
+          <img [src]="image.url" alt="" />
+        </div>
+        <mat-form-field class="flex flex-row w-full mt-1 mb-1">
+          <mat-label for="imagePath">Image URL</mat-label>
+          <input matInput type="text" id="imagePath" name="imagePath" formControlName="imagePath" #imagePath />
         </mat-form-field>
       <div>
         <img [src]="imagePath.value" alt="" />
