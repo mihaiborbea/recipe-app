@@ -7,7 +7,10 @@ export const authReducer = createReducer(
   initialState,
 
   on(
-    AuthActions.loginStart,
+    AuthActions.loginWithEmail,
+    AuthActions.loginWithFacebook,
+    AuthActions.loginWithGoogle,
+    AuthActions.loginWithMicrosoft,
     AuthActions.signupStart,
     AuthActions.passwordRecoveryStart,
     AuthActions.passwordResetStart,

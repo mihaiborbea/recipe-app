@@ -2,7 +2,10 @@ import { createAction, props } from '@ngrx/store';
 
 import { User } from '../domain/user.model';
 
-export const LOGIN_START = '[Auth] Login Start';
+export const LOGIN_WITH_EMAIL = '[Auth] Login With Email';
+export const LOGIN_WITH_FB = '[Auth] Login With Facebook';
+export const LOGIN_WITH_GG = '[Auth] Login With Google';
+export const LOGIN_WITH_MS = '[Auth] Login With Microsoft';
 export const SIGNUP_START = '[Auth] Signup Start';
 export const PASSWORD_RECOVERY_START = '[Auth] Password Recovery Start';
 export const PASSWORD_RECOVERY_END = '[Auth] Password Recovery End';
@@ -16,8 +19,8 @@ export const CLEAR_ERROR = '[Auth] Clear Error';
 export const AUTO_LOGIN = '[Auth] Auto Login';
 export const LOGOUT = '[Auth] Logout';
 
-export const loginStart = createAction(
-  LOGIN_START,
+export const loginWithEmail = createAction(
+  LOGIN_WITH_EMAIL,
   props<{
     email: string;
     password: string;
@@ -80,3 +83,9 @@ export const passwordRecoveryEnd = createAction(PASSWORD_RECOVERY_END);
 export const passwordResetEnd = createAction(PASSWORD_RESET_END);
 
 export const logout = createAction(LOGOUT);
+
+export const loginWithFacebook = createAction(LOGIN_WITH_FB);
+
+export const loginWithGoogle = createAction(LOGIN_WITH_GG);
+
+export const loginWithMicrosoft = createAction(LOGIN_WITH_MS);

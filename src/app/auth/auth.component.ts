@@ -92,9 +92,13 @@ export class AuthComponent implements OnDestroy, OnInit {
         this.store.dispatch(AuthActions.signupStart({ email, password }));
         break;
       default:
-        this.store.dispatch(AuthActions.loginStart({ email, password }));
+        this.store.dispatch(AuthActions.loginWithEmail({ email, password }));
     }
     form.reset();
+  }
+
+  onSignInWithProvider(provider: string) {
+    this.store.dispatch(AuthActions[`loginWith${provider}`]());
   }
 
   private async appendPageModeToRoute(): Promise<void> {
