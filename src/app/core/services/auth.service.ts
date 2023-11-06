@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
+  signInWithRedirect,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   sendEmailVerification,
@@ -10,11 +11,20 @@ import {
   verifyPasswordResetCode,
   confirmPasswordReset,
   UserCredential,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  OAuthProvider,
+  getRedirectResult,
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private providers = {
+    microsoft: new OAuthProvider('microsoft.com'),
+    facebook: new FacebookAuthProvider(),
+    google: new GoogleAuthProvider(),
+  };
   constructor(private auth: Auth) {}
 
   signUp(email: string, password: string): Observable<UserCredential> {
@@ -23,6 +33,18 @@ export class AuthService {
 
   signIn(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.auth, email, password));
+  }
+
+  signInWithMicrosoft(): Observable<void> {
+    return from(signInWithRedirect(this.auth, this.providers.microsoft));
+  }
+
+  signInWithFacebook(): Observable<void> {
+    return from(signInWithRedirect(this.auth, this.providers.facebook));
+  }
+
+  signInWithGoogle(): Observable<void> {
+    return from(signInWithRedirect(this.auth, this.providers.google));
   }
 
   sendEmailVerification(user: User): Observable<void> {
@@ -50,5 +72,17 @@ export class AuthService {
 
   authenticatedUser(): Observable<User> {
     return from([this.auth.currentUser]);
+  }
+
+  async socialLoginResult(
+    providerName: string
+  ): Promise<{ userData: UserCredential; token: string }> {
+    const userData = await getRedirectResult(this.auth);
+    const credential = this.providers[providerName].credentialFromResult(
+      this.auth,
+      userData
+    );
+    const token = credential.accessToken;
+    return { userData, token };
   }
 }

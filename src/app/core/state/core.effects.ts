@@ -15,7 +15,7 @@ export class CoreEffects {
         RecipesActions.fetchRecipes,
         ShoppingListActions.fetchShoppingList,
         AuthActions.signupStart,
-        AuthActions.loginStart
+        AuthActions.loginWithEmail
       ),
       map(() => CoreActions.showLoadingBar())
     )

@@ -33,6 +33,20 @@
         }}
       </button>
 
+      <ng-container *ngIf="authMode === 'login'">
+        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Facebook')">
+          Login with Facebook
+        </button>
+      
+        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Google')">
+          Login with Google
+        </button>
+      
+        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Microsoft')">
+          Login with Microsoft
+        </button>
+      </ng-container>
+
       <button class="self-stretch" mat-stroked-button color="accent" type="button"
         (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
         {{ authMode === "login" ? "Create an Account" : "Go to Login" }}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { User } from '../domain/user.model';
@@ -12,11 +12,59 @@ import { AuthService } from '../../core/services/auth.service';
 export class AuthEffects {
   authLogin$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.loginStart),
+      ofType(AuthActions.loginWithEmail),
       switchMap((action) => {
         return this.authService.signIn(action.email, action.password).pipe(
           switchMap((resData) => {
-            return this.handleAuthentication(resData);
+            return this.handleEmailAuthentication(resData);
+          }),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  authLoginWithGoogle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginWithGoogle),
+      switchMap(() => {
+        return this.authService.signInWithGoogle().pipe(
+          switchMap((resData) => {
+            return this.handleSocialAuthentication('google');
+          }),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  authLoginWithFacebook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginWithFacebook),
+      switchMap(() => {
+        return this.authService.signInWithFacebook().pipe(
+          switchMap((resData) => {
+            return this.handleSocialAuthentication('facebook');
+          }),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  authLoginWithMicrosoft$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginWithMicrosoft),
+      switchMap(() => {
+        return this.authService.signInWithMicrosoft().pipe(
+          switchMap((resData) => {
+            return this.handleSocialAuthentication('microsoft');
           }),
           catchError((errorRes) => {
             return this.handleError(errorRes);
@@ -32,7 +80,7 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signUp(action.email, action.password).pipe(
           switchMap((resData) => {
-            return this.handleAuthentication(resData);
+            return this.handleEmailAuthentication(resData);
           }),
           catchError((errorRes) => {
             return this.handleError(errorRes);
@@ -145,12 +193,26 @@ export class AuthEffects {
     private authService: AuthService
   ) {}
 
-  private async handleAuthentication(userData) {
+  private async handleEmailAuthentication(userData) {
     const token = await userData.user.getIdToken();
     const user = new User(userData.user.email, userData.user.uid, token);
     if (!userData.user.emailVerified) {
-      await this.authService.sendEmailVerification(userData.user).toPromise();
+      await firstValueFrom(
+        this.authService.sendEmailVerification(userData.user)
+      );
     }
+    return AuthActions.authenticateSuccess({ user, redirect: true });
+  }
+
+  public async handleSocialAuthentication(providerName) {
+    const socialLoginRes = await this.authService.socialLoginResult(
+      providerName
+    );
+    const user = new User(
+      socialLoginRes.userData.user.email,
+      socialLoginRes.userData.user.uid,
+      socialLoginRes.token
+    );
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
