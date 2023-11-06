@@ -10,7 +10,7 @@ import { AuthService } from '../../core/services/auth.service';
 
 @Injectable()
 export class AuthEffects {
-  authLogin$ = createEffect(() =>
+  loginWithEmail$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithEmail),
       switchMap((action) => {
@@ -26,12 +26,12 @@ export class AuthEffects {
     )
   );
 
-  authLoginWithGoogle$ = createEffect(() =>
+  loginWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithGoogle),
       switchMap(() => {
         return this.authService.signInWithGoogle().pipe(
-          switchMap((resData) => {
+          switchMap(() => {
             return this.handleSocialAuthentication('google');
           }),
           catchError((errorRes) => {
@@ -42,12 +42,12 @@ export class AuthEffects {
     )
   );
 
-  authLoginWithFacebook$ = createEffect(() =>
+  loginWithFacebook$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithFacebook),
       switchMap(() => {
         return this.authService.signInWithFacebook().pipe(
-          switchMap((resData) => {
+          switchMap(() => {
             return this.handleSocialAuthentication('facebook');
           }),
           catchError((errorRes) => {
@@ -58,12 +58,12 @@ export class AuthEffects {
     )
   );
 
-  authLoginWithMicrosoft$ = createEffect(() =>
+  loginWithMicrosoft$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginWithMicrosoft),
       switchMap(() => {
         return this.authService.signInWithMicrosoft().pipe(
-          switchMap((resData) => {
+          switchMap(() => {
             return this.handleSocialAuthentication('microsoft');
           }),
           catchError((errorRes) => {
@@ -74,7 +74,23 @@ export class AuthEffects {
     )
   );
 
-  authSignup$ = createEffect(() =>
+  autoLogin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.autoLogin),
+      switchMap(() => {
+        return this.authService.authenticatedUser().pipe(
+          switchMap(async (authData) => {
+            return this.handleAutomaticAuthentication(authData);
+          }),
+          catchError((errorRes) => {
+            return this.handleError(errorRes);
+          })
+        );
+      })
+    )
+  );
+
+  signup$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signupStart),
       switchMap((action) => {
@@ -90,7 +106,7 @@ export class AuthEffects {
     )
   );
 
-  authForget$ = createEffect(() =>
+  forgotPassword$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.passwordRecoveryStart),
       switchMap((action) => {
@@ -104,7 +120,7 @@ export class AuthEffects {
     )
   );
 
-  passwordReset$ = createEffect(() =>
+  resetPassword$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.passwordResetStart),
       switchMap((action) => {
@@ -129,28 +145,7 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  autoLogin$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.autoLogin),
-      switchMap(() => {
-        return this.authService.authenticatedUser();
-      }),
-      switchMap(async (authData) => {
-        if (!authData) {
-          return AuthActions.authenticateFail({ errorMessage: null });
-        }
-        const token = await authData.getIdToken();
-        const user = new User(authData.email, authData.uid, token);
-
-        return AuthActions.authenticateSuccess({
-          user,
-          redirect: false,
-        });
-      })
-    )
-  );
-
-  authLogout$ = createEffect(
+  logout$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthActions.logout),
@@ -204,7 +199,7 @@ export class AuthEffects {
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
-  public async handleSocialAuthentication(providerName) {
+  private async handleSocialAuthentication(providerName) {
     const socialLoginRes = await this.authService.socialLoginResult(
       providerName
     );
@@ -214,6 +209,15 @@ export class AuthEffects {
       socialLoginRes.token
     );
     return AuthActions.authenticateSuccess({ user, redirect: true });
+  }
+
+  public async handleAutomaticAuthentication(authData) {
+    const token = await authData.getIdToken();
+    const user = new User(authData.email, authData.uid, token);
+    return AuthActions.authenticateSuccess({
+      user,
+      redirect: false,
+    });
   }
 
   private handleError(errorRes: any) {
