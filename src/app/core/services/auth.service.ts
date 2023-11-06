@@ -70,8 +70,19 @@ export class AuthService {
     return from(this.auth.signOut());
   }
 
-  authenticatedUser(): Observable<User> {
-    return from([this.auth.currentUser]);
+  authenticatedUser(): Observable<User | unknown> {
+    return from(
+      new Promise((resolve, reject) => {
+        this.auth.onAuthStateChanged(
+          (user) => {
+            resolve(user);
+          },
+          (_) => {
+            reject(null);
+          }
+        );
+      })
+    );
   }
 
   async socialLoginResult(
