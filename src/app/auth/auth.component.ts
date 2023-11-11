@@ -11,6 +11,8 @@ import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
 import { AuthErrorCodesMessages } from './domain/errorCodes';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 type AuthPageMode =
   | 'login'
@@ -35,8 +37,23 @@ export class AuthComponent implements OnDestroy, OnInit {
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'meta',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../assets/icons/icon-meta-96x96.svg'
+      )
+    );
+    this.matIconRegistry.addSvgIcon(
+      'google',
+      this.domSanitizer.bypassSecurityTrustResourceUrl(
+        '../../assets/icons/icon-google-96x96.svg'
+      )
+    );
+  }
 
   ngOnInit(): void {
     this.store

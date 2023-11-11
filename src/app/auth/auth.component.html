@@ -3,59 +3,70 @@
   <div *ngIf="isLoading$ | async">
     <mat-spinner></mat-spinner>
   </div>
-  <form class="flex flex-col place-self-center place-content-center w-4/5 md:w-2/5 lg:w-1/3 xl:w-1/5" #authForm="ngForm"
-    (ngSubmit)="onSubmit(authForm)" *ngIf="(isLoading$ | async) === false">
-    <mat-form-field class="self-stretch" *ngIf="authMode !== 'resetPassword'">
-      <mat-label for="email">Email</mat-label>
-      <input matInput type="email" id="email" ngModel name="email" required email />
-    </mat-form-field>
-    <mat-form-field class="self-stretch" *ngIf="authMode !== 'accountRecovery'">
-      <mat-label for="password">{{
-        authMode === "resetPassword" ? "New password" : "Password"
-        }}</mat-label>
-      <input matInput type="password" id="password" ngModel name="password" required minlength="6" #password="ngModel" />
-    </mat-form-field>
-    <mat-form-field class="self-stretch" *ngIf="authMode === 'signup' || authMode === 'resetPassword'">
-      <mat-label for="confirmPassword">Confirm password</mat-label>
-      <input matInput type="password" id="confirmPassword" ngModel name="confirmPassword" appMustMatch="password" required
-        minlength="6" #confirmPassword="ngModel" />
-    </mat-form-field>
-    <div class="flex flex-col place-self-center place-content-center self-stretch gap-4">
-      <button class="self-stretch" mat-raised-button color="primary" type="submit" [disabled]="!authForm.valid">
-        {{
-        authMode === "login"
-        ? "Login"
-        : authMode === "resetPassword"
-        ? "Reset password"
-        : authMode === "accountRecovery"
-        ? "Send password recovery email"
-        : "Sign up"
-        }}
-      </button>
+  <mat-card class="bg-zinc-500 mt-12 p-4 w-4/5 md:w-2/5 lg:w-1/3 xl:w-1/5">
+    <form class="flex flex-col place-self-center place-content-center w-full" #authForm="ngForm"
+      (ngSubmit)="onSubmit(authForm)" *ngIf="(isLoading$ | async) === false">
+      <mat-form-field [hideRequiredMarker]="true" class="self-stretch" *ngIf="authMode !== 'resetPassword'">
+        <input matInput type="email" id="email" ngModel name="email" placeholder="Email" required email />
+        <mat-icon class="text-zinc-400" matSuffix>email</mat-icon>
+      </mat-form-field>
+      <mat-form-field [hideRequiredMarker]="true" class="self-stretch" *ngIf="authMode !== 'accountRecovery'">
+        <input matInput type="password" id="password" ngModel name="password" [placeholder]="authMode==='resetPassword'
+                                                                                              ? 'New password' : 'Password'"
+          required minlength="6" #password="ngModel" />
+        <mat-icon class="text-zinc-400" matSuffix>key</mat-icon>
+      </mat-form-field>
+      <mat-form-field [hideRequiredMarker]="true" class="self-stretch"
+        *ngIf="authMode === 'signup' || authMode === 'resetPassword'">
+        <input matInput type="password" id="confirmPassword" ngModel name="confirmPassword" appMustMatch="password"
+          placeholder="Confirm password" required minlength="6" #confirmPassword="ngModel" />
+      
+        <mat-icon class="text-zinc-400" matSuffix>key</mat-icon>
+      </mat-form-field>
+      <div class="flex flex-col place-self-center place-content-center self-stretch gap-4">
+        <button class="self-stretch" mat-flat-button color="primary" type="submit" [disabled]="!authForm.valid">
+          {{
+          authMode === "login"
+          ? "Login"
+          : authMode === "resetPassword"
+          ? "Reset password"
+          : authMode === "accountRecovery"
+          ? "Send password recovery email"
+          : "Sign up"
+          }}
+        </button>
 
-      <ng-container *ngIf="authMode === 'login'">
-        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Facebook')">
-          Login with Facebook
-        </button>
-      
-        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Google')">
-          Login with Google
-        </button>
-      
-        <button class="self-stretch" mat-raised-button type="button" (click)="onSignInWithProvider('Microsoft')">
+        <ng-container *ngIf="authMode === 'login'">
+          <button class="self-stretch" mat-stroked-button type="button" (click)="onSignInWithProvider('Facebook')">
+            <span class="text-blue-500">Login with Meta</span>
+            <mat-icon svgIcon="meta"></mat-icon>
+          </button>
+
+          <button class="self-stretch" mat-stroked-button type="button" (click)="onSignInWithProvider('Google')">
+            <span class="text-red-500">Login with Google</span>
+            <mat-icon svgIcon="google"></mat-icon>
+          </button>
+
+          <!-- <button class="self-stretch" mat-flat-button type="button" (click)="onSignInWithProvider('Microsoft')">
           Login with Microsoft
-        </button>
-      </ng-container>
+        </button> -->
+        </ng-container>
 
-      <button class="self-stretch" mat-stroked-button color="accent" type="button"
-        (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
-        {{ authMode === "login" ? "Create an Account" : "Go to Login" }}
-      </button>
+        <mat-card-actions>
+        
+          <button mat-button color="accent" type="button" (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
+            <span class="text-sm">{{ authMode === "login" ? "Register an Account" : "Have an account?"
+              }}</span>
+          </button>
 
-      <button class="self-stretch" mat-button color="accent" type="button" (click)="onSwitchMode('accountRecovery')"
-        *ngIf="authMode !== 'accountRecovery'">
-        Forgot password ?
-      </button>
-    </div>
-  </form>
+          <mat-divider [vertical]="true" [inset]="true"></mat-divider>
+          
+          <button mat-button color="accent" type="button" (click)="onSwitchMode('accountRecovery')"
+            *ngIf="authMode !== 'accountRecovery'">
+            <span class="text-sm">Forgot password ?</span>
+            </button>
+        </mat-card-actions>
+      </div>
+      </form>
+  </mat-card>
 </div>
