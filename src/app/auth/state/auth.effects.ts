@@ -7,6 +7,7 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { User } from '../domain/user.model';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../core/services/auth.service';
+import { AuthErrorCodes, AuthErrorCodesMessages } from '../domain/errorCodes';
 
 @Injectable()
 export class AuthEffects {
@@ -79,8 +80,8 @@ export class AuthEffects {
       ofType(AuthActions.autoLogin),
       switchMap(() => {
         return this.authService.authenticatedUser().pipe(
-          switchMap(async (authData) => {
-            return this.handleAutomaticAuthentication(authData);
+          switchMap(async (user) => {
+            return this.handleAutomaticAuthentication(user);
           }),
           catchError((errorRes) => {
             return this.handleError(errorRes);
@@ -211,30 +212,30 @@ export class AuthEffects {
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
-  public async handleAutomaticAuthentication(authData) {
+  private async handleAutomaticAuthentication(authData) {
     const token = await authData.getIdToken();
     const user = new User(authData.email, authData.uid, token);
-    return AuthActions.authenticateSuccess({
-      user,
-      redirect: false,
-    });
+    return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
   private handleError(errorRes: any) {
+    console.log('HEREEEEEEEEE', errorRes);
     let errorMsg = 'An unknown error occurred!';
     if (!errorRes.code) {
       return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));
     }
-
     switch (errorRes.code) {
-      case 'auth/email-already-in-use':
-        errorMsg = 'This email already exists!';
+      case AuthErrorCodes.EmailAlreadyUsed:
+        errorMsg = AuthErrorCodesMessages.EmailAlreadyUsed;
         break;
-      case 'auth/user-not-found':
-        errorMsg = 'User not found!';
+      case AuthErrorCodes.UserNotFound:
+        errorMsg = AuthErrorCodesMessages.UserNotFound;
         break;
-      case 'auth/wrong-password':
-        errorMsg = 'Password invalid!';
+      case AuthErrorCodes.WrongPassword:
+        errorMsg = AuthErrorCodesMessages.WrongPassword;
+        break;
+      case AuthErrorCodes.NotLoggedIn:
+        errorMsg = AuthErrorCodesMessages.NotLoggedIn;
         break;
     }
     return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));

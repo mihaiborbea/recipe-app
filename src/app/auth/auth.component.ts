@@ -10,6 +10,7 @@ import { PlaceholderDirective } from '../shared/directives/placeholder.directive
 import * as AuthActions from './state/auth.actions';
 import { selectAuthError, selectAuthLoading } from './state/auth.selectors';
 import { AppState } from '../core/state/app.store';
+import { AuthErrorCodesMessages } from './domain/errorCodes';
 
 type AuthPageMode =
   | 'login'
@@ -41,7 +42,8 @@ export class AuthComponent implements OnDestroy, OnInit {
     this.store
       .pipe(select(selectAuthError), takeUntil(this.destroy$))
       .subscribe((err) => {
-        if (err) {
+        console.log('ERRROR HEEERREE', err);
+        if (err && err !== AuthErrorCodesMessages.NotLoggedIn) {
           this.showErrorAlert(err);
         }
       });

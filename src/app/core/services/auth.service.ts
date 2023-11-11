@@ -17,6 +17,7 @@ import {
   getRedirectResult,
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
+import { AuthErrorCodes } from 'src/app/auth/domain/errorCodes';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -73,14 +74,13 @@ export class AuthService {
   authenticatedUser(): Observable<User | unknown> {
     return from(
       new Promise((resolve, reject) => {
-        this.auth.onAuthStateChanged(
-          (user) => {
+        this.auth.onAuthStateChanged((user) => {
+          if (user) {
             resolve(user);
-          },
-          (_) => {
-            reject(null);
+          } else {
+            reject({ code: AuthErrorCodes.NotLoggedIn });
           }
-        );
+        });
       })
     );
   }
