@@ -20,7 +20,7 @@
         *ngIf="authMode === 'signup' || authMode === 'resetPassword'">
         <input matInput type="password" id="confirmPassword" ngModel name="confirmPassword" appMustMatch="password"
           placeholder="Confirm password" required minlength="6" #confirmPassword="ngModel" />
-      
+
         <mat-icon class="text-zinc-400" matSuffix>key</mat-icon>
       </mat-form-field>
       <div class="flex flex-col place-self-center place-content-center self-stretch gap-4">
@@ -53,15 +53,15 @@
         </ng-container>
 
         <mat-card-actions>
-        
-          <button mat-button color="accent" type="button" (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
+
+          <button mat-button color="primary" type="button" (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
             <span class="text-sm">{{ authMode === "login" ? "Register an Account" : "Have an account?"
               }}</span>
           </button>
 
           <mat-divider [vertical]="true" [inset]="true"></mat-divider>
-          
-          <button mat-button color="accent" type="button" (click)="onSwitchMode('accountRecovery')"
+
+          <button mat-button color="primary" type="button" (click)="onSwitchMode('accountRecovery')"
             *ngIf="authMode !== 'accountRecovery'">
             <span class="text-sm">Forgot password ?</span>
             </button>
