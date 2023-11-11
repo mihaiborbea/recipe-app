@@ -8,7 +8,7 @@ export const environment: IEnvironment = {
   production: false,
   firebaseConfig: {
     apiKey: 'AIzaSyDv3qXHWQ71YzX1oNrL9FFOeW4OSMNpMH0',
-    authDomain: 'recipe-app-8ac24.firebaseapp.com',
+    authDomain: 'foodilo.app',
     databaseURL:
       'https://recipe-app-8ac24-default-rtdb.europe-west1.firebasedatabase.app',
     projectId: 'recipe-app-8ac24',

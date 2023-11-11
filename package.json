@@ -1,6 +1,6 @@
 {
-  "name": "recipe-app",
-  "version": "0.0.0",
+  "name": "foodilo",
+  "version": "0.8.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

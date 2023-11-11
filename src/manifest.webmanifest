@@ -1,6 +1,6 @@
 {
-  "name": "mRecipes",
-  "short_name": "mRecipes",
+  "name": "foodilo",
+  "short_name": "foodilo",
   "description": "A simple recipe app to save your recipes and search for new ones.",
   "lang": "en-US",
   "categories": ["food", "shopping", "lifestyle", "utilities"],
