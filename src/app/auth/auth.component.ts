@@ -42,9 +42,9 @@ export class AuthComponent implements OnDestroy, OnInit {
     private domSanitizer: DomSanitizer
   ) {
     this.matIconRegistry.addSvgIcon(
-      'meta',
+      'facebook',
       this.domSanitizer.bypassSecurityTrustResourceUrl(
-        '../../assets/icons/icon-meta-96x96.svg'
+        '../../assets/icons/icon-facebook-96x96.svg'
       )
     );
     this.matIconRegistry.addSvgIcon(
