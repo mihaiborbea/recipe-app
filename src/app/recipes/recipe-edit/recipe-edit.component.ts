@@ -11,6 +11,8 @@ import { Recipe } from '../domain/recipe.model';
 import { AppState } from 'src/app/core/state/app.store';
 import { User } from 'src/app/auth/domain/user.model';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
+import { FileUploadService } from 'src/app/core/services/fileupload.service';
+import { FileUpload } from 'src/app/shared/domain/fileupload.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -27,11 +29,16 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private fileUploadService: FileUploadService
   ) {}
 
-  get controls() {
+  get ingredientsControls() {
     return (<UntypedFormArray>this.recipeForm.get('ingredients')).controls;
+  }
+
+  get imagesControls() {
+    return (<UntypedFormArray>this.recipeForm.get('images')).controls;
   }
 
   ngOnInit(): void {
@@ -56,6 +63,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
+  onSelectImage(input: HTMLInputElement) {
+    const newfile = new FileUpload(input.files.item(0));
+    this.fileUploadService.pushFileToStorage(newfile);
+  }
+
   onAddIngredient() {
     (<UntypedFormArray>this.recipeForm.get('ingredients')).push(
       new UntypedFormGroup({
@@ -69,6 +81,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log('images', this.recipeForm.get('images'));
     if (this.editMode) {
       const editedRecipe = new Recipe(
         this.recipe.id,
@@ -114,9 +127,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       if (this.recipe.images) {
         recipeImages = new UntypedFormArray(
           this.recipe.images.map(
-            (i) =>
+            (img) =>
               new UntypedFormGroup({
-                url: new UntypedFormControl(i.url, Validators.required),
+                value: new UntypedFormControl(img.url, Validators.required),
               })
           )
         );
