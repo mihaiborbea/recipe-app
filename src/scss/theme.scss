@@ -4,7 +4,7 @@
 @include mat-core();
 
 // Define a light theme
-$light-primary: mat-palette($mat-teal);
+$light-primary: mat-palette($mat-green);
 $light-accent: mat-palette($mat-lime);
 $light-theme: mat-light-theme(
   (
@@ -16,7 +16,7 @@ $light-theme: mat-light-theme(
 );
 
 // Define a dark theme
-$dark-primary: mat-palette($mat-teal);
+$dark-primary: mat-palette($mat-green);
 $dark-accent: mat-palette($mat-lime);
 $dark-theme: mat-dark-theme(
   (
