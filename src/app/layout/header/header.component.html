@@ -4,7 +4,7 @@
   >
     <div
       class="sm:hidden"
-      *ngIf="isAuthenticated"
+      *ngIf="user"
     >
       <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
@@ -25,10 +25,10 @@
     <div class="hidden sm:flex flex-row grow 2xl:content-center 2xl:justify-center max-w-[80%]"
     >
       <ul class="flex gap-4 list-none text-xl">
-        <li *ngIf="isAuthenticated">
+        <li *ngIf="user">
           <a routerLink="/recipes" routerLinkActive="active">My Recipes</a>
         </li>
-        <li *ngIf="isAuthenticated">
+        <li *ngIf="user">
           <a routerLink="/shopping-list" routerLinkActive="active"
             >Shopping List</a
           >
@@ -37,10 +37,10 @@
     </div>
     <div
     class="hidden sm:flex flex-row grow content-center justify-end max-w-[10%]"
-      *ngIf="isAuthenticated"
+      *ngIf="user"
     >
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
+    <button mat-basic-button [matMenuTriggerFor]="menu">
+      <img [src]="user.profile.avatarUrl" />
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="$event.stopPropagation()">

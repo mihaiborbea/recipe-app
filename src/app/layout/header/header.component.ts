@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from '../../auth/state/auth.actions';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { AppState } from 'src/app/core/state/app.store';
+import { User } from 'src/app/auth/domain/user.model';
 
 @Component({
   selector: 'app-header',
@@ -19,14 +20,14 @@ import { AppState } from 'src/app/core/state/app.store';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() public sidenavToggle = new EventEmitter();
   collapsed = false;
-  isAuthenticated = false;
+  user: User = null;
   private userSub: Subscription;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.userSub = this.store.select(selectAuthUser).subscribe((user) => {
-      this.isAuthenticated = !!user;
+      this.user = user;
     });
   }
 

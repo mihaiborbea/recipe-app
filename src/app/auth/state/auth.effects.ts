@@ -191,7 +191,7 @@ export class AuthEffects {
 
   private async handleEmailAuthentication(userData) {
     const token = await userData.user.getIdToken();
-    const user = new User(userData.user.email, userData.user.uid, token);
+    const user = new User(userData.user.uid, userData.user.email, token, '');
     if (!userData.user.emailVerified) {
       await firstValueFrom(
         this.authService.sendEmailVerification(userData.user)
@@ -205,16 +205,17 @@ export class AuthEffects {
       providerName
     );
     const user = new User(
-      socialLoginRes.userData.user.email,
       socialLoginRes.userData.user.uid,
-      socialLoginRes.token
+      socialLoginRes.userData.user.email,
+      socialLoginRes.token,
+      socialLoginRes.userData.user.photoURL
     );
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
   private async handleAutomaticAuthentication(authData) {
     const token = await authData.getIdToken();
-    const user = new User(authData.email, authData.uid, token);
+    const user = new User(authData.uid, authData.email, token, '');
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
