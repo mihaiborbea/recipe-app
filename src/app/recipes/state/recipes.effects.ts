@@ -12,15 +12,27 @@ import { FileUploadService } from 'src/app/core/services/fileupload.service';
 import { FileUpload } from 'src/app/shared/domain/fileupload.model';
 @Injectable()
 export class RecipesEffects {
-  fetchRecipes$ = createEffect(() =>
+  fetchUserRecipes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        RecipesActions.fetchRecipes,
+        RecipesActions.fetchUserRecipes,
         RecipesActions.createRecipe,
         RecipesActions.updateRecipe
       ),
       withLatestFrom(this.store.select(selectAuthUser)),
       switchMap(([_, user]) => this.recipesService.getUserRecipes(user.id)),
+      map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
+    )
+  );
+
+  fetchAllRecipes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        RecipesActions.fetchAllRecipes,
+        RecipesActions.createRecipe,
+        RecipesActions.updateRecipe
+      ),
+      switchMap((action) => this.recipesService.getAllRecipes()),
       map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
     )
   );

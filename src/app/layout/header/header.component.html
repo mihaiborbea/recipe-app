@@ -29,7 +29,7 @@
           [src]="(user$ | async).profile.avatarUrl ? (user$ | async).profile.avatarUrl : '../../../assets/icons/user-avatar.svg'" />
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/recipes" routerLinkActive="active">
+        <button mat-menu-item routerLink="/my-recipes" routerLinkActive="active">
           <span>My Recipes</span>
         </button>
         <button mat-menu-item disabled="true">

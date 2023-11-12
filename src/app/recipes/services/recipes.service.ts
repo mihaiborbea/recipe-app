@@ -31,6 +31,13 @@ export class RecipesService {
     return docs.map((d) => d.data());
   }
 
+  async getAllRecipes(): Promise<Recipe[]> {
+    const recipesColl = collection(this.firestore, `recipes`);
+    const q = query(recipesColl).withConverter(recipeConverter);
+    const docs = (await getDocs(q)).docs;
+    return docs.map((d) => d.data());
+  }
+
   async addOrUpdateRecipe(recipe: Partial<Recipe>): Promise<void> {
     let docRef: DocumentReference;
     if (recipe.id) {

@@ -12,7 +12,8 @@ export class CoreEffects {
   showLoadingBar$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        RecipesActions.fetchRecipes,
+        RecipesActions.fetchUserRecipes,
+        RecipesActions.fetchAllRecipes,
         ShoppingListActions.fetchShoppingList,
         AuthActions.signupStart,
         AuthActions.loginWithEmail

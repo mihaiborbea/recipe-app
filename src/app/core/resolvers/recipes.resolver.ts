@@ -25,7 +25,12 @@ export class RecipesResolver  {
       take(1),
       switchMap((recipes) => {
         if (recipes.length === 0) {
-          this.store.dispatch(RecipesActions.fetchRecipes());
+          console.log(state);
+          const userOrAllRecipes = state.url === '/my-recipes' ? 'User' : 'All';
+          console.log(userOrAllRecipes);
+          this.store.dispatch(
+            RecipesActions[`fetch${userOrAllRecipes}Recipes`]()
+          );
           return this.actions$.pipe(
             ofType(RecipesActions.SET_RECIPES),
             take(1)
