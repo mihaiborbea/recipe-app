@@ -11,16 +11,14 @@
         <mat-icon class="text-zinc-400" matSuffix>email</mat-icon>
       </mat-form-field>
       <mat-form-field [hideRequiredMarker]="true" class="self-stretch" *ngIf="authMode !== 'accountRecovery'">
-        <input matInput type="password" id="password" ngModel name="password" [placeholder]="authMode==='resetPassword'
-                                                                                              ? 'New password' : 'Password'"
-          required minlength="6" #password="ngModel" />
+        <input matInput type="password" id="password" ngModel name="password"
+          [placeholder]="authMode==='resetPassword' ? 'New password' : 'Password'" required minlength="6" #password="ngModel" />
         <mat-icon class="text-zinc-400" matSuffix>key</mat-icon>
       </mat-form-field>
       <mat-form-field [hideRequiredMarker]="true" class="self-stretch"
         *ngIf="authMode === 'signup' || authMode === 'resetPassword'">
         <input matInput type="password" id="confirmPassword" ngModel name="confirmPassword" appMustMatch="password"
           placeholder="Confirm password" required minlength="6" #confirmPassword="ngModel" />
-
         <mat-icon class="text-zinc-400" matSuffix>key</mat-icon>
       </mat-form-field>
       <div class="flex flex-col place-self-center place-content-center self-stretch gap-4">
@@ -52,21 +50,17 @@
         </button> -->
         </ng-container>
 
-        <mat-card-actions>
-
+        <div class="flex flex-col place-self-center place-content-center self-stretch gap-0">
           <button mat-button color="primary" type="button" (click)="onSwitchMode(authMode === 'login' ? 'signup' : 'login')">
-            <span class="text-sm">{{ authMode === "login" ? "Register an Account" : "Have an account?"
+            <span class="text-sm">{{ authMode === "login" ? "Register a new account" : "Have an account ? Login"
               }}</span>
           </button>
-
-          <mat-divider [vertical]="true" [inset]="true"></mat-divider>
-
           <button mat-button color="primary" type="button" (click)="onSwitchMode('accountRecovery')"
             *ngIf="authMode !== 'accountRecovery'">
             <span class="text-sm">Forgot password ?</span>
-            </button>
-        </mat-card-actions>
+          </button>
+        </div>
       </div>
-      </form>
+    </form>
   </mat-card>
 </div>
