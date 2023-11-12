@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 18.18
       - name: npm dependencies
-        run: npm install
+        run: npm install --force
       - name: Build
         run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
