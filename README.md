@@ -1,6 +1,6 @@
 # RecipeApp ![main workflow](https://github.com/mihaiborbea/recipe-app/actions/workflows/firebase-hosting-merge.yml/badge.svg)
 
-<img alt="foodilo-logo" src="https://github.com/mihaiborbea/recipe-app/blob/main/src/assets/logo/brand-logo.png" width="200" height="200" />
+<img alt="foodilo-logo" src="https://github.com/mihaiborbea/recipe-app/blob/main/src/assets/logo/brand-logo-mono-white.png" width="200" height="200" />
 A simple web app to store cooking recipes and to manage a shopping list.
 
 ## Features:
