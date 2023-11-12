@@ -11,7 +11,6 @@ import { Recipe } from '../domain/recipe.model';
 import { AppState } from 'src/app/core/state/app.store';
 import { User } from 'src/app/auth/domain/user.model';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
-import { FileUploadService } from 'src/app/core/services/fileupload.service';
 import { FileUpload } from 'src/app/shared/domain/fileupload.model';
 
 @Component({
@@ -29,19 +28,15 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<AppState>,
-    private fileUploadService: FileUploadService
+    private store: Store<AppState>
   ) {}
 
   get ingredientsControls() {
     return (<UntypedFormArray>this.recipeForm.get('ingredients')).controls;
   }
 
-  get imagesControls() {
-    return (<UntypedFormArray>this.recipeForm.get('images')).controls;
-  }
-
   ngOnInit(): void {
+    console.log('HERE');
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
@@ -63,11 +58,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  onSelectImage(input: HTMLInputElement) {
-    const newfile = new FileUpload(input.files.item(0));
-    this.fileUploadService.pushFileToStorage(newfile);
-  }
-
   onAddIngredient() {
     (<UntypedFormArray>this.recipeForm.get('ingredients')).push(
       new UntypedFormGroup({
@@ -81,13 +71,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('images', this.recipeForm.get('images'));
+    const recipeImage = new FileUpload(
+      this.recipeForm.get('image').value.files[0].name,
+      'gs://TBD',
+      this.recipeForm.get('image').value.files[0]
+    );
     if (this.editMode) {
       const editedRecipe = new Recipe(
         this.recipe.id,
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
-        this.recipeForm.get('images').value,
+        recipeImage,
         this.recipeForm.get('ingredients').value,
         this.currentUser.id
       );
@@ -99,7 +93,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         null,
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
-        this.recipeForm.get('images').value,
+        recipeImage,
         this.recipeForm.get('ingredients').value,
         this.currentUser.id
       );
@@ -118,22 +112,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let recipeName = '';
-    let recipeImages = new UntypedFormArray([]);
+    let recipeImage = null;
     let recipeDescription = '';
     let recipeIngredients = new UntypedFormArray([]);
 
     if (this.editMode) {
       recipeName = this.recipe.name;
-      if (this.recipe.images) {
-        recipeImages = new UntypedFormArray(
-          this.recipe.images.map(
-            (img) =>
-              new UntypedFormGroup({
-                value: new UntypedFormControl(img.url, Validators.required),
-              })
-          )
-        );
-      }
       recipeDescription = this.recipe.description;
       if (this.recipe.ingredients) {
         recipeIngredients = new UntypedFormArray(
@@ -153,7 +137,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.recipeForm = new UntypedFormGroup({
       name: new UntypedFormControl(recipeName, Validators.required),
-      images: recipeImages,
+      image: new UntypedFormControl(recipeImage, Validators.required),
       description: new UntypedFormControl(
         recipeDescription,
         Validators.required

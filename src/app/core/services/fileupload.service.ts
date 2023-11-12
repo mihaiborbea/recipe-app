@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import {
+  Storage,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 
 import { FileUpload } from '../../shared/domain/fileupload.model';
 
@@ -9,15 +14,20 @@ export class FileUploadService {
 
   constructor(private storage: Storage) {}
 
-  async pushFileToStorage(fileUpload: FileUpload): Promise<any> {
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+  async pushFileToStorage(
+    fileUpload: FileUpload,
+    collection?: string
+  ): Promise<string> {
+    const filePath = `${collection ? collection : this.basePath}/${
+      '' + Date.now() + fileUpload.file.name
+    }`;
     const storageRef = ref(this.storage, filePath);
     const uploadTask = uploadBytesResumable(storageRef, fileUpload.file);
 
-    // const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
     const uploadedFile = await uploadTask;
 
-    return uploadedFile;
+    const downloadURL = await getDownloadURL(uploadedFile.ref);
+
+    return downloadURL;
   }
 }

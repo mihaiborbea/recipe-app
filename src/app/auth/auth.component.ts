@@ -59,7 +59,6 @@ export class AuthComponent implements OnDestroy, OnInit {
     this.store
       .pipe(select(selectAuthError), takeUntil(this.destroy$))
       .subscribe((err) => {
-        console.log('ERRROR HEEERREE', err);
         if (err && err !== AuthErrorCodesMessages.NotLoggedIn) {
           this.showErrorAlert(err);
         }

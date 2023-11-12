@@ -14,12 +14,12 @@
         <mat-icon class="text-zinc-400" matSuffix>restaurant_menu</mat-icon>
         </mat-form-field>
       <mat-form-field class="flex flex-row w-full mt-1 mb-2">
-        <ngx-mat-file-input placeholder="Images" formControlName="images" [accept]="'image/*'" [multiple]="true"
-          onChange="onSelectImage(upload)" #uplaod />
+        <ngx-mat-file-input [valuePlaceholder]="editMode ? 'Change image' :'Select image'" formControlName="image"
+          [accept]="'image/*'" />
         <mat-icon class="text-zinc-400" matSuffix>folder</mat-icon>
       </mat-form-field>
-      <div *ngFor="let image of imagesControls">
-        <img [src]="image.value" alt="" />
+      <div *ngIf="recipe?.image">
+        <img [src]="recipe.image.url" alt="" />
       </div>
       <mat-form-field class="flex flex-row w-full mt-1 mb-2">
         <textarea placeholder="Description" matInput type="text" id="description" rows="4"
