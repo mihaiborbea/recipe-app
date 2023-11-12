@@ -40,7 +40,7 @@
       *ngIf="user"
     >
     <button mat-basic-button [matMenuTriggerFor]="menu">
-      <img [src]="user.profile.avatarUrl" />
+      <img [src]="user.profile.avatarUrl ? user.profile.avatarUrl : '../../../assets/icons/user-avatar.svg'" />
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="$event.stopPropagation()">

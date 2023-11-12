@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSub = this.store.select(selectAuthUser).subscribe((user) => {
       this.user = user;
+      console.log('USER', this.user);
     });
   }
 
