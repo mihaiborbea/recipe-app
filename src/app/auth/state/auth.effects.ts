@@ -204,6 +204,7 @@ export class AuthEffects {
     const socialLoginRes = await this.authService.socialLoginResult(
       providerName
     );
+    console.log('Social login result:', socialLoginRes);
     const user = new User(
       socialLoginRes.userData.user.uid,
       socialLoginRes.userData.user.email,
