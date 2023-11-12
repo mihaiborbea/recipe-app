@@ -208,7 +208,7 @@ export class AuthEffects {
       socialLoginRes.userData.user.uid,
       socialLoginRes.userData.user.email,
       socialLoginRes.token,
-      socialLoginRes.userData.user.photoURL
+      socialLoginRes.userData.user.providerData[0].photoURL
     );
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
