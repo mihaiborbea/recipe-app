@@ -6,7 +6,6 @@ export class Recipe {
     public id: string,
     public name: string,
     public description: string,
-    public imagePath: string,
     public images: FileUpload[],
     public ingredients: Ingredient[],
     public createdBy: string
@@ -18,7 +17,6 @@ export const recipeConverter = {
     return {
       name: recipe.name,
       description: recipe.description,
-      imagePath: recipe.imagePath,
       images: recipe.images,
       ingredients: recipe.ingredients.map((i) => ({ ...i })),
       createdBy: recipe.createdBy,
@@ -30,7 +28,6 @@ export const recipeConverter = {
       snapshot.id,
       data.name,
       data.description,
-      data.imagePath,
       data.images,
       data.ingredients.map((i) => new Ingredient(i.name, i.amount)),
       data.createdBy

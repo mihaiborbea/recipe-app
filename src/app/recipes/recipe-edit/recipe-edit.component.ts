@@ -74,7 +74,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.recipe.id,
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
-        this.recipeForm.get('imagePath').value,
         this.recipeForm.get('images').value,
         this.recipeForm.get('ingredients').value,
         this.currentUser.id
@@ -87,7 +86,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         null,
         this.recipeForm.get('name').value,
         this.recipeForm.get('description').value,
-        this.recipeForm.get('imagePath').value,
         this.recipeForm.get('images').value,
         this.recipeForm.get('ingredients').value,
         this.currentUser.id
@@ -107,14 +105,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let recipeName = '';
-    let recipeImagePath = '';
     let recipeImages = new UntypedFormArray([]);
     let recipeDescription = '';
     let recipeIngredients = new UntypedFormArray([]);
 
     if (this.editMode) {
       recipeName = this.recipe.name;
-      recipeImagePath = this.recipe.imagePath;
       if (this.recipe.images) {
         recipeImages = new UntypedFormArray(
           this.recipe.images.map(
@@ -144,7 +140,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.recipeForm = new UntypedFormGroup({
       name: new UntypedFormControl(recipeName, Validators.required),
-      imagePath: new UntypedFormControl(recipeImagePath, Validators.required),
       images: recipeImages,
       description: new UntypedFormControl(
         recipeDescription,
