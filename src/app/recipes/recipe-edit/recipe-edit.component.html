@@ -10,38 +10,37 @@
         </button>
       </div>
       <mat-form-field class="flex flex-row w-full mt-2 mb-1">
-        <mat-label for="name">Name</mat-label>
-        <input matInput type="text" id="name" name="name" formControlName="name" />
+        <input matInput type="text" id="name" name="name" formControlName="name" placeholder="Recipe name" />
+        <mat-icon class="text-zinc-400" matSuffix>restaurant_menu</mat-icon>
         </mat-form-field>
-      <mat-form-field class="flex flex-row w-full mt-1 mb-1">
-        <mat-label for="imagePath">Image URL</mat-label>
-        <input matInput type="text" id="imagePath" name="imagePath" formControlName="imagePath" #imagePath />
-        </mat-form-field>
-      <div>
-        <img [src]="imagePath.value" alt="" />
+      <mat-form-field class="flex flex-row w-full mt-1 mb-2">
+        <ngx-mat-file-input [valuePlaceholder]="editMode ? 'Change image' :'Select image'" formControlName="image"
+          [accept]="'image/*'" />
+        <mat-icon class="text-zinc-400" matSuffix>folder</mat-icon>
+      </mat-form-field>
+      <div *ngIf="recipe?.image">
+        <img [src]="recipe.image.url" alt="" />
       </div>
       <mat-form-field class="flex flex-row w-full mt-1 mb-2">
-        <mat-label for="description">Description</mat-label>
-        <textarea matInput type="text" id="description" rows="4" formControlName="description"></textarea>
+        <textarea placeholder="Description" matInput type="text" id="description" rows="4"
+          formControlName="description"></textarea>
+        <mat-icon class="text-zinc-400" matSuffix>receipt</mat-icon>
         </mat-form-field>
       <div class="flex flex-col h-full">
         <div formArrayName="ingredients">
-          <div *ngFor="let ingredients of controls; let i = index" [formGroupName]="i" class="flex flex-row gap-2 w-full">
-            <mat-form-field class="w-[80%] mt-1 mb-1">
+          <div *ngFor="let ingredients of ingredientsControls; let i = index" [formGroupName]="i" class="flex flex-row w-full">
+            <mat-form-field appearance="fill" class="w-[80%] mt-1 mb-1">
               <input matInput type="text" placeholder="Ingredient name" formControlName="name" />
             </mat-form-field>
-            <mat-form-field class="w-[20%] mt-1 mb-1">
-              <input matInput type="text" placeholder="Ingredient amount" formControlName="amount" />
+            <mat-form-field appearance="fill" class="w-[20%] mt-1 mb-1">
+              <input matInput type="text" placeholder="Amount" formControlName="amount" />
             </mat-form-field>
-            <button mat-icon-button color="warn" type="button" class="mt-3" (click)="onDeleteIngredient(i)">
-              <mat-icon>close</mat-icon>
+            <button mat-icon-button color="accent" type="button" class="mt-3" (click)="onDeleteIngredient(i)">
+              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </div>
-        <div>
-          <mat-divider class="flex grow mb-3"></mat-divider>
-          </div>
-          <div>
+          <div class="flex flex-row gap-2">
             <button mat-raised-button color="accent" type="button" (click)="onAddIngredient()">
               Add Ingredient
             </button>

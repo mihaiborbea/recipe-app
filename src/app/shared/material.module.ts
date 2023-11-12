@@ -15,6 +15,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 const materialComponents = [
   MatToolbarModule,
@@ -30,6 +31,7 @@ const materialComponents = [
   MatProgressBarModule,
   MatMenuModule,
   MatProgressSpinnerModule,
+  MaterialFileInputModule,
 ];
 
 @NgModule({

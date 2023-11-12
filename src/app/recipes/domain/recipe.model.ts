@@ -1,3 +1,4 @@
+import { FileUpload } from '../../shared/domain/fileupload.model';
 import { Ingredient } from '../../shared/domain/ingredient.model';
 
 export class Recipe {
@@ -5,7 +6,7 @@ export class Recipe {
     public id: string,
     public name: string,
     public description: string,
-    public imagePath: string,
+    public image: FileUpload,
     public ingredients: Ingredient[],
     public createdBy: string
   ) {}
@@ -13,10 +14,12 @@ export class Recipe {
 
 export const recipeConverter = {
   toFirestore: (recipe: Recipe) => {
+    const allowedImage = { ...recipe.image };
+    delete allowedImage.file;
     return {
       name: recipe.name,
       description: recipe.description,
-      imagePath: recipe.imagePath,
+      image: allowedImage,
       ingredients: recipe.ingredients.map((i) => ({ ...i })),
       createdBy: recipe.createdBy,
     };
@@ -27,7 +30,7 @@ export const recipeConverter = {
       snapshot.id,
       data.name,
       data.description,
-      data.imagePath,
+      new FileUpload(data.image.name, data.image.url, null),
       data.ingredients.map((i) => new Ingredient(i.name, i.amount)),
       data.createdBy
     );

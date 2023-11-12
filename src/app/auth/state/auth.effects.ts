@@ -219,7 +219,6 @@ export class AuthEffects {
   }
 
   private handleError(errorRes: any) {
-    console.log('HEREEEEEEEEE', errorRes);
     let errorMsg = 'An unknown error occurred!';
     if (!errorRes.code) {
       return of(AuthActions.authenticateFail({ errorMessage: errorMsg }));

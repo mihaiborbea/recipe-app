@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import {
   browserLocalPersistence,
   getAuth,
   provideAuth,
 } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import { metaReducers } from './state/meta.reducers';
 import { CoreEffects } from './state/core.effects';
@@ -25,6 +26,10 @@ import { appReducer } from './state/app.store';
       return auth;
     }),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => {
+      const app = getApp();
+      return getStorage(app);
+    }),
     StoreModule.forRoot(appReducer, {
       metaReducers: metaReducers,
     }),
