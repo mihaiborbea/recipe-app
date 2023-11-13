@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldModule,
@@ -32,6 +33,7 @@ const materialComponents = [
   MatMenuModule,
   MatProgressSpinnerModule,
   MaterialFileInputModule,
+  MatBadgeModule,
 ];
 
 @NgModule({

@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
-  <div class="flex flex-row place-content-start lg:place-content-center items-center justify-items-stretch w-full">
-    <div class="sm:hidden" *ngIf="user$ | async">
+  <div class="flex flex-row lg:place-content-center items-center justify-between justify-items-stretch w-full">
+    <div *ngIf="user$ | async" class="sm:hidden">
       <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="w-1/9 sm:w-[10%] mr-4">
+    <div class="place-content-start w-1/9 sm:w-[10%] w-[90%] mr-4">
       <a routerLink="/">
         <img title="logo" src="../../../assets/logo/brand-logo-mono-black.png" class="sm:max-w-[70px] max-w-[60px]" />
       </a>
@@ -17,13 +17,12 @@
         </li>
       </ul>
     </div>
-    <div class="hidden sm:flex flex-row grow content-center justify-end max-w-[5%]" *ngIf="(user$ | async)">
+    <div *ngIf="(user$ | async)" class="flex flex-row content-center place-content-end justify-end w-[5%] mr-4">
       <button mat-basic-button routerLink="/shopping-list">
-        <mat-icon>add_shopping_cart</mat-icon>
-        <span>0</span>
+        <mat-icon matBadge="0" matBadgeOverlap="false" matBadgeColor="accent">add_shopping_cart</mat-icon>
       </button>
     </div>
-    <div class="hidden sm:flex flex-row grow content-center justify-end max-w-[5%]" *ngIf="(user$ | async)">
+    <div *ngIf="(user$ | async)" class="hidden sm:flex flex-row grow content-center justify-end max-w-[5%]">
       <button mat-basic-button [matMenuTriggerFor]="menu">
         <img
           [src]="(user$ | async).profile.avatarUrl ? (user$ | async).profile.avatarUrl : '../../../assets/icons/user-avatar.svg'" />
@@ -31,12 +30,15 @@
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/my-recipes" routerLinkActive="active">
           <span>My Recipes</span>
+          <mat-icon>menu_book</mat-icon>
         </button>
         <button mat-menu-item disabled="true">
           <span>My Adresses</span>
+          <mat-icon>pin_drop</mat-icon>
         </button>
         <button mat-menu-item disabled="true">
           <span>My Orders</span>
+          <mat-icon>history_edu</mat-icon>
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="$event.stopPropagation()">
@@ -44,6 +46,7 @@
         </button>
         <button mat-menu-item (click)="onLogout()">
           <span>Logout</span>
+          <mat-icon>logout</mat-icon>
         </button>
       </mat-menu>
     </div>

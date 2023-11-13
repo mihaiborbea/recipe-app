@@ -1,18 +1,36 @@
-<mat-nav-list class="flex flex-col list-none h-full">
-  <div class="flex flex-col list-none h-full">
-    <mat-list-item class="flex grow-0" routerLink="/recipes" (click)="onSidenavClose()">
-      <mat-icon fontSet="material-icons-outlined">fastfood</mat-icon>
+<mat-nav-list class="flex flex-col list-none justify-between justify-items-stretch h-full">
+  <mat-list-item class="justify-start" routerLink="/recipes" (click)="onSidenavClose()">
+    <span class="flex flex-row items-center gap-2">
+      <mat-icon>restaurant_menu</mat-icon>
       <span class="nav-caption">Recipes</span>
-    </mat-list-item>
-    <mat-list-item class="flex grow-0" routerLink="/shopping-list" (click)="onSidenavClose()">
-      <mat-icon fontSet="material-icons-outlined">shopping_bag</mat-icon><span class="nav-caption">Shopping List</span>
-    </mat-list-item>
-    <mat-divider class="flex grow my-auto"></mat-divider>
-    <mat-list-item class="flex grow-0">
-      <app-theme-switch></app-theme-switch>
-    </mat-list-item>
-    <mat-list-item class="flex grow-0" (click)="onLogout(); onSidenavClose()">
-      <mat-icon>logout</mat-icon><span class="nav-caption">Logout</span>
-    </mat-list-item>
-  </div>
+    </span>
+  </mat-list-item>
+  <mat-list-item class="justify-end" routerLink="/my-recipes" routerLinkActive="active">
+    <span class="flex flex-row items-center gap-2">
+      <mat-icon>menu_book</mat-icon>
+      <span>My Recipes</span>
+    </span>
+  </mat-list-item>
+  <mat-list-item class="justify-end" disabled="true">
+    <span class="flex flex-row items-center gap-2">
+      <mat-icon>pin_drop</mat-icon>
+      <span>My Adresses</span>
+    </span>
+  </mat-list-item>
+  <mat-list-item class="justify-end" disabled="true">
+    <span class="flex flex-row items-center gap-2">
+      <mat-icon>history_edu</mat-icon>
+      <span>My Orders</span>
+    </span>
+  </mat-list-item>
+  <mat-divider class="justify-end"></mat-divider>
+  <mat-list-item class="gap-2 justify-end">
+    <app-theme-switch></app-theme-switch>
+  </mat-list-item>
+  <mat-list-item class="justify-end" (click)="onLogout(); onSidenavClose()">
+    <span class="flex flex-row items-center gap-2">
+      <mat-icon>logout</mat-icon>
+      <span class="nav-caption">Logout</span>
+    </span>
+  </mat-list-item>
 </mat-nav-list>
