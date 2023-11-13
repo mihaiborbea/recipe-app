@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AppThemes, ThemeService } from '../../../core/services/theme.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-switch',
@@ -9,7 +9,7 @@ import { AppThemes, ThemeService } from '../../../core/services/theme.service';
   styleUrls: ['./theme-switch.component.scss'],
 })
 export class ThemeSwitchComponent implements OnInit, OnDestroy {
-  isDarkTheme;
+  currentTheme;
 
   private sub: Subscription;
 
@@ -17,7 +17,7 @@ export class ThemeSwitchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.themeService.currentTheme$.subscribe((theme) => {
-      this.isDarkTheme = theme === AppThemes.dark ? true : false;
+      this.currentTheme = theme;
     });
   }
 
@@ -25,7 +25,7 @@ export class ThemeSwitchComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  onToggleTheme() {
-    this.themeService.toggleTheme();
+  onSelectTheme(value: string) {
+    this.themeService.setTheme(value);
   }
 }

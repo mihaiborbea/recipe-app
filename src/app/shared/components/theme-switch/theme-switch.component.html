@@ -1,3 +1,13 @@
-<mat-slide-toggle [checked]="isDarkTheme" (change)="onToggleTheme()">
-  <mat-icon class="ml-1 mt-1">{{ isDarkTheme ? " mode_night" : "light_mode" }}</mat-icon>
-</mat-slide-toggle>
+<mat-button-toggle-group disableRipple="true" appearance="legacy" (change)="onSelectTheme(group.value)"
+  #group="matButtonToggleGroup" name="appTheme" aria-label="App Theme"
+  class="flex flex-row place-content-center gap-8 w-full shadow-none">
+  <mat-button-toggle [checked]="currentTheme === 'light-theme'" value="light-theme">
+    <mat-icon [color]="currentTheme === 'light-theme' ? 'accent':''">light_mode</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle [checked]="currentTheme === 'system'" value="system">
+    <mat-icon [color]="currentTheme === 'system' ? 'accent':''">devices</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle [checked]="currentTheme === 'dark-theme'" value="dark-theme">
+    <mat-icon [color]="currentTheme === 'dark-theme' ? 'accent':''">mode_night</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>

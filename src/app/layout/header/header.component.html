@@ -40,8 +40,8 @@
           <span>My Orders</span>
           <mat-icon>history_edu</mat-icon>
         </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="$event.stopPropagation()">
+        <mat-divider class="py-1"></mat-divider>
+        <button class="px-0" mat-menu-item (click)="$event.stopPropagation()">
           <app-theme-switch></app-theme-switch>
         </button>
         <button mat-menu-item (click)="onLogout()">

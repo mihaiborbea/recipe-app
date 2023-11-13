@@ -6,6 +6,7 @@ import { UserSettingsService } from './user-settings.service';
 export enum AppThemes {
   light = 'light-theme',
   dark = 'dark-theme',
+  system = 'system',
 }
 
 @Injectable({
@@ -29,18 +30,17 @@ export class ThemeService {
       this.userSettingsService.item = { appTheme: theme as AppThemes };
       if (theme === AppThemes.dark) {
         this.renderer.addClass(this.document.body, AppThemes.dark);
+      } else if (theme === AppThemes.system) {
+        this.renderer.addClass(this.document.body, AppThemes.system);
       } else {
         this.renderer.removeClass(this.document.body, AppThemes.dark);
+        this.renderer.removeClass(this.document.body, AppThemes.system);
       }
     });
   }
 
-  toggleTheme(): void {
-    if (this._currentThemeSub.getValue() === AppThemes.light) {
-      this._currentThemeSub.next(AppThemes.dark);
-    } else {
-      this._currentThemeSub.next(AppThemes.light);
-    }
+  setTheme(theme: string): void {
+    this._currentThemeSub.next(theme as AppThemes);
   }
 
   get currentTheme$(): Observable<string> {

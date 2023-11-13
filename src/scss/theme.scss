@@ -47,3 +47,13 @@ $dark-theme: mat-dark-theme(
   --background: #{map-get(map-get($dark-theme, background), background)};
   --backdrop: #{"rgba(#{red(mat-color(map-get($dark-theme, foreground), text))},#{green(mat-color(map-get($dark-theme, foreground), text))},#{blue(mat-color(map-get($dark-theme, foreground), text))}, 0.35)"};
 }
+
+.system {
+  @media (prefers-color-scheme: light) {
+    @include angular-material-theme($light-theme);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @include angular-material-theme($dark-theme);
+  }
+}

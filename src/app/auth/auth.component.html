@@ -3,7 +3,7 @@
   <div *ngIf="isLoading$ | async">
     <mat-spinner></mat-spinner>
   </div>
-  <mat-card class="bg-zinc-500 mt-12 p-4 w-4/5 md:w-2/5 lg:w-1/3 xl:w-1/5">
+  <mat-card class="mt-12 p-4 w-4/5 md:w-2/5 lg:w-1/3 xl:w-1/5">
     <form class="flex flex-col place-self-center place-content-center w-full" #authForm="ngForm"
       (ngSubmit)="onSubmit(authForm)" *ngIf="(isLoading$ | async) === false">
       <mat-form-field [hideRequiredMarker]="true" class="self-stretch" *ngIf="authMode !== 'resetPassword'">
