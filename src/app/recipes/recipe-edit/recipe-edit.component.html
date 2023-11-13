@@ -1,49 +1,49 @@
 <div class="pb-4">
-    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-      <div class="flex flex-row gap-2">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">
-          Save
-        </button>
-        <button mat-raised-button color="warn" type="button" (click)="onCancel()">
-          Cancel
-        </button>
+  <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+    <div class="flex flex-row gap-2">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">
+        Save
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+    <mat-form-field class="w-full mt-2 mb-1">
+      <input matInput type="text" id="name" name="name" formControlName="name" placeholder="Recipe name" />
+      <mat-icon class="text-zinc-400" matSuffix>restaurant_menu</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="w-full mt-1 mb-1">
+      <input matInput type="text" id="description" name="description" formControlName="description"
+        placeholder="Description" />
+      <mat-icon class="text-zinc-400" matSuffix>receipt</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="w-full mt-1 mb-1">
+      <ngx-mat-file-input [valuePlaceholder]="editMode ? 'Change image' :'Select image'" formControlName="image"
+        [accept]="'image/*'" />
+      <mat-icon class="text-zinc-400" matSuffix>folder</mat-icon>
+    </mat-form-field>
+    <div *ngIf="recipe?.image">
+      <img class="w-[600px] h-[600px] object-fill" [src]="recipe.image.url" alt="" />
       </div>
-      <mat-form-field class="flex flex-row w-full mt-2 mb-1">
-        <input matInput type="text" id="name" name="name" formControlName="name" placeholder="Recipe name" />
-        <mat-icon class="text-zinc-400" matSuffix>restaurant_menu</mat-icon>
-        </mat-form-field>
-      <mat-form-field class="flex flex-row w-full mt-1 mb-2">
-        <ngx-mat-file-input [valuePlaceholder]="editMode ? 'Change image' :'Select image'" formControlName="image"
-          [accept]="'image/*'" />
-        <mat-icon class="text-zinc-400" matSuffix>folder</mat-icon>
-      </mat-form-field>
-      <div *ngIf="recipe?.image">
-        <img [src]="recipe.image.url" alt="" />
-      </div>
-      <mat-form-field class="flex flex-row w-full mt-1 mb-2">
-        <textarea placeholder="Description" matInput type="text" id="description" rows="4"
-          formControlName="description"></textarea>
-        <mat-icon class="text-zinc-400" matSuffix>receipt</mat-icon>
-        </mat-form-field>
-      <div class="flex flex-col h-full">
-        <div formArrayName="ingredients">
-          <div *ngFor="let ingredients of ingredientsControls; let i = index" [formGroupName]="i" class="flex flex-row w-full">
-            <mat-form-field appearance="fill" class="w-[80%] mt-1 mb-1">
-              <input matInput type="text" placeholder="Ingredient name" formControlName="name" />
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-[20%] mt-1 mb-1">
-              <input matInput type="text" placeholder="Amount" formControlName="amount" />
-            </mat-form-field>
-            <button mat-icon-button color="accent" type="button" class="mt-3" (click)="onDeleteIngredient(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+    <div class="flex flex-col h-full mt-3">
+      <div formArrayName="ingredients">
+        <div *ngFor="let ingredients of ingredientsControls; let i = index" [formGroupName]="i" class="flex flex-row w-full">
+          <mat-form-field appearance="fill" class="w-[80%]">
+            <input matInput type="text" placeholder="Ingredient name" formControlName="name" />
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-[20%]">
+            <input matInput type="text" placeholder="Amount" formControlName="amount" />
+          </mat-form-field>
+          <button mat-icon-button color="accent" type="button" class="mt-3" (click)="onDeleteIngredient(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
           </div>
         </div>
-          <div class="flex flex-row gap-2">
-            <button mat-raised-button color="accent" type="button" (click)="onAddIngredient()">
-              Add Ingredient
-            </button>
+        <div class="gap-2">
+          <button mat-raised-button color="accent" type="button" (click)="onAddIngredient()">
+            Add Ingredient
+          </button>
         </div>
-      </div>
-    </form>
+        </div>
+        </form>
 </div>

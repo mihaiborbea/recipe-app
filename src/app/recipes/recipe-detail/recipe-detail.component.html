@@ -1,52 +1,42 @@
-<div class="pb-5">
-  <div>
+<div class="pb-5 w-full">
+  <div class="flex flex-col sm:flex-row gap-2 mb-2">
+    <span class="text-2xl font-bold">{{ recipe.name }}</span>
     <div>
-      <h1>{{ recipe.name }}</h1>
-    </div>
-  </div>
-  <div>
-    <div class="mb-3">
-      <img [src]="recipe?.image?.url" alt="" />
-    </div>
-  </div>
-  <div>
-    <div>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        [matMenuTriggerFor]="recipeMenu"
-      >
-        Manage Recipe <mat-icon>expand_more</mat-icon>
+      <button mat-stroked-button color="accent" type="button" [matMenuTriggerFor]="recipeMenu">
+        Manage Recipe <mat-icon>edit</mat-icon>
       </button>
-      <mat-menu #recipeMenu="matMenu">
-        <button mat-menu-item (click)="onAddToShoppingList()">
-          <span>Add to Shopping List</span>
-        </button>
+      <mat-menu class="w-full" #recipeMenu="matMenu">
         <button mat-menu-item (click)="onEditRecipe()">
           <span>Edit Recipe</span>
         </button>
         <button mat-menu-item (click)="onDeleteRecipe()">
           <span>Delete Recipe</span>
         </button>
-      </mat-menu>
+        </mat-menu>
     </div>
   </div>
-  <br />
-  <div>
-    <div>
-      <p>{{ recipe.description }}</p>
-    </div>
+  <div class="mb-2">
+    <span>{{ recipe.description }}</span>
   </div>
-  <br />
+  <div class="mb-3">
+    <img class="w-full max-h-[300px] sm:max-h-[600px] object-cover" [src]="recipe?.image?.url" alt="" />
+  </div>
   <div>
-    <div>
-      <mat-list>
-        <mat-list-item *ngFor="let ingredient of recipe.ingredients">
-          {{ ingredient.name }} - {{ ingredient.amount }}
-          <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list>
-    </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title class="text-lg font-semibold accent">Ingredients</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let ingredient of recipe.ingredients">
+            {{ ingredient.name }} - {{ ingredient.amount }}
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <button mat-flat-button color="primary" type=" button" (click)="onAddToShoppingList()">
+        <span>Add to shopping list</span>
+      </button>
+      </mat-card>
   </div>
 </div>
