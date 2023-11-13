@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 @Component({
@@ -19,15 +20,18 @@ export class RecipesComponent implements OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private deviceService: DeviceDetectorService
+  ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
     this.route.firstChild.params
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         if (params && params.hasOwnProperty('id')) {
           this.hideList = true;
-          this.hideBackBtn = false;
+          this.hideBackBtn = false || !this.deviceService.isDesktop();
         }
       });
 

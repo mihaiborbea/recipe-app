@@ -4,10 +4,10 @@
   </div>
   <div class="flex flex-row w-[6%] md:hidden content-center" [ngClass]="{'hidden': hideBackBtn || !hideList }"
     routerLink="/recipes">
-    <button type="button" class="flex flex-row p-0" mat-icon-button color="accent">
-      <mat-icon>arrow_back</mat-icon>
+    <button type="button" class="flex flex-row items-center gap-2 p-0">
+      <mat-icon color="accent">arrow_back</mat-icon>
+      <span class="text-lime-300">Back</span>
     </button>
-    <span>Back</span>
   </div>
   <div class="max-w-[960px] w-[94%] md:w-[57%]" [ngClass]="{'hidden': !hideList }">
     <router-outlet></router-outlet>
