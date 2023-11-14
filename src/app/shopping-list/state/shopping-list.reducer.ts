@@ -13,32 +13,43 @@ export const shoppingListReducer = createReducer(
 
   on(ShoppingListActions.addIngredient, (state, action) => {
     const newState = { ...state };
-    newState.shoppingList.ingredients.push(action.ingredient);
+    newState.shoppingList.recipes[action.rIndex].ingredients.push(
+      action.ingredient
+    );
     return newState;
   }),
 
   on(ShoppingListActions.addIngredients, (state, action) => {
     const newState = { ...state };
-    newState.shoppingList.ingredients.push(...action.ingredients);
+    const recipeIndex = state.shoppingList.recipes.findIndex(
+      (recipe) => recipe.recipeName === action.recipe.name
+    );
+    newState.shoppingList.recipes[recipeIndex].ingredients.push(
+      ...action.ingredients
+    );
     return newState;
   }),
 
   on(ShoppingListActions.updateIngredient, (state, action) => {
     const newState = { ...state };
-    newState.editIndex = -1;
-    newState.shoppingList.ingredients = state.shoppingList.ingredients.map(
-      (ingredient, index) =>
-        index === state.editIndex ? { ...action.ingredient } : ingredient
-    );
+    newState.editIngredientIndex = -1;
+    newState.shoppingList.recipes[action.rIndex].ingredients =
+      state.shoppingList.recipes[action.rIndex].ingredients.map(
+        (ingredient, index) =>
+          index === state.editIngredientIndex
+            ? { ...action.ingredient }
+            : ingredient
+      );
     return newState;
   }),
 
-  on(ShoppingListActions.deleteIngredient, (state) => {
+  on(ShoppingListActions.deleteIngredient, (state, action) => {
     const newState = { ...state };
-    newState.editIndex = -1;
-    newState.shoppingList.ingredients = state.shoppingList.ingredients.filter(
-      (_, index) => index !== state.editIndex
-    );
+    newState.editIngredientIndex = -1;
+    newState.shoppingList.recipes[state.editRecipeIndex].ingredients =
+      state.shoppingList.recipes[action.recipeIndex].ingredients.filter(
+        (_, index) => index !== state.editIngredientIndex
+      );
     return newState;
   }),
 

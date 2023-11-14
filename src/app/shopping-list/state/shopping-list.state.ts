@@ -2,10 +2,12 @@ import { ShoppingList } from '../domain/shopping-list.model';
 
 export interface ShoppingListState {
   shoppingList: ShoppingList;
-  editIndex: number;
+  editRecipeIndex: number;
+  editIngredientIndex: number;
 }
 
 export const initialState: ShoppingListState = {
   shoppingList: null,
-  editIndex: -1,
+  editRecipeIndex: -1,
+  editIngredientIndex: -1,
 };

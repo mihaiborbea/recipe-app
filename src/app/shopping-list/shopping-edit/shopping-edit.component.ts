@@ -31,11 +31,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       this.store.select(selectShoppingList),
     ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(([editIndex, shoppingList]) => {
-        const index = editIndex;
-        if (index > -1) {
+      .subscribe(([editIndexes, shoppingList]) => {
+        const rIndex = editIndexes.rIndex;
+        const iIndex = editIndexes.iIndex;
+        if (rIndex > -1) {
           this.editMode = true;
-          this.editedItem = shoppingList.ingredients[index];
+          this.editedItem = shoppingList.recipes[rIndex].ingredients[iIndex];
           this.form.setValue({
             name: this.editedItem.name,
             amount: this.editedItem.amount,
@@ -51,11 +52,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const newIngredient = new Ingredient(value.name, value.amount);
     if (this.editMode) {
       this.store.dispatch(
-        ShoppingListActions.updateIngredient({ ingredient: newIngredient })
+        ShoppingListActions.updateIngredient({
+          rIndex: 0,
+          iIndex: 0,
+          ingredient: newIngredient,
+        })
       );
     } else {
       this.store.dispatch(
-        ShoppingListActions.addIngredient({ ingredient: newIngredient })
+        ShoppingListActions.addIngredient({
+          rIndex: 0,
+          ingredient: newIngredient,
+        })
       );
     }
     this.editMode = false;
@@ -69,7 +77,12 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.store.dispatch(ShoppingListActions.deleteIngredient());
+    this.store.dispatch(
+      ShoppingListActions.deleteIngredient({
+        recipeIndex: 0,
+        ingredientIndex: 0,
+      })
+    );
     this.onClear();
   }
 

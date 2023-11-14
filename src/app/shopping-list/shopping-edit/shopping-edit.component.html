@@ -1,54 +1,23 @@
 <div>
-  <div>
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <div class="flex flex-col md:flex-row w-full">
-        <mat-form-field class="w-full md:w-2/3 mr-2">
-          <mat-label for="name">Name</mat-label>
-          <input matInput type="text" id="name" name="name" ngModel required />
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <div class="flex flex-col md:flex-row w-full">
+      <mat-form-field class="w-full md:w-2/3 mr-2">
+        <input matInput type="text" id="name" name="name" placeholder="Name" ngModel required />
         </mat-form-field>
         <mat-form-field class="w-full md:w-1/3">
-          <mat-label for="amount">Amount</mat-label>
-          <input
-            matInput
-            type="number"
-            id="amount"
-            name="amount"
-            ngModel
-            required
-            pattern="^[1-9]+[0-9]*$"
-          />
+        <input matInput type="number" id="amount" name="amount" placeholder="Qty" ngModel required pattern="^[1-9]+[0-9]*$" />
         </mat-form-field>
+        </div>
+        <div class="flex flex-row">
+      <button class="mr-2" mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+        {{ editMode ? "Update" : "Add" }}
+      </button>
+      <button class="mr-2" mat-raised-button color="warn" type="button" (click)="onDelete()" *ngIf="editMode">
+        Delete
+      </button>
+      <button class="mr-2" mat-raised-button color="accent" type="reset" (click)="onClear()">
+        Clear
+      </button>
       </div>
-      <div class="flex flex-row">
-        <button
-        class="mr-2"
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="!f.valid"
-        >
-          {{ editMode ? "Update" : "Add" }}
-        </button>
-        <button
-        class="mr-2"
-          mat-raised-button
-          color="warn"
-          type="button"
-          (click)="onDelete()"
-          *ngIf="editMode"
-        >
-          Delete
-        </button>
-        <button
-        class="mr-2"
-          mat-raised-button
-          color="accent"
-          type="reset"
-          (click)="onClear()"
-        >
-          Clear
-        </button>
-      </div>
-    </form>
-  </div>
+      </form>
 </div>

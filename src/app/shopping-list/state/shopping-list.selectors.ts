@@ -10,7 +10,12 @@ const selectShpListState = createFeatureSelector<ShoppingListState>(
 
 export const selectIngredientsCount = createSelector(
   selectShpListState,
-  (state: ShoppingListState) => state.shoppingList?.ingredients.length
+  (state: ShoppingListState) => {
+    return state.shoppingList?.recipes.reduce(
+      (acc, cv) => acc + cv.ingredients.length,
+      0
+    );
+  }
 );
 
 export const selectShoppingList = createSelector(
@@ -20,5 +25,8 @@ export const selectShoppingList = createSelector(
 
 export const selectEditIndex = createSelector(
   selectShpListState,
-  (state: ShoppingListState) => state.editIndex
+  (state: ShoppingListState) => ({
+    rIndex: state.editRecipeIndex,
+    iIndex: state.editIngredientIndex,
+  })
 );

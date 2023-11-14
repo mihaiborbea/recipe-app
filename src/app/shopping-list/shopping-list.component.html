@@ -3,15 +3,16 @@
     <div class="relative h-[20%] min-h-[180px]">
       <app-shopping-edit></app-shopping-edit>
     </div>
-    <mat-selection-list #list [multiple]="false" class="scrollbar">
-      <div *ngFor="
-                              let ingredient of (shoppingList$ | async)?.ingredients;
-                              let i = index
-          ">
-        <mat-list-option (click)="onEditItem(i)">{{ ingredient.name }} ({{ ingredient.amount }})
-        </mat-list-option>
-        <mat-divider></mat-divider>
-      </div>
+    <mat-selection-list class="overflow-hidden h-[80%]" [multiple]="true">
+      <mat-list-option *ngFor="let ingredient of (shoppingList$ | async)?.recipes; let i = index" (click)="onEditItem(i)">
+        {{ ingredient.recipeName }}
+      </mat-list-option>
+      <mat-divider></mat-divider>
     </mat-selection-list>
+    <div class="flex flex-row gap-2">
+      <button mat-raised-button color="primary" disabled>Order on freshful</button>
+      <button mat-raised-button color="primary" disabled>Order on sezamo</button>
+      <button mat-raised-button color="primary" disabled>Order on glovo</button>
+    </div>
   </div>
 </div>
