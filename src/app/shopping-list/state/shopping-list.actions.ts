@@ -2,7 +2,6 @@ import { createAction, props } from '@ngrx/store';
 
 import { Ingredient } from '../../shared/domain/ingredient.model';
 import { ShoppingList } from '../domain/shopping-list.model';
-import { Recipe } from 'src/app/recipes/domain/recipe.model';
 
 export const FETCH_SHOPPING_LIST = '[Shopping List] Fetch Shopping List';
 export const SET_SHOPPING_LIST = '[Shopping List] Set Shopping List';
@@ -34,7 +33,7 @@ export const addIngredient = createAction(
 export const addIngredients = createAction(
   ADD_INGREDIENTS,
   props<{
-    recipe: Recipe;
+    rIndex: number;
     ingredients: Ingredient[];
   }>()
 );

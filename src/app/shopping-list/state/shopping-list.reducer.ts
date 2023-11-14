@@ -13,20 +13,45 @@ export const shoppingListReducer = createReducer(
 
   on(ShoppingListActions.addIngredient, (state, action) => {
     const newState = { ...state };
-    newState.shoppingList.recipes[action.rIndex].ingredients.push(
-      action.ingredient
-    );
+    const existingIngredientIndex = state.shoppingList.recipes[
+      action.rIndex
+    ].ingredients.findIndex((i) => i.name === action.ingredient.name);
+    if (existingIngredientIndex > 0) {
+      const newAmount =
+        newState.shoppingList.recipes[action.rIndex].ingredients[
+          existingIngredientIndex
+        ].amount + action.ingredient.amount;
+      newState.shoppingList.recipes[action.rIndex].ingredients[
+        existingIngredientIndex
+      ].amount = newAmount;
+    } else {
+      newState.shoppingList.recipes[action.rIndex].ingredients.push(
+        action.ingredient
+      );
+    }
     return newState;
   }),
 
   on(ShoppingListActions.addIngredients, (state, action) => {
     const newState = { ...state };
-    const recipeIndex = state.shoppingList.recipes.findIndex(
-      (recipe) => recipe.recipeName === action.recipe.name
-    );
-    newState.shoppingList.recipes[recipeIndex].ingredients.push(
-      ...action.ingredients
-    );
+    for (let i in action.ingredients) {
+      const existingIngredientIndex = state.shoppingList.recipes[
+        action.rIndex
+      ].ingredients.findIndex((ing) => ing.name === action.ingredients[i].name);
+      if (existingIngredientIndex > 0) {
+        const newAmount =
+          newState.shoppingList.recipes[action.rIndex].ingredients[
+            existingIngredientIndex
+          ].amount + action.ingredients[i].amount;
+        newState.shoppingList.recipes[action.rIndex].ingredients[
+          existingIngredientIndex
+        ].amount = newAmount;
+      } else {
+        newState.shoppingList.recipes[action.rIndex].ingredients.push(
+          action.ingredients[i]
+        );
+      }
+    }
     return newState;
   }),
 
