@@ -1,15 +1,25 @@
-<div class="flex flex-row items-center place-content-center">
-  <div class="flex flex-col relative h-[100%] w-[90%] md:w-[80%] lg:w-[60%]">
-    <div class="relative h-[20%] min-h-[180px]">
+<div class="flex flex-row items-center place-content-center h-full">
+  <div class="flex flex-col relative h-full w-[90%] md:w-[80%] lg:w-[60%]">
+    <div class="h-[20%] min-h-[180px]">
       <app-shopping-edit></app-shopping-edit>
     </div>
-    <mat-selection-list class="overflow-hidden h-[80%]" [multiple]="true">
-      <mat-list-option *ngFor="let ingredient of (shoppingList$ | async)?.recipes; let i = index" (click)="onEditItem(i)">
-        {{ ingredient.recipeName }}
-      </mat-list-option>
-      <mat-divider></mat-divider>
-    </mat-selection-list>
-    <div class="flex flex-row gap-2">
+    <div class="h-[60%]">
+      <mat-selection-list class=" h-full" [multiple]="true">
+        <mat-list-option class="my-2" *ngFor="let recipe of (shoppingList$ | async)?.recipes; let rIndex = index"
+          (click)="onEditItem(rIndex)">
+          <span>{{ recipe.recipeName }}</span>
+          <mat-selection-list class="" [multiple]="true">
+            <mat-list-option class="my-6" *ngFor="let ingredient of recipe.ingredients; let iIndex = index"
+              (click)="onEditItem(rIndex)">
+              <span>{{ingredient.name}}</span>
+            </mat-list-option>
+          </mat-selection-list>
+    
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </mat-selection-list>
+          </div>
+          <div class="flex flex-row h-[20%] gap-2">
       <button mat-raised-button color="primary" disabled>Order on freshful</button>
       <button mat-raised-button color="primary" disabled>Order on sezamo</button>
       <button mat-raised-button color="primary" disabled>Order on glovo</button>

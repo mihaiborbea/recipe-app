@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/firestore';
 
 import {
+  RecipeIngredients,
   ShoppingList,
   shoppingListConverter,
 } from 'src/app/shopping-list/domain/shopping-list.model';
@@ -58,24 +59,29 @@ export class RecipesService {
   }
 
   async addRecipeToUserShoppingList(recipe: Recipe, userId) {
-    let userShoppingList;
-    const docs = (
-      await getDocs(
-        collection(
-          this.firestore,
-          `userData/${userId}/shoppingList`
-        ).withConverter(shoppingListConverter)
-      )
-    ).docs;
+    const docRef = collection(
+      this.firestore,
+      `userData/${userId}/shoppingList`
+    ).withConverter(shoppingListConverter);
+    let userShoppingList: ShoppingList = new ShoppingList(docRef.id, [
+      new RecipeIngredients(recipe.name),
+    ]);
+    let shoppingRecipeIndex = 0;
+
+    const docs = (await getDocs(docRef)).docs;
     if (docs && docs.length) {
       userShoppingList = docs[0].data();
-    } else {
-      const docRef = doc(
-        collection(this.firestore, `userData/${userId}/shoppingList`)
+      shoppingRecipeIndex = userShoppingList.recipes.findIndex(
+        (r) => r.recipeName === recipe.name
       );
-      userShoppingList = new ShoppingList(docRef.id);
+      if (shoppingRecipeIndex === -1) {
+        userShoppingList.recipes.push(new RecipeIngredients(recipe.name));
+        shoppingRecipeIndex = userShoppingList.recipes.length - 1;
+      }
     }
-    userShoppingList.ingredients.push(...recipe.ingredients);
+    userShoppingList.recipes[shoppingRecipeIndex].ingredients.push(
+      ...recipe.ingredients
+    );
     await setDoc(
       doc(
         this.firestore,

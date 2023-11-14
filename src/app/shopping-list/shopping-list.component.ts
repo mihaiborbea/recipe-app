@@ -13,18 +13,18 @@ import {
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styles: [
-    `
-      .mat-mdc-selection-list:hover {
-        overflow-y: hidden;
-      }
-    `,
-    `
-      .mat-mdc-selection-list:hover {
-        overflow-y: scroll;
-      }
-    `,
-  ],
+  // styles: [
+  //   `
+  //     .mat-mdc-selection-list:hover {
+  //       overflow-y: hidden;
+  //     }
+  //   `,
+  //   `
+  //     .mat-mdc-selection-list:hover {
+  //       overflow-y: scroll;
+  //     }
+  //   `,
+  // ],
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   @ViewChild('list') selectionList;

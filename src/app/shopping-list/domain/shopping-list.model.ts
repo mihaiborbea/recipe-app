@@ -4,8 +4,11 @@ export class ShoppingList {
   constructor(public id: string, public recipes: RecipeIngredients[] = []) {}
 }
 
-class RecipeIngredients {
-  constructor(public recipeName: string, public ingredients: Ingredient[]) {}
+export class RecipeIngredients {
+  constructor(
+    public recipeName: string,
+    public ingredients: Ingredient[] = []
+  ) {}
 }
 
 export const shoppingListConverter = {
