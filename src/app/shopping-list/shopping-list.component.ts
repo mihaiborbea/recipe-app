@@ -29,6 +29,7 @@ import {
 export class ShoppingListComponent implements OnInit, OnDestroy {
   @ViewChild('list') selectionList;
   shoppingList$ = this.store.select(selectShoppingList);
+  recipeIndex = -1;
 
   private destroy$ = new Subject<void>();
 
@@ -48,7 +49,17 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       });
   }
 
-  onEditItem(index: number) {
+  onRecipeClick(index: number) {
+    this.recipeIndex = index;
+    this.store.dispatch(
+      ShoppingListActions.startEditIngredient({
+        recipeIndex: index,
+        ingredientIndex: 0,
+      })
+    );
+  }
+
+  onIngredientClick(index: number) {
     this.store.dispatch(
       ShoppingListActions.startEditIngredient({
         recipeIndex: 0,
