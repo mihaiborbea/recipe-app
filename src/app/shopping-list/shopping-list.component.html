@@ -1,33 +1,31 @@
-<div class="flex flex-row items-center place-content-center h-full">
+<div class="flex flex-row gap-3 items-center place-content-center h-full">
   <div class="flex flex-col relative h-full w-[90%] md:w-[80%] lg:w-[60%]">
-    <div class="h-[20%] min-h-[180px]">
-      <app-shopping-edit></app-shopping-edit>
+    <p class="mb-4 text-2xl font-bold">Shopping list</p>
+    <div>
+      <mat-accordion multi="true" class="h-full">
+        <mat-expansion-panel *ngFor="let recipe of (shoppingList$ | async)?.recipes; let rIndex = index">
+          <mat-expansion-panel-header class="my-2">
+            <mat-panel-title class="justify-between" (click)="onRecipeClick(rIndex)">
+              <span class="text-xs sm:text-base">{{
+                recipe.recipeName }}</span>
+              <span class="accent text-xs sm:text-base font-semibold">{{recipe.ingredients.length}}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list [multiple]="true">
+            <mat-list-option selected="true"
+              *ngFor="let ingredient of (shoppingList$ | async)?.recipes[rIndex].ingredients; let iIndex = index"
+              class="flex-row" (click)="onIngredientClick(iIndex)">
+              <span>{{ingredient.name}}</span>
+              <span>{{ingredient.amount}}</span>
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+        </mat-accordion>
     </div>
-    <div class="h-[60%]">
-      <mat-selection-list class="h-[50%]" [multiple]="true">
-        <ng-container *ngFor="let recipe of (shoppingList$ | async)?.recipes; let rIndex = index">
-          <mat-list-option class="my-2" (click)="onRecipeClick(rIndex)">
-            <span>{{ recipe.recipeName }}</span>
-          </mat-list-option>
-        </ng-container>
-        <mat-divider></mat-divider>
-      </mat-selection-list>
-
-      <mat-selection-list class="h-[50%]" [multiple]="true">
-        <ng-container *ngIf="recipeIndex >= 0">
-          <mat-list-option
-            *ngFor="let ingredient of (shoppingList$ | async)?.recipes[recipeIndex].ingredients; let iIndex = index"
-            class="my-6" (click)="onIngredientClick(iIndex)">
-            <span>{{ingredient.name}}</span>
-          </mat-list-option>
-        </ng-container>
-      </mat-selection-list>
-
-    </div>
-    <div class="flex flex-row h-[20%] gap-2">
-      <button mat-raised-button color="primary" disabled>Order on freshful</button>
-      <button mat-raised-button color="primary" disabled>Order on sezamo</button>
-      <button mat-raised-button color="primary" disabled>Order on glovo</button>
+    <div class="flex flex-row gap-2 mt-4">
+      <button mat-raised-button color="primary" class="text-sm sm:text-base" disabled>Order on freshful</button>
+      <button mat-raised-button color="primary" class="text-sm sm:text-base" disabled>Order on sezamo</button>
+      <button mat-raised-button color="primary" class="text-sm sm:text-base" disabled>Order on glovo</button>
     </div>
   </div>
 </div>
