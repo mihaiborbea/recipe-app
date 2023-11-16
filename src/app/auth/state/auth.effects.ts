@@ -216,8 +216,12 @@ export class AuthEffects {
 
   private async handleAutomaticAuthentication(authData) {
     const token = await authData.getIdToken();
-    console.log('AUTOLOGIN', authData);
-    const user = new User(authData.uid, authData.email, token, '');
+    const user = new User(
+      authData.uid,
+      authData.email,
+      token,
+      authData.photoURL
+    );
     return AuthActions.authenticateSuccess({ user, redirect: true });
   }
 
