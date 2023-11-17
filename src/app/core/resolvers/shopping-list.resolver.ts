@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
 import { switchMap, take } from 'rxjs/operators';
@@ -11,9 +11,7 @@ import * as ShoppingListActions from '../../shopping-list/state/shopping-list.ac
 import { AppState } from '../state/app.store';
 
 @Injectable({ providedIn: 'root' })
-export class ShoppingListResolver
-  
-{
+export class ShoppingListResolver {
   constructor(private store: Store<AppState>, private actions$: Actions) {}
 
   resolve(
@@ -26,15 +24,11 @@ export class ShoppingListResolver
     return this.store.select(selectShoppingList).pipe(
       take(1),
       switchMap((shoppingList) => {
-        if (!shoppingList) {
-          this.store.dispatch(ShoppingListActions.fetchShoppingList());
-          return this.actions$.pipe(
-            ofType(ShoppingListActions.SET_SHOPPING_LIST),
-            take(1)
-          );
-        } else {
-          return of({ shoppingList });
-        }
+        this.store.dispatch(ShoppingListActions.fetchShoppingList());
+        return this.actions$.pipe(
+          ofType(ShoppingListActions.SET_SHOPPING_LIST),
+          take(1)
+        );
       })
     );
   }
