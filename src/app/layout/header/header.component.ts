@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from '../../auth/state/auth.actions';
 import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { AppState } from 'src/app/core/state/app.store';
-// import * as ShoppingListActions from 'src/app/shopping-list/state/shopping-list.actions';
+import { selectIngredientsCount } from 'src/app/shopping-list/state/shopping-list.selectors';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnDestroy {
   @Output() public sidenavToggle = new EventEmitter();
   collapsed = false;
   user$ = this.store.select(selectAuthUser);
+  shoppingListCount$ = this.store.select(selectIngredientsCount);
   private destroy$ = new Subject<void>();
 
   constructor(private store: Store<AppState>) {}

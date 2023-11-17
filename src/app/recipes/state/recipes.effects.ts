@@ -9,7 +9,10 @@ import { selectAuthUser } from 'src/app/auth/state/auth.selectors';
 import { RecipesService } from '../services/recipes.service';
 import { AppState } from 'src/app/core/state/app.store';
 import { FileUploadService } from 'src/app/core/services/fileupload.service';
+import { ShoppingListService } from 'src/app/shopping-list/services/shopping-list.service';
 import { FileUpload } from 'src/app/shared/domain/fileupload.model';
+import * as ShoppingListActions from 'src/app/shopping-list/state/shopping-list.actions';
+
 @Injectable()
 export class RecipesEffects {
   fetchUserRecipes$ = createEffect(() =>
@@ -79,25 +82,28 @@ export class RecipesEffects {
     }
   );
 
-  addRecipeToShoppingList$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(RecipesActions.addRecipeToShoppingList),
-        withLatestFrom(this.store.select(selectAuthUser)),
-        switchMap(([action, user]) => {
-          return this.recipesService.addRecipeToUserShoppingList(
-            action.recipe,
-            user.id
-          );
-        })
+  addRecipeToShoppingList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipesActions.addRecipeToShoppingList),
+      withLatestFrom(this.store.select(selectAuthUser)),
+      switchMap(([action, user]) =>
+        this.recipesService.addRecipeToUserShoppingList(action.recipe, user.id)
       ),
-    { dispatch: false }
+      withLatestFrom(this.store.select(selectAuthUser)),
+      switchMap(([_, user]) =>
+        this.shoppingListService.getShoppingList(user.id)
+      ),
+      map((shoppingList) =>
+        ShoppingListActions.setShoppingList({ shoppingList })
+      )
+    )
   );
 
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
     private recipesService: RecipesService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private shoppingListService: ShoppingListService
   ) {}
 }

@@ -7,12 +7,14 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { RecipesResolver } from '../core/resolvers/recipes.resolver';
 import { RecipesComponent } from './recipes.component';
+import { ShoppingListResolver } from '../core/resolvers/shopping-list.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: RecipesComponent,
     canActivate: [AuthGuard],
+    resolve: [ShoppingListResolver],
     children: [
       {
         path: '',

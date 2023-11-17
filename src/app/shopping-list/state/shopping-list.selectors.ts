@@ -12,7 +12,7 @@ export const selectIngredientsCount = createSelector(
   selectShpListState,
   (state: ShoppingListState) => {
     return state.shoppingList?.recipes.reduce(
-      (acc, cv) => acc + cv.ingredients.length,
+      (acc, slR) => acc + slR.ingredients.length,
       0
     );
   }

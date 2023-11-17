@@ -15,6 +15,10 @@ import { RecipesService } from './services/recipes.service';
 import { RecipesEffects } from './state/recipes.effects';
 import { recipesReducer } from './state/recipes.reducer';
 import { RECIPES_STATE_NAME } from './state/recipes.selectors';
+import { ShoppingListService } from '../shopping-list/services/shopping-list.service';
+import { SHOPPING_LIST_STATE_NAME } from 'src/app/shopping-list/state/shopping-list.selectors';
+import { shoppingListReducer } from 'src/app/shopping-list/state/shopping-list.reducer';
+import { ShoppingListEffects } from 'src/app/shopping-list/state/shopping-list.effects';
 
 @NgModule({
   declarations: [
@@ -30,8 +34,9 @@ import { RECIPES_STATE_NAME } from './state/recipes.selectors';
     ReactiveFormsModule,
     RecipesRoutingModule,
     StoreModule.forFeature(RECIPES_STATE_NAME, recipesReducer),
-    EffectsModule.forFeature([RecipesEffects]),
+    StoreModule.forFeature(SHOPPING_LIST_STATE_NAME, shoppingListReducer),
+    EffectsModule.forFeature([RecipesEffects, ShoppingListEffects]),
   ],
-  providers: [RecipesService],
+  providers: [RecipesService, ShoppingListService],
 })
 export class RecipesModule {}
