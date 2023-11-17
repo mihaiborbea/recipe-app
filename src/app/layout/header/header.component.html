@@ -1,29 +1,27 @@
 <mat-toolbar color="primary">
-  <div class="flex flex-row lg:place-content-center items-center justify-between justify-items-stretch w-full">
-    <div *ngIf="user$ | async" class="sm:hidden">
+  <div class="flex flex-row gap-8 items-center w-full">
+    <div id="hamburger" *ngIf="user$ | async" class="md:hidden">
       <button mat-icon-button (click)="onToggleSidenav()">
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="place-content-start w-1/9 sm:w-[10%] w-[90%] mr-4">
+    <div id="logo" class="content-center md:content-start">
       <a routerLink="/">
         <img title="logo" src="../../../assets/logo/brand-logo-mono-black.png" class="sm:max-w-[70px] max-w-[60px]" />
       </a>
     </div>
-    <div class="hidden sm:flex flex-row grow 2xl:content-center 2xl:justify-center max-w-[80%]">
+    <div id="menu" class="hidden md:flex flex-row content-center">
       <ul class="flex gap-4 list-none text-xl">
         <li *ngIf="(user$ | async)">
           <a routerLink="/" routerLinkActive="active">Recipes</a>
         </li>
       </ul>
     </div>
-    <div *ngIf="(user$ | async)" class="flex flex-row content-center place-content-end justify-end w-[5%] mr-4">
-      <button mat-basic-button routerLink="/shopping-list">
+    <div id="toolbar" *ngIf="(user$ | async)" class="flex flex-row grow justify-end gap-10 mr-4">
+      <button class="block" mat-basic-button routerLink="/shopping-list">
         <mat-icon matBadge="0" matBadgeOverlap="false" matBadgeColor="accent">add_shopping_cart</mat-icon>
       </button>
-    </div>
-    <div *ngIf="(user$ | async)" class="hidden sm:flex flex-row grow content-center justify-end max-w-[5%]">
-      <button mat-basic-button [matMenuTriggerFor]="menu">
+      <button class="hidden md:block" mat-basic-button [matMenuTriggerFor]="menu">
         <img
           [src]="(user$ | async).profile.avatarUrl ? (user$ | async).profile.avatarUrl : '../../../assets/icons/user-avatar.svg'" />
       </button>
