@@ -204,7 +204,6 @@ export class AuthEffects {
     const socialLoginRes = await this.authService.socialLoginResult(
       providerName
     );
-    console.log('Social login result:', socialLoginRes);
     const user = new User(
       socialLoginRes.userData.user.uid,
       socialLoginRes.userData.user.email,
@@ -222,7 +221,7 @@ export class AuthEffects {
       token,
       authData.photoURL
     );
-    return AuthActions.authenticateSuccess({ user, redirect: true });
+    return AuthActions.authenticateSuccess({ user, redirect: false });
   }
 
   private handleError(errorRes: any) {
