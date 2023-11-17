@@ -17,7 +17,7 @@
         </li>
       </ul>
     </div>
-    <div id="toolbar" *ngIf="(user$ | async)" class="flex flex-row grow justify-end gap-10">
+    <div id="toolbar" *ngIf="(user$ | async)" class="flex flex-row grow justify-end gap-10 mr-4">
       <button class="block" mat-basic-button routerLink="/shopping-list">
         <mat-icon matBadge="0" matBadgeOverlap="false" matBadgeColor="accent">add_shopping_cart</mat-icon>
       </button>

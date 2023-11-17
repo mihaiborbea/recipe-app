@@ -1,15 +1,24 @@
 <a [routerLink]="[recipe.id]" routerLinkActive="active" class="no-underline">
-  <mat-card class="flex flex-col h-[100%] p-3">
-    <mat-card-header class="p-0">
-      <mat-card-title class="p-0">
-        <span class="font-semibold text-lg m-0">{{ recipe.name }}</span>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="flex flex-row content-start justify-start grow p-0 w-full h-[120px]">
-      <div class="w-[70%] h-32 overflow-hidden p-0">
-        <span>{{ recipe.description }}</span>
-      </div>
-      <img class="w-[30%] h-[90%]" mat-card-image [src]="recipe?.image?.url" [alt]="recipe.name" />
-    </mat-card-content>
+  <mat-card class="flex flex-row h-[100%]">
+    <div class="flex flex-col w-[60%] py-3 pl-3">
+      <mat-card-header class="p-0">
+        <mat-card-title class="p-0">
+          <span class="font-semibold text-lg m-0">{{ recipe.name }}</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="flex flex-row content-start justify-start grow p-0 w-full h-[120px]">
+        <div class="w-[70%] h-32 overflow-hidden p-0">
+          <span>{{ recipe.description }}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="start">
+        <button mat-flat-button color="primary" type=" button" (click)="onAddToShoppingList()">
+          <span>Add to shopping list</span>
+        </button>
+      </mat-card-actions>
+    </div>
+    <div class="h-[225px] w-[40%] ">
+      <img class="h-full w-full rounded-r-md" mat-card-image [src]="recipe?.image?.url" [alt]="recipe.name" />
+    </div>
   </mat-card>
 </a>
