@@ -25,7 +25,8 @@ export class CoreEffects {
   hideLoadingBar$ = createEffect(() =>
     this.actions$.pipe(
       ofType(
-        RecipesActions.setRecipes,
+        RecipesActions.setAllRecipes,
+        RecipesActions.setUserRecipes,
         ShoppingListActions.setShoppingList,
         AuthActions.authenticateSuccess,
         AuthActions.authenticateFail

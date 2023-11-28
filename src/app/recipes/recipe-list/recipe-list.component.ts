@@ -5,7 +5,10 @@ import { Store } from '@ngrx/store';
 import { takeUntil } from 'rxjs/operators';
 
 import { Recipe } from '../domain/recipe.model';
-import { selectRecipes } from '../state/recipes.selectors';
+import {
+  selectAllRecipes,
+  selectUserRecipes,
+} from '../state/recipes.selectors';
 import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
@@ -24,8 +27,15 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('recipes.resolver: this.router', this.router);
+    const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
+      ? 'User'
+      : 'All';
+    console.log('recipes.resolver: userOrAllRecipes', userOrAllRecipes);
     this.store
-      .select(selectRecipes)
+      .select(
+        userOrAllRecipes === 'User' ? selectUserRecipes : selectAllRecipes
+      )
       .pipe(takeUntil(this.destroy$))
       .subscribe((recipes: Recipe[]) => {
         this.recipes = recipes;

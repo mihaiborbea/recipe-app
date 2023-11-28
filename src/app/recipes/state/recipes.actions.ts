@@ -2,7 +2,8 @@ import { createAction, props } from '@ngrx/store';
 
 import { Recipe } from '../domain/recipe.model';
 
-export const SET_RECIPES = '[Recipes] Set Recipes';
+export const SET_ALL_RECIPES = '[Recipes] Set all Recipes';
+export const SET_USER_RECIPES = '[Recipes] Set user Recipes';
 export const FETCH_USER_RECIPES = '[Recipes] Fetch User Recipes';
 export const FETCH_ALL_RECIPES = '[Recipes] Fetch All Recipes';
 export const CREATE_RECIPE = '[Recipes] Create Recipe';
@@ -32,12 +33,20 @@ export const deleteRecipe = createAction(
   }>()
 );
 
-export const setRecipes = createAction(
-  SET_RECIPES,
+export const setAllRecipes = createAction(
+  SET_ALL_RECIPES,
   props<{
     recipes: Recipe[];
   }>()
 );
+
+export const setUserRecipes = createAction(
+  SET_USER_RECIPES,
+  props<{
+    recipes: Recipe[];
+  }>()
+);
+
 export const addRecipeToShoppingList = createAction(
   ADD_RECIPE_TO_SHOPPING_LSIT,
   props<{ recipe: Recipe }>()

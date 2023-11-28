@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,10 +22,8 @@ export class RecipesComponent implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private deviceService: DeviceDetectorService
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.firstChild.params
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {

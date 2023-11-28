@@ -1,11 +1,11 @@
 <mat-nav-list class="flex flex-col list-none justify-items-stretch h-full">
-  <mat-list-item class="justify-start" routerLink="/recipes" (click)="onSidenavClose()">
+  <mat-list-item class="justify-start" routerLink="/recipes" (click)="onSidenavClose()" routerLinkActive="active">
     <span class="flex flex-row items-center">
       <mat-icon>restaurant_menu</mat-icon>
       <span class="nav-caption">Recipes</span>
     </span>
   </mat-list-item>
-  <mat-list-item class="justify-end" routerLink="/my-recipes" routerLinkActive="active">
+  <mat-list-item class="justify-end" routerLink="/my-recipes" (click)="onSidenavClose()" routerLinkActive="active">
     <span class="flex flex-row items-center">
       <mat-icon>menu_book</mat-icon>
       <span>My Recipes</span>

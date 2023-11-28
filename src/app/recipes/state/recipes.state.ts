@@ -1,9 +1,11 @@
 import { Recipe } from '../domain/recipe.model';
 
 export interface RecipesState {
-  recipes: Recipe[];
+  allRecipes: Recipe[];
+  userRecipes: Recipe[];
 }
 
 export const initialState: RecipesState = {
-  recipes: [],
+  allRecipes: [],
+  userRecipes: [],
 };

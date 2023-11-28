@@ -8,23 +8,37 @@ export const recipesReducer = createReducer(
 
   on(RecipesActions.createRecipe, (state, action) => ({
     ...state,
-    recipes: [{ ...action.recipe }, ...state.recipes],
+    allRecipes: [{ ...action.recipe }, ...state.allRecipes],
+    userRecipes: [{ ...action.recipe }, ...state.userRecipes],
   })),
 
   on(RecipesActions.updateRecipe, (state, action) => ({
     ...state,
-    recipes: state.recipes.map((recipe) =>
+    allRecipes: state.allRecipes.map((recipe) =>
+      recipe.id === action.recipe.id ? { ...action.recipe } : recipe
+    ),
+    userRecipes: state.userRecipes.map((recipe) =>
       recipe.id === action.recipe.id ? { ...action.recipe } : recipe
     ),
   })),
 
   on(RecipesActions.deleteRecipe, (state, action) => ({
     ...state,
-    recipes: state.recipes.filter((recipe) => recipe.id !== action.recipe.id),
+    allRecipes: state.allRecipes.filter(
+      (recipe) => recipe.id !== action.recipe.id
+    ),
+    userRecipes: state.userRecipes.filter(
+      (recipe) => recipe.id !== action.recipe.id
+    ),
   })),
 
-  on(RecipesActions.setRecipes, (state, action) => ({
+  on(RecipesActions.setAllRecipes, (state, action) => ({
     ...state,
-    recipes: [...action.recipes],
+    allRecipes: [...action.recipes],
+  })),
+
+  on(RecipesActions.setUserRecipes, (state, action) => ({
+    ...state,
+    userRecipes: [...action.recipes],
   }))
 );

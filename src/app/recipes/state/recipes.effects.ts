@@ -24,7 +24,7 @@ export class RecipesEffects {
       ),
       withLatestFrom(this.store.select(selectAuthUser)),
       switchMap(([_, user]) => this.recipesService.getUserRecipes(user.id)),
-      map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
+      map((recipes: Recipe[]) => RecipesActions.setUserRecipes({ recipes }))
     )
   );
 
@@ -36,7 +36,7 @@ export class RecipesEffects {
         RecipesActions.updateRecipe
       ),
       switchMap((action) => this.recipesService.getAllRecipes()),
-      map((recipes: Recipe[]) => RecipesActions.setRecipes({ recipes }))
+      map((recipes: Recipe[]) => RecipesActions.setAllRecipes({ recipes }))
     )
   );
 

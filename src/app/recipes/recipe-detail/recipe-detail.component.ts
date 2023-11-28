@@ -6,7 +6,10 @@ import { Subject } from 'rxjs';
 
 import { Recipe } from '../domain/recipe.model';
 import * as RecipesActions from '../state/recipes.actions';
-import { selectRecipes } from '../state/recipes.selectors';
+import {
+  selectAllRecipes,
+  selectUserRecipes,
+} from '../state/recipes.selectors';
 import { AppState } from 'src/app/core/state/app.store';
 
 @Component({
@@ -25,11 +28,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('recipes.resolver: this.router', this.router);
+    const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
+      ? 'User'
+      : 'All';
+    console.log('recipes.resolver: userOrAllRecipes', userOrAllRecipes);
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
         map((params) => params['id']),
-        withLatestFrom(this.store.select(selectRecipes)),
+        withLatestFrom(
+          this.store.select(
+            userOrAllRecipes === 'User' ? selectUserRecipes : selectAllRecipes
+          )
+        ),
         map(([id, recipes]) => {
           return recipes.find((recipe) => recipe.id === id);
         })

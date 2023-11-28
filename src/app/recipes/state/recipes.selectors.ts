@@ -7,7 +7,12 @@ export const RECIPES_STATE_NAME = 'recipes';
 const selectRecipesState =
   createFeatureSelector<RecipesState>(RECIPES_STATE_NAME);
 
-export const selectRecipes = createSelector(
+export const selectAllRecipes = createSelector(
   selectRecipesState,
-  (state: RecipesState) => state.recipes
+  (state: RecipesState) => state.allRecipes
+);
+
+export const selectUserRecipes = createSelector(
+  selectRecipesState,
+  (state: RecipesState) => state.userRecipes
 );

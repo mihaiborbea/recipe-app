@@ -6,7 +6,10 @@ import { takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import * as RecipesActions from '../state/recipes.actions';
-import { selectRecipes } from '../state/recipes.selectors';
+import {
+  selectAllRecipes,
+  selectUserRecipes,
+} from '../state/recipes.selectors';
 import { Recipe } from '../domain/recipe.model';
 import { AppState } from 'src/app/core/state/app.store';
 import { User } from 'src/app/auth/domain/user.model';
@@ -36,12 +39,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('HERE');
+    console.log('recipes.resolver: this.router', this.router);
+    const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
+      ? 'User'
+      : 'All';
+    console.log('recipes.resolver: userOrAllRecipes', userOrAllRecipes);
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
         withLatestFrom(
-          this.store.select(selectRecipes),
+          this.store.select(
+            userOrAllRecipes === 'User' ? selectUserRecipes : selectAllRecipes
+          ),
           this.store.select(selectAuthUser)
         )
       )
