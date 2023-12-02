@@ -1,6 +1,7 @@
 {
   "name": "foodilo",
   "version": "0.8.2",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +10,6 @@
     "test": "ng test",
     "lint": "ng lint"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.7",
     "@angular/cdk": "^16.2.6",
