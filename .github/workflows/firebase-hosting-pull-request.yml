@@ -13,6 +13,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18.18
+      - name: Go to client dir
+        run: cd client
       - name: npm dependencies
         run: npm install --force
       - name: Build
