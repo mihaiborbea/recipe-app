@@ -15,7 +15,7 @@ import { takeUntil } from 'rxjs/operators';
   ],
 })
 export class RecipesComponent implements OnDestroy {
-  hideList = false;
+  hideList = true;
   hideBackBtn = true;
 
   private destroy$ = new Subject<void>();
@@ -28,7 +28,7 @@ export class RecipesComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
         if (params && params.hasOwnProperty('id')) {
-          this.hideList = true;
+          this.hideList = false;
           this.hideBackBtn = false || !this.deviceService.isDesktop();
         }
       });
@@ -37,7 +37,7 @@ export class RecipesComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((segments) => {
         if (segments && segments[0] && segments[0].path === 'new') {
-          this.hideList = true;
+          this.hideList = false;
         }
       });
   }

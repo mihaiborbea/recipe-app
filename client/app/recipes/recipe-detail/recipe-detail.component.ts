@@ -29,11 +29,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('recipe-detail.cpm: this.router', this.router);
     const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
       ? 'User'
       : 'All';
-    console.log('recipe-detail.cpm: userOrAllRecipes', userOrAllRecipes);
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
