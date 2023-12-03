@@ -6,7 +6,7 @@
     "recipe-app-8ac24": {
       "hosting": {
         "recipe-app": [
-          "resources"
+          "recipe-app-8ac24"
         ]
       }
     }
