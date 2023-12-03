@@ -18,6 +18,7 @@ import { AppState } from 'client/app/core/state/app.store';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
+  isMyRecipe: boolean;
 
   private destroy$ = new Subject<void>();
 
@@ -28,11 +29,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('recipes.resolver: this.router', this.router);
+    console.log('recipe-detail.cpm: this.router', this.router);
     const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
       ? 'User'
       : 'All';
-    console.log('recipes.resolver: userOrAllRecipes', userOrAllRecipes);
+    console.log('recipe-detail.cpm: userOrAllRecipes', userOrAllRecipes);
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
@@ -47,6 +48,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((recipe) => {
+        this.isMyRecipe = userOrAllRecipes === 'User' ? true : false;
         this.recipe = recipe;
       });
   }
