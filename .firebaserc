@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "recipe-app-8ac24"
-  }
+  },
+  "targets": {
+    "recipe-app-8ac24": {
+      "hosting": {
+        "recipe-app": [
+          "resources"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
