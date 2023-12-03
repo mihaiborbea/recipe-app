@@ -1,14 +1,10 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
-    "sourceMap": true,
-    "strict": true,
+    "baseUrl": "./",
+    "outDir": "./out-tsc/functions",
     "target": "es2017"
   },
-  "compileOnSave": true,
-  "include": ["functions/src"]
+  "include": ["functions/src/**.ts"],
+  "exclude": ["./out-tsc/functions"]
 }
