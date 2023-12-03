@@ -17,11 +17,7 @@ import * as ShoppingListActions from 'client/app/shopping-list/state/shopping-li
 export class RecipesEffects {
   fetchUserRecipes$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        RecipesActions.fetchUserRecipes,
-        RecipesActions.createRecipe,
-        RecipesActions.updateRecipe
-      ),
+      ofType(RecipesActions.fetchUserRecipes),
       withLatestFrom(this.store.select(selectAuthUser)),
       switchMap(([_, user]) => this.recipesService.getUserRecipes(user.id)),
       map((recipes: Recipe[]) => RecipesActions.setUserRecipes({ recipes }))
@@ -30,45 +26,38 @@ export class RecipesEffects {
 
   fetchAllRecipes$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        RecipesActions.fetchAllRecipes,
-        RecipesActions.createRecipe,
-        RecipesActions.updateRecipe
-      ),
-      switchMap((action) => this.recipesService.getAllRecipes()),
+      ofType(RecipesActions.fetchAllRecipes),
+      switchMap((_) => this.recipesService.getAllRecipes()),
       map((recipes: Recipe[]) => RecipesActions.setAllRecipes({ recipes }))
     )
   );
 
-  storeRecipe$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(RecipesActions.updateRecipe, RecipesActions.createRecipe),
-        map(async (action) => {
-          const uploadedFileUrl =
-            await this.fileUploadService.pushFileToStorage(
-              action.recipe.image,
-              'recipes'
-            );
-          const uploadedImage = new FileUpload(
-            action.recipe.image.name,
-            uploadedFileUrl,
-            action.recipe.image.file
-          );
-          const recipeWithUploadedImage = new Recipe(
-            action.recipe.id,
-            action.recipe.name,
-            action.recipe.description,
-            uploadedImage,
-            action.recipe.ingredients,
-            action.recipe.createdBy
-          );
-          return this.recipesService.addOrUpdateRecipe(recipeWithUploadedImage);
-        })
-      ),
-    {
-      dispatch: false,
-    }
+  storeRecipe$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RecipesActions.updateRecipe, RecipesActions.createRecipe),
+      map(async (action) => {
+        const uploadedFileUrl = await this.fileUploadService.pushFileToStorage(
+          action.recipe.image,
+          'recipes'
+        );
+        const uploadedImage = new FileUpload(
+          action.recipe.image.name,
+          uploadedFileUrl,
+          action.recipe.image.file
+        );
+        const recipeWithUploadedImage = new Recipe(
+          action.recipe.id,
+          action.recipe.name,
+          action.recipe.description,
+          uploadedImage,
+          action.recipe.ingredients,
+          action.recipe.createdBy
+        );
+        console.log('recipe stored.');
+        return this.recipesService.addOrUpdateRecipe(recipeWithUploadedImage);
+      }),
+      map((_) => RecipesActions.fetchUserRecipes())
+    )
   );
 
   deleteRecipe$ = createEffect(
