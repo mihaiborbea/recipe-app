@@ -17,7 +17,7 @@
       ],
       "rewrites": [
         {
-          "source": "**",
+          "source": "client",
           "destination": "/index.html"
         }
       ]
