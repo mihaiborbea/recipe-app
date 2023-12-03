@@ -44,11 +44,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('recipes.resolver: this.router', this.router);
     const userOrAllRecipes = this.router.url.startsWith('/my-recipes')
       ? 'User'
       : 'All';
-    console.log('recipes.resolver: userOrAllRecipes', userOrAllRecipes);
     this.route.params
       .pipe(
         takeUntil(this.destroy$),
