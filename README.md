@@ -46,3 +46,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Firebase SDK was used through [AngularFire](https://github.com/angular/angularfire) library.
 
 In order to configure this project to work with firebase, all you need to do is to provide a Firebase config object inside environment.ts file (/src/environments/). To get the config based on _your_ Firebase account, check this [page](https://support.google.com/firebase/answer/7015592?hl=en#web).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
